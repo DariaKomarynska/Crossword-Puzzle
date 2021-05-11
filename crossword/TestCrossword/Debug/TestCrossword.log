@@ -1,0 +1,3 @@
+﻿  test_Player.cpp
+C:\Users\amaje\source\repos\203.3-krzyzowki\crossword\crossword\Player.cpp(27,62): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+  TestCrossword.vcxproj -> C:\Users\amaje\source\repos\203.3-krzyzowki\crossword\Debug\TestCrossword.dll

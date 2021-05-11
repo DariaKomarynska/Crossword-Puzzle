@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.29926.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PROI_Lab_3", "PROI_Lab_3\PROI_Lab_3.vcxproj", "{9EB7E463-6524-4DF6-B386-8C416ABEC3CF}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTestBoard", "UnitTestBoard\UnitTestBoard.vcxproj", "{DC8E363B-4F20-41DD-815D-7DD926B6DA9E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTest_Board", "UnitTestBoard\UnitTestBoard.vcxproj", "{DC8E363B-4F20-41DD-815D-7DD926B6DA9E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dictionary", "Dictionary\Dictionary.vcxproj", "{6677D4D1-7679-4325-9390-130CF53B51F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,14 @@ Global
 		{DC8E363B-4F20-41DD-815D-7DD926B6DA9E}.Release|x64.Build.0 = Release|x64
 		{DC8E363B-4F20-41DD-815D-7DD926B6DA9E}.Release|x86.ActiveCfg = Release|Win32
 		{DC8E363B-4F20-41DD-815D-7DD926B6DA9E}.Release|x86.Build.0 = Release|Win32
+		{6677D4D1-7679-4325-9390-130CF53B51F5}.Debug|x64.ActiveCfg = Debug|x64
+		{6677D4D1-7679-4325-9390-130CF53B51F5}.Debug|x64.Build.0 = Debug|x64
+		{6677D4D1-7679-4325-9390-130CF53B51F5}.Debug|x86.ActiveCfg = Debug|Win32
+		{6677D4D1-7679-4325-9390-130CF53B51F5}.Debug|x86.Build.0 = Debug|Win32
+		{6677D4D1-7679-4325-9390-130CF53B51F5}.Release|x64.ActiveCfg = Release|x64
+		{6677D4D1-7679-4325-9390-130CF53B51F5}.Release|x64.Build.0 = Release|x64
+		{6677D4D1-7679-4325-9390-130CF53B51F5}.Release|x86.ActiveCfg = Release|Win32
+		{6677D4D1-7679-4325-9390-130CF53B51F5}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

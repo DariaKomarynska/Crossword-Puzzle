@@ -1,4 +1,3 @@
-/*
 #include "..\crossword\Dictionary.h"
 #include "CppUnitTest.h"
 
@@ -192,7 +191,7 @@ namespace Dictionarytest
 			meaning = "big animal";
 			dict_a.add_word(word, meaning);
 
-			map<string, string> dict2 = { {"apple", "fruit"}, {"pen", "writing instrument"} };
+			map<string, string> dict2 = { {"apple", "big animal"}, {"pen", "writing instrument"} };
 			Dictionary dict_b(dict2);
 
 			Assert::IsTrue(dict_a == dict_b);
@@ -207,7 +206,7 @@ namespace Dictionarytest
 			word = "apple";
 			dict_a + word;
 
-			map<string, string> dict2 = { {"apple"}, {"pen", "writing instrument"} };
+			map<string, string> dict2 = { {"apple", ""}, {"pen", "writing instrument"} };
 			Dictionary dict_b(dict2);
 
 			Assert::IsTrue(dict_a == dict_b);
@@ -221,7 +220,7 @@ namespace Dictionarytest
 			word = "horse";
 			dict_a + word;
 
-			map<string, string> dict2 = { {"apple", "fruit"}, {"horse"}, {"pen", "writing instrument"} };
+			map<string, string> dict2 = { {"apple", "fruit"}, {"horse", ""}, {"pen", "writing instrument"} };
 			Dictionary dict_b(dict2);
 
 			Assert::IsTrue(dict_a == dict_b);
@@ -229,4 +228,3 @@ namespace Dictionarytest
 
 	};
 }
-*/

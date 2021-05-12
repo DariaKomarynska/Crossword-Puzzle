@@ -49,13 +49,13 @@ namespace testPlayer
 		}
 
 
-		TEST_METHOD(TestPlayerNewGame)
+		TEST_METHOD(TestPlayerEndGame)
 		{
 			Player byk = Player("byczeq");
 			byk.addPoints(30);
 			Assert::AreEqual(byk.getPoints(), 30);
 			
-			byk.newGame();
+			byk.endGame();
 			Assert::AreEqual(byk.getPoints(), 0);
 			std::vector< int > st{ 30 };
 			Assert::AreEqual(byk.getPointList().size(), st.size());
@@ -67,11 +67,11 @@ namespace testPlayer
 		{
 			Player byk = Player("byczeq");
 			byk.addPoints(30);
-			byk.newGame();
+			byk.endGame();
 			byk.addPoints(20);
-			byk.newGame();
+			byk.endGame();
 			byk.addPoints(10);
-			byk.newGame();
+			byk.endGame();
 
 			std::vector< int > st{ 30, 20, 10 };
 			Assert::AreEqual(byk.getPointList().size(), st.size());
@@ -87,11 +87,11 @@ namespace testPlayer
 		{
 			Player byk = Player("byczeq");
 			byk.addPoints(30);
-			byk.newGame();
+			byk.endGame();
 			byk.addPoints(20);
-			byk.newGame();
+			byk.endGame();
 			byk.addPoints(10);
-			byk.newGame();
+			byk.endGame();
 
 			int av = 20;
 			Assert::AreEqual(byk.getAveragePoints(), av);
@@ -102,11 +102,11 @@ namespace testPlayer
 		{
 			Player byk = Player("byczeq");
 			byk.addPoints(30);
-			byk.newGame();
+			byk.endGame();
 			byk.addPoints(20);
-			byk.newGame();
+			byk.endGame();
 			byk.addPoints(10);
-			byk.newGame();
+			byk.endGame();
 
 			std::string st = "Game\tPoints\n1\t30\n2\t20\n3\t10\n";
 			Assert::AreEqual(byk.getStatistisc(), st);

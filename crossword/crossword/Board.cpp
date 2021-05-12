@@ -3,73 +3,84 @@
 #include <iostream>
 #include <algorithm>
 #include <stdexcept>
+#include <sstream>
 
 Board::Board(const int r_len, const int c_len)
 {
-	column_len = c_len;
-	row_len = r_len;
-	for (int i = 0; i < 20; i++)
+	columnLen = c_len;
+	rowLen = r_len;
+	for (int i = 0; i < columnLen; i++)
 	{
-		for (int j = 0; j < 20; j++)
+		for (int j = 0; j < rowLen; j++)
 		{
-			// fill every field with " "
-			fields[i][j] = 32;
+			// fill every field with "#"
+			fields[i][j] = Field();
 		}
 	}
 }
 
-int Board::get_col_len()
+
+const int Board::getColLen()
 {
-	return column_len;
+	return columnLen;
 }
 
-int Board::get_row_len()
+
+const int Board::getRowLen()
 {
-	return row_len;
+	return rowLen;
 }
 
-char Board::get_field(int row, int col)
+
+char Board::getValue(const int row, const int col) const
 {
-	if (0 > col || col >= column_len || 0 > row || row >= row_len)
+	if (0 > col || col >= columnLen || 0 > row || row >= rowLen)
 	{
 		throw std::out_of_range("Index out of range");
 	}
-	return fields[row][col];
+	return fields[row][col].value;
 }
 
-void Board::fill_field(int row, int col, char value)
+void Board::fillField(const int row, const int col, const char value)
 {
-	if (0 > col || col >= column_len || 0 > row || row >= row_len)
+	if (0 > col || col >= columnLen || 0 > row || row >= rowLen)
 	{
 		throw "Index out of range";
 	}
 	if (value == 0)
 	{
-		value = 32;  // 32 == " "
+		fields[row][col] = '_';
 	}
-	fields[row][col] = value;
+}
+
+void Board::clear() {
+	for (int i = 0; i < rowLen; i++)
+	{
+		for (int j = 0; j < columnLen; j++)
+		{
+			if (fields[i][j].value != '#') {
+				fields[i][j].value = '_';
+			}
+		}
+	}
 }
 
 std::ostream& operator<<(std::ostream& os, const Board& b)
 {
-	Board test(b.row_len, b.column_len);
+	// example: | v | a | l | u | e |
+	//			| _ | _ | _ | # | # |
+	Board test(b.rowLen, b.columnLen);
 	if (test == b)
 	{
 		os << "Empty Board";
 		return os;
 	}
-	for (int i = 0; i < b.row_len; i++)
+	for (int i = 0; i < b.rowLen; i++)
 	{
-		for (int j = 0; j < b.column_len; j++)
+		os << "|";
+		for (int j = 0; j < b.columnLen; j++)
 		{
-			if (b.fields[i][j] != 32)  // 32 == " "
-			{
-				os << " " << b.fields[i][j] << " |";
-			}
-			else
-			{
-				os << "    ";
-			}
+			os << " " << b.getValue(i, j)  << " ";
 		}
 		os << std::endl;
 	}
@@ -125,31 +136,31 @@ std::istream& operator>>(std::istream& is, Board& b)
 	if (value != 0 || endl)
 	{
 		b_new.fields[row][col] = value;
-		b_new.row_len = row + 1;
+		b_new.rowLen = row + 1;
 	}
-	b_new.column_len = max_col;
+	b_new.columnLen = max_col;
 	b = b_new;
 	return is;
 }
 
 Board operator+(const Board& b1, const Board& b2)
 {
-	if (b1.row_len + b2.row_len >= 20)
+	if (b1.rowLen + b2.rowLen >= 20)
 	{
 		throw std::out_of_range("Boards are too big");
 	}
 
 	Board out = b1;	// set output as first Board
-	out.row_len = b1.row_len + b2.row_len;
-	int col = std::max(b1.column_len, b2.column_len);
+	out.rowLen = b1.rowLen + b2.rowLen;
+	int col = std::max(b1.columnLen, b2.columnLen);
 	
 	// fill rest of an output with second Board
-	for (int i = 0; i < b2.row_len; i++)
+	for (int i = 0; i < b2.rowLen; i++)
 	{
 		for (int j = 0; j < col; j++)
 		{
-			char fl = b2.fields[i][j];
-			out.fill_field(i + b1.row_len, j, fl);
+			char val = b2.fields[i][j].value;
+			out.fillField(i + b1.rowLen, j, val);
 		}
 	}
 	return out;
@@ -157,15 +168,15 @@ Board operator+(const Board& b1, const Board& b2)
 
 Board& operator++(Board& b)
 {
-	if (b.row_len >= 20)
+	if (b.rowLen >= 20)
 	{
 		throw "Board is at maximal size";
 	}
 	// add a new row with empty fields
-	b.row_len = b.row_len + 1;
-	for (int i = 0; i < b.column_len; i++)
+	b.rowLen = b.rowLen + 1;
+	for (int i = 0; i < b.columnLen; i++)
 	{
-		b.fill_field(b.row_len - 1, i, 32);
+		b.fillField(b.rowLen - 1, i, 32);
 	}
 	return b;
 }
@@ -180,16 +191,16 @@ Board& operator++(Board& b, int)
 
 Board& operator--(Board& b)
 {
-	if (b.row_len <= 1)
+	if (b.rowLen <= 1)
 	{
 		throw "Board is at minimal size";
 	}
 	// reset values of last row
-	for (int i = 0; i < b.column_len; i++)
+	for (int i = 0; i < b.columnLen; i++)
 	{
-		b.fill_field(b.row_len - 1, i, 32);
+		b.fillField(b.rowLen - 1, i, 32);
 	}
-	b.row_len = b.row_len - 1;
+	b.rowLen = b.rowLen - 1;
 	return b;
 }
 
@@ -206,14 +217,14 @@ bool operator==(const Board& b1, const Board& b2)
 	{
 		for (int j = 0; j < 20; j++)
 		{	
-			// assert every pair of matchong fields have equal values
-			if (b1.fields[i][j] != b2.fields[i][j])
+			// assert every pair of matching fields have equal values
+			if (b1.fields[i][j].value != b2.fields[i][j].value)
 			{
 				return 0;
 			}
 		}
 	}
 	// assert Board's size is the same
-	return (b1.column_len == b2.column_len && b1.row_len == b2.row_len);
+	return (b1.columnLen == b2.columnLen && b1.rowLen == b2.rowLen);
 }
 

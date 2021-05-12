@@ -24,6 +24,6 @@ public:
 	int getAveragePoints();
 	std::string getStatistisc();
 
-	void newGame();
+	void endGame();
 	
 };

@@ -28,7 +28,7 @@ int Player::getAveragePoints() {
 }
 
 
-void Player::newGame() {
+void Player::endGame() {
 	pointList.push_back(points);
 	resetPoints();
 }

@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Game.h"
+#include "aid.cpp"
 
 
 Game::Game(Player nPlayer, Board nBoard) : player(nPlayer), board(nBoard) {
@@ -65,17 +66,4 @@ void Game::play() {
 			}
 		}
 	}
-}
-
-
-int number(std::string s) {
-	return std::stoi(s);
-}
-
-
-bool isNumber(std::string s) {
-	for (char let : s) {
-		if (!isdigit(let)) return false;
-	}
-	return true;
 }

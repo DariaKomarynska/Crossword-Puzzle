@@ -14,16 +14,16 @@ namespace UnitTestBoard
 		{
 			Board b1(3, 3);
 			char test = "t"[0];
-			b1.fill_field(1, 1, test);
-			Assert::IsTrue(test == b1.get_field(1, 1));
+			b1.fillField(1, 1, test);
+			Assert::IsTrue(test == b1.getValue(1, 1));
 		}
 
 		TEST_METHOD(fill_get_00)
 		{
 			Board b1(3, 3);
 			char test = "t"[0];
-			b1.fill_field(0, 0, test);
-			Assert::IsTrue(test == b1.get_field(0, 0));
+			b1.fillField(0, 0, test);
+			Assert::IsTrue(test == b1.getValue(0, 0));
 		}
 
 		TEST_METHOD(fill_out_of_range)
@@ -34,7 +34,7 @@ namespace UnitTestBoard
 			char test = "t"[0];
 			try
 			{
-				b1.fill_field(5, 0, "t"[0]);
+				b1.fillField(5, 0, "t"[0]);
 			}
 			catch (const char* msg)
 			{
@@ -46,13 +46,13 @@ namespace UnitTestBoard
 		TEST_METHOD(get_col_len)
 		{
 			Board b1(3, 3);
-			Assert::IsTrue(b1.get_col_len() == 3);
+			Assert::IsTrue(b1.getColLen() == 3);
 		}
 
 		TEST_METHOD(get_row_len)
 		{
 			Board b1(3, 3);
-			Assert::IsTrue(b1.get_row_len() == 3);
+			Assert::IsTrue(b1.getRowLen() == 3);
 		}
 
 	};
@@ -98,7 +98,7 @@ namespace UnitTestBoard
 		{
 			Board b1(3, 3);
 			Board b2(3, 3);
-			b1.fill_field(2, 2, "a"[0]);
+			b1.fillField(2, 2, "a"[0]);
 			--b1;
 			++b1;
 			Assert::IsTrue(b1 == b2);
@@ -117,8 +117,8 @@ namespace UnitTestBoard
 			Board b1(3, 3);
 			Board b2(3, 3);
 			Board b3(6, 3);
-			b2.fill_field(2, 2, "a"[0]);
-			b3.fill_field(5, 2, "a"[0]);
+			b2.fillField(2, 2, "a"[0]);
+			b3.fillField(5, 2, "a"[0]);
 			Assert::IsTrue(b1 + b2 == b3);
 		}
 
@@ -127,8 +127,8 @@ namespace UnitTestBoard
 			Board b1(3, 3);
 			Board b2(3, 3);
 			Board b3(6, 3);
-			b1.fill_field(2, 2, "a"[0]);
-			b3.fill_field(2, 2, "a"[0]);
+			b1.fillField(2, 2, "a"[0]);
+			b3.fillField(2, 2, "a"[0]);
 			Assert::IsTrue(b1 + b2 == b3);
 		}
 
@@ -137,10 +137,10 @@ namespace UnitTestBoard
 			Board b1(3, 3);
 			Board b2(3, 3);
 			Board b3(6, 3);
-			b1.fill_field(2, 2, "a"[0]);
-			b2.fill_field(2, 2, "a"[0]);
-			b3.fill_field(2, 2, "a"[0]);
-			b3.fill_field(5, 2, "a"[0]);
+			b1.fillField(2, 2, "a"[0]);
+			b2.fillField(2, 2, "a"[0]);
+			b3.fillField(2, 2, "a"[0]);
+			b3.fillField(5, 2, "a"[0]);
 			Assert::IsTrue(b1 + b2 == b3);
 		}
 
@@ -157,10 +157,10 @@ namespace UnitTestBoard
 		{
 			std::stringstream os;
 			Board b1(3, 3);
-			b1.fill_field(0, 0, "a"[0]);
-			b1.fill_field(0, 1, "b"[0]);
-			b1.fill_field(1, 0, "c"[0]);
-			b1.fill_field(2, 1, "d"[0]);
+			b1.fillField(0, 0, "a"[0]);
+			b1.fillField(0, 1, "b"[0]);
+			b1.fillField(1, 0, "c"[0]);
+			b1.fillField(2, 1, "d"[0]);
 			os << b1;
 			std::string out = " a | b |    \n c |        \n     d |    \n";
 			Assert::IsTrue(os.str() == out);
@@ -174,10 +174,10 @@ namespace UnitTestBoard
 			std::string input = "a|b||c|d";
 			is << input;
 			is >> b1;
-			b2.fill_field(0, 0, "a"[0]);
-			b2.fill_field(0, 1, "b"[0]);
-			b2.fill_field(1, 0, "c"[0]);
-			b2.fill_field(1, 1, "d"[0]);
+			b2.fillField(0, 0, "a"[0]);
+			b2.fillField(0, 1, "b"[0]);
+			b2.fillField(1, 0, "c"[0]);
+			b2.fillField(1, 1, "d"[0]);
 			Assert::IsTrue(b1 == b2);
 		}
 

@@ -1,6 +1,7 @@
 #include "Dictionary.h"
 #include <iostream>
 #include <fstream>
+#include <vector>
 
 
 void Dictionary::add_word(string word, string meaning)
@@ -8,7 +9,6 @@ void Dictionary::add_word(string word, string meaning)
 	// add new word with small letters in word
 	transform(word.begin(), word.end(), word.begin(), ::tolower);
 	dictionary[word] = meaning;
-
 }
 
 string Dictionary::find_meaning(string& word)
@@ -20,6 +20,29 @@ string Dictionary::find_meaning(string& word)
 		return it->second;
 	}
 	else { return "There is no such word in the dictionary"; }
+}
+
+
+string Dictionary::find_meaning(int index) {
+	int count = 0;
+	for (auto& it : dictionary) {
+		if (count == index) {
+			count++;
+			return it.second;
+		}
+	}
+	return "There is no such a question in the dictionary";
+}
+
+string Dictionary::find_word(int index) {
+	int count = 0;
+	for (auto& it : dictionary) {
+		count++;
+		if (count == index) {
+			return it.first;
+		}
+	}
+	return "There is no such a word in the dictionary";
 }
 
 string Dictionary::find_word(string& meaning)
@@ -66,6 +89,25 @@ void Dictionary::add_dictionary(map<string, string> second_dict)
 		add_word(pair.first, pair.second);
 	}
 }
+
+
+const std::vector<std::string> Dictionary::questions() {
+	std::vector<std::string> ques;
+	for (auto& pair : dictionary) {
+		ques.push_back(pair.second);
+	}
+	return ques;
+}
+
+
+const std::vector<std::string> Dictionary::answers() {
+	std::vector<std::string> ans;
+	for (auto& pair : dictionary) {
+		ans.push_back(pair.first);
+	}
+	return ans;
+}
+
 
 Dictionary& Dictionary::operator = (const Dictionary& another_dict)
 {

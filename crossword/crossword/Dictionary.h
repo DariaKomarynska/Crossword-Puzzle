@@ -21,6 +21,9 @@ public:
 
 	}
 
+	const std::vector<std::string> questions ();
+	const std::vector<std::string> answers();
+
 	void add_word(string word, string meaning);
 
 	void remove_word(string word);
@@ -31,9 +34,13 @@ public:
 
 	string find_word(string& meaning);
 
+	string find_meaning(int index);
+
+	string find_word(int index);
+
 	map<string, string> find_by_letter(char first_char);
 
-	void add_dict_file(const string& file_name);
+	//void add_dict_file(const string& file_name);
 
 	Dictionary& operator = (const Dictionary& another_dict);
 

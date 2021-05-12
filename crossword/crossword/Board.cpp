@@ -4,6 +4,8 @@
 #include <algorithm>
 #include <stdexcept>
 #include <sstream>
+#include "aid.cpp"
+
 
 Board::Board(const int r_len, const int c_len)
 {
@@ -16,6 +18,26 @@ Board::Board(const int r_len, const int c_len)
 			// fill every field with "#"
 			fields[i][j] = Field();
 		}
+	}
+}
+
+
+void Board::addRow() {
+	rowLen++;
+	std::vector <Field> new_row;
+	for (int i = 0; i < columnLen; i++) {
+		Field f = Field();
+		new_row.push_back(f);
+	}
+	fields.push_back(new_row);
+}
+
+
+void Board::addColumn() {
+	columnLen++;
+	for (auto& it : fields) {
+		Field f = Field();
+		it.push_back(f);
 	}
 }
 
@@ -63,6 +85,105 @@ void Board::clear() {
 			}
 		}
 	}
+}
+
+
+void Board::initWithCSVFile(int size, std::string filepath) {
+	/* size - amount of questions/answers
+	* rows counted from 1
+	* CSV file:
+	* Question1,answer1,start_row1,start_column1,vertically/horizontally
+	* Question2,answer2,start_row2,start_column2,vertically/horizontally
+	*/
+	std::vector<std::vector<Field>> new_fields;
+	map<std::string, std::string> map_dict;
+
+	int count = 0;
+
+	std::string crossword_line;
+
+	std::ifstream file("filepath");
+
+	int noRows = 0;
+	int noColumns = 0;
+
+	while (getline(file, crossword_line), count<size) {
+
+		std::string part;
+		std::vector<std::string> data;
+		stringstream s(crossword_line);
+		while (getline(s, part, ',')) {
+			data.push_back(part);
+		}
+		if (data.size() != 5) {
+			throw std::invalid_argument("Invalid data in file!");
+			break;
+		}
+		std::string question = data.at(0);
+		std::string answer = data.at(1);
+		int start_row = number(data.at(2)) - 1;
+		int start_col = number(data.at(3)) - 1;
+		std::string orientation = data.at(4);
+
+		setFields(start_row, start_col, orientation, answer, count);
+
+		map_dict[answer] == question;
+		
+		count++;
+	}
+	
+	file.close();
+
+	solutions = Dictionary(map_dict);
+}
+
+
+void Board::setFields(int start_row, int start_col, std::string orientation, std::string answer, int NOQuestion) {
+	if (orientation == "vertically") {
+		int last_row = start_row + answer.length() - 1;
+
+		while (rowLen < last_row) {
+			addRow();
+		}
+
+		for (int i = start_row; i <= last_row; i++) {
+			char letter = answer.at(i);
+			if (!fields[i][start_col].isExpected('#') && !fields[i][start_col].isExpected(letter)) {
+				throw std::invalid_argument("Invalid data");
+			}
+
+			fields[i][start_col].postInit(NOQuestion, letter);
+		}
+	}
+	else if (orientation == "horizontally") {
+		int last_col = start_col + answer.length() - 1;
+
+		while (columnLen < last_col) {
+			addColumn();
+		}
+
+		for (int i = start_col; i <= last_col; i++) {
+			char letter = answer.at(i);
+			if (!fields[start_row][i].isExpected('#') && !fields[start_row][i].isExpected(letter)) {
+				throw std::invalid_argument("Invalid data");
+			}
+
+			fields[start_row][i].postInit(NOQuestion, letter);
+		}
+	}
+	else { throw std::invalid_argument("Invalid data"); }
+}
+
+
+std::vector<std::string> Board::getQuestions() {
+	std::vector<std::string> ques = solutions.questions();
+	return ques;
+}
+
+
+void Board::fillAnsewr(int noQue, std::string answer) {
+	solutions[]
+	fields[i][j].value = '_';
 }
 
 std::ostream& operator<<(std::ostream& os, const Board& b)
@@ -227,4 +348,3 @@ bool operator==(const Board& b1, const Board& b2)
 	// assert Board's size is the same
 	return (b1.columnLen == b2.columnLen && b1.rowLen == b2.rowLen);
 }
-

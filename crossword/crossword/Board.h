@@ -21,11 +21,20 @@ private:
 	friend Board& operator--(Board&, int);
 	friend bool operator==(const Board& b1, const Board& b2);
 
+
 public:
+	Board() {};
 	Board(const int row_len, const int col_len);
+	void addRow();
+	void addColumn();
+	void initWithCSVFile(int size, std::string filepath);
 	const int getRowLen();
 	const int getColLen();
 	void fillField(const int row,const int col,const char value);
 	char getValue(const int row, const int col) const;
 	void clear();
+	void fillAnsewr(int noQue, std::string answer);
+	std::vector<std::string> getQuestions();
+
+	void setFields(int start_row, int start_col, std::string orientation, std::string answer, int NOQuestion);
 };

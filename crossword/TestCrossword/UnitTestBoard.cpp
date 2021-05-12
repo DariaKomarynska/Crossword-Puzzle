@@ -181,5 +181,41 @@ namespace UnitTestBoard
 			Assert::IsTrue(b1 == b2);
 		}
 
+		TEST_METHOD(addRow)
+		{
+			
+		}
+
+		TEST_METHOD(addColumn)
+		{
+
+		}
+
+		TEST_METHOD(clear)
+		{
+
+		}
+
+		TEST_METHOD(setFields)
+		{
+
+		}
+
+		TEST_METHOD(initWithCSVFile)
+		{
+
+		}
+
+		TEST_METHOD(getQuestions)
+		{
+
+		}
+
+		TEST_METHOD(fillAnswer)
+		{
+			Board b = Board();
+
+		}
+		
 	};
 }

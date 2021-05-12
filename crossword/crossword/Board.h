@@ -8,9 +8,10 @@
 class Board
 {
 private:
-	int columnLen = 0;
-	int rowLen = 0;
+	int NOColumns = 0;
+	int NORows = 0;
 	std::vector<std::vector<Field>> fields;
+	vector<vector<int>> firstLetters;
 	Dictionary solutions;
 	friend std::ostream& operator<<(std::ostream& os, const Board& b);
 	friend std::istream& operator>>(std::istream& is, Board& b);
@@ -24,17 +25,27 @@ private:
 
 public:
 	Board() {};
-	Board(const int row_len, const int col_len);
+	Board(const int no_row, const int no_col);
+	Board(int size, std::string filepath);
+
 	void addRow();
 	void addColumn();
-	void initWithCSVFile(int size, std::string filepath);
-	const int getRowLen();
-	const int getColLen();
+	const int getNORows();
+	const int getNOColumns();
 	void fillField(const int row,const int col,const char value);
-	char getValue(const int row, const int col) const;
+	const char getValue(const int row, const int col) const;
 	void clear();
-	void fillAnsewr(int noQue, std::string answer);
+	void fillAnswer(int noQue, std::string answer);
 	std::vector<std::string> getQuestions();
+	bool validCoords(const int row, const int col) const;
+	void putFirstLetters();
+	bool isCorrect(const int row, const int col) { return fields[row][col].isCorrect(); };
+	int countPoints();
 
 	void setFields(int start_row, int start_col, std::string orientation, std::string answer, int NOQuestion);
 };
+
+
+extern bool isNumber(std::string s);
+extern int number(std::string s);
+extern char const intToChar(int num);

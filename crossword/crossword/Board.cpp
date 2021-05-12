@@ -4,16 +4,15 @@
 #include <algorithm>
 #include <stdexcept>
 #include <sstream>
-#include "aid.cpp"
 
 
-Board::Board(const int r_len, const int c_len)
+Board::Board(const int no_row, const int no_col)
 {
-	columnLen = c_len;
-	rowLen = r_len;
-	for (int i = 0; i < columnLen; i++)
+	NOColumns = no_col;
+	NORows = no_row;
+	for (int i = 0; i < NORows; i++)
 	{
-		for (int j = 0; j < rowLen; j++)
+		for (int j = 0; j < NOColumns; j++)
 		{
 			// fill every field with "#"
 			fields[i][j] = Field();
@@ -23,9 +22,9 @@ Board::Board(const int r_len, const int c_len)
 
 
 void Board::addRow() {
-	rowLen++;
+	NORows++;
 	std::vector <Field> new_row;
-	for (int i = 0; i < columnLen; i++) {
+	for (int i = 0; i < NOColumns; i++) {
 		Field f = Field();
 		new_row.push_back(f);
 	}
@@ -33,30 +32,35 @@ void Board::addRow() {
 }
 
 
+bool Board::validCoords (const int row, const int col) const {
+	return col >= 0 && col < NOColumns && row >= 0 && row < NORows;
+}
+
+
 void Board::addColumn() {
-	columnLen++;
-	for (auto& it : fields) {
+	NOColumns++;
+	for (int i = 0; i < NORows; i++) {
 		Field f = Field();
-		it.push_back(f);
+		fields[i].push_back(f);
 	}
 }
 
 
-const int Board::getColLen()
+const int Board::getNOColumns()
 {
-	return columnLen;
+	return NOColumns;
 }
 
 
-const int Board::getRowLen()
+const int Board::getNORows()
 {
-	return rowLen;
+	return NORows;
 }
 
 
-char Board::getValue(const int row, const int col) const
+const char Board::getValue(const int row, const int col) const
 {
-	if (0 > col || col >= columnLen || 0 > row || row >= rowLen)
+	if (validCoords(row, col))
 	{
 		throw std::out_of_range("Index out of range");
 	}
@@ -65,7 +69,7 @@ char Board::getValue(const int row, const int col) const
 
 void Board::fillField(const int row, const int col, const char value)
 {
-	if (0 > col || col >= columnLen || 0 > row || row >= rowLen)
+	if (validCoords(row, col))
 	{
 		throw "Index out of range";
 	}
@@ -76,20 +80,19 @@ void Board::fillField(const int row, const int col, const char value)
 }
 
 void Board::clear() {
-	for (int i = 0; i < rowLen; i++)
+	for (int i = 0; i < NORows; i++)
 	{
-		for (int j = 0; j < columnLen; j++)
+		for (int j = 0; j < NOColumns; j++)
 		{
-			if (fields[i][j].value != '#') {
-				fields[i][j].value = '_';
-			}
+			fields[i][j].clear();
 		}
 	}
+	putFirstLetters();
 }
 
 
-void Board::initWithCSVFile(int size, std::string filepath) {
-	/* size - amount of questions/answers
+Board::Board(int NOQuest, std::string filepath) {
+	/* NOQuest - amount of questions/answers
 	* rows counted from 1
 	* CSV file:
 	* Question1,answer1,start_row1,start_column1,vertically/horizontally
@@ -102,12 +105,13 @@ void Board::initWithCSVFile(int size, std::string filepath) {
 
 	std::string crossword_line;
 
-	std::ifstream file("filepath");
+	std::ifstream file(filepath);
+
 
 	int noRows = 0;
 	int noColumns = 0;
 
-	while (getline(file, crossword_line), count<size) {
+	while (getline(file, crossword_line), count< NOQuest) {
 
 		std::string part;
 		std::vector<std::string> data;
@@ -138,15 +142,35 @@ void Board::initWithCSVFile(int size, std::string filepath) {
 }
 
 
+void Board::putFirstLetters() {
+	int count = 1;
+	for (auto pair : firstLetters) {
+		int row = pair[0];
+		int col = pair[1];
+		fields[row][col].fill(count);
+		count++;
+	}
+}
+
+
 void Board::setFields(int start_row, int start_col, std::string orientation, std::string answer, int NOQuestion) {
+	vector<int> vec;
+	vec.push_back(start_row);
+	vec.push_back(start_col);
+	firstLetters.push_back(vec);
+
 	if (orientation == "vertically") {
 		int last_row = start_row + answer.length() - 1;
 
-		while (rowLen < last_row) {
+		while (NORows < last_row) {
 			addRow();
 		}
 
-		for (int i = start_row; i <= last_row; i++) {
+		fields[start_row][start_col].postInit(NOQuestion, answer.at(0));
+
+		fields[start_row][start_col].fill(intToChar(NOQuestion));	// field with index
+
+		for (int i = start_row + 1; i <= last_row; i++) {
 			char letter = answer.at(i);
 			if (!fields[i][start_col].isExpected('#') && !fields[i][start_col].isExpected(letter)) {
 				throw std::invalid_argument("Invalid data");
@@ -158,11 +182,15 @@ void Board::setFields(int start_row, int start_col, std::string orientation, std
 	else if (orientation == "horizontally") {
 		int last_col = start_col + answer.length() - 1;
 
-		while (columnLen < last_col) {
+		while (NOColumns < last_col) {
 			addColumn();
 		}
 
-		for (int i = start_col; i <= last_col; i++) {
+		fields[start_row][start_col].postInit(NOQuestion, answer.at(0));
+
+		fields[start_row][start_col].fill(intToChar(NOQuestion));	// field with index
+
+		for (int i = start_col + 1; i <= last_col; i++) {
 			char letter = answer.at(i);
 			if (!fields[start_row][i].isExpected('#') && !fields[start_row][i].isExpected(letter)) {
 				throw std::invalid_argument("Invalid data");
@@ -181,30 +209,49 @@ std::vector<std::string> Board::getQuestions() {
 }
 
 
-void Board::fillAnsewr(int noQue, std::string answer) {
-	solutions[]
-	fields[i][j].value = '_';
+void Board::fillAnswer(int noQue, std::string answer) {
+	int letterCount = 0;
+	for (int i = 0; i < NORows && letterCount < answer.length(); i++) {
+		for (int j = 0; j < NOColumns && letterCount < answer.length(); j++) {
+			if (fields[i][j].NOQuestion == noQue) {
+				fields[i][j].fill(answer[letterCount]);
+				letterCount++;
+			}
+		}
+	}
 }
+
+int Board::countPoints() {
+	int points = 0;
+	for (int i = 0; i < NORows; i++) {
+		for (int j = 0; j < NOColumns; j++) {
+			if (fields[i][j].value != '#' && fields[i][j].isCorrect()) points++;
+		}
+	}
+	return points;
+}
+
 
 std::ostream& operator<<(std::ostream& os, const Board& b)
 {
 	// example: | v | a | l | u | e |
 	//			| _ | _ | _ | # | # |
-	Board test(b.rowLen, b.columnLen);
+	Board test(b.NOColumns, b.NORows);
 	if (test == b)
 	{
 		os << "Empty Board";
 		return os;
 	}
-	for (int i = 0; i < b.rowLen; i++)
+	for (int i = 0; i < b.NORows; i++)
 	{
 		os << "|";
-		for (int j = 0; j < b.columnLen; j++)
+		for (int j = 0; j < b.NOColumns; j++)
 		{
 			os << " " << b.getValue(i, j)  << " ";
 		}
 		os << std::endl;
 	}
+	os << b.solutions;
 	return os;
 }
 
@@ -257,31 +304,31 @@ std::istream& operator>>(std::istream& is, Board& b)
 	if (value != 0 || endl)
 	{
 		b_new.fields[row][col] = value;
-		b_new.rowLen = row + 1;
+		b_new.NOColumns = row + 1;
 	}
-	b_new.columnLen = max_col;
+	b_new.NORows = max_col;
 	b = b_new;
 	return is;
 }
 
 Board operator+(const Board& b1, const Board& b2)
 {
-	if (b1.rowLen + b2.rowLen >= 20)
+	if (b1.NOColumns + b2.NORows >= 20)
 	{
 		throw std::out_of_range("Boards are too big");
 	}
 
 	Board out = b1;	// set output as first Board
-	out.rowLen = b1.rowLen + b2.rowLen;
-	int col = std::max(b1.columnLen, b2.columnLen);
+	out.NOColumns = b1.NOColumns + b2.NOColumns;
+	int col = std::max(b1.NORows, b2.NORows);
 	
 	// fill rest of an output with second Board
-	for (int i = 0; i < b2.rowLen; i++)
+	for (int i = 0; i < b2.NOColumns; i++)
 	{
 		for (int j = 0; j < col; j++)
 		{
 			char val = b2.fields[i][j].value;
-			out.fillField(i + b1.rowLen, j, val);
+			out.fillField(i + b1.NOColumns, j, val);
 		}
 	}
 	return out;
@@ -289,15 +336,15 @@ Board operator+(const Board& b1, const Board& b2)
 
 Board& operator++(Board& b)
 {
-	if (b.rowLen >= 20)
+	if (b.NOColumns >= 20)
 	{
 		throw "Board is at maximal size";
 	}
 	// add a new row with empty fields
-	b.rowLen = b.rowLen + 1;
-	for (int i = 0; i < b.columnLen; i++)
+	b.NOColumns = b.NOColumns + 1;
+	for (int i = 0; i < b.NORows; i++)
 	{
-		b.fillField(b.rowLen - 1, i, 32);
+		b.fillField(b.NOColumns - 1, i, 32);
 	}
 	return b;
 }
@@ -312,16 +359,16 @@ Board& operator++(Board& b, int)
 
 Board& operator--(Board& b)
 {
-	if (b.rowLen <= 1)
+	if (b.NOColumns <= 1)
 	{
 		throw "Board is at minimal size";
 	}
 	// reset values of last row
-	for (int i = 0; i < b.columnLen; i++)
+	for (int i = 0; i < b.NORows; i++)
 	{
-		b.fillField(b.rowLen - 1, i, 32);
+		b.fillField(b.NOColumns - 1, i, 32);
 	}
-	b.rowLen = b.rowLen - 1;
+	b.NOColumns = b.NOColumns - 1;
 	return b;
 }
 
@@ -346,5 +393,30 @@ bool operator==(const Board& b1, const Board& b2)
 		}
 	}
 	// assert Board's size is the same
-	return (b1.columnLen == b2.columnLen && b1.rowLen == b2.rowLen);
+	return (b1.NORows == b2.NORows && b1.NOColumns == b2.NOColumns);
+}
+
+
+extern bool isNumber(std::string s) {
+	for (char let : s) {
+		if (!isdigit(let)) return false;
+	}
+	return true;
+}
+
+
+extern int number(std::string s) {
+	if (isNumber(s)) {
+		return std::stoi(s);
+	}
+	else {
+		throw std::invalid_argument("Not numeric");
+	}
+}
+
+
+extern char const intToChar(int num) {
+	std::string s = std::to_string(num);
+	char const* pchar = s.c_str();
+	return *pchar;
 }

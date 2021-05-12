@@ -11,4 +11,8 @@ private:
 public:
 	Game(Player nPlayer, Board nBoard);
 	void play();
+	void filling();
+	void ending();
+	void checkForPoints(int row, int col);
+	void countPoints();
 };

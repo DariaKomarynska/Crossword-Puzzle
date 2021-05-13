@@ -138,6 +138,14 @@ bool Dictionary::operator==(const Dictionary& second_dict)
 	return this->dictionary == second_dict.dictionary;
 }
 
+bool operator==(const vector<string> vect1, const vector<string> vect2)
+{
+	bool result;
+	// compare contents of two vectors
+	result = std::equal(vect1.begin(), vect1.end(), vect2.begin());
+	return result;
+}
+
 istream& operator >>(istream& is, Dictionary& dict)
 {
 	// input the pair into dictionary

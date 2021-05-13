@@ -1,4 +1,5 @@
 #include "..\crossword\Dictionary.h"
+#include "..\crossword\Dictionary.cpp"
 #include "CppUnitTest.h"
 
 using namespace std;

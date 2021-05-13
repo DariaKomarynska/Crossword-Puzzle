@@ -1,9 +1,9 @@
 #pragma once
 #include <string>
 #include <iostream>
-#include "Field.h"
 #include <vector>
 #include "Dictionary.h"
+#include "Field.h"
 
 class Board
 {

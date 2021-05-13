@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <stdexcept>
 #include <sstream>
+#include <vector>
 
 
 Board::Board(const int no_row, const int no_col)
@@ -12,11 +13,14 @@ Board::Board(const int no_row, const int no_col)
 	NORows = no_row;
 	for (int i = 0; i < NORows; i++)
 	{
+		vector <Field> row;
 		for (int j = 0; j < NOColumns; j++)
 		{
 			// fill every field with "#"
-			fields[i][j] = Field();
+			Field f = Field();
+			row.push_back(f);
 		}
+		fields.push_back(row);
 	}
 }
 
@@ -32,7 +36,7 @@ void Board::addRow() {
 }
 
 
-bool Board::validCoords (const int row, const int col) const {
+bool Board::validCoords(const int row, const int col) const {
 	return col >= 0 && col < NOColumns && row >= 0 && row < NORows;
 }
 
@@ -60,24 +64,23 @@ const int Board::getNORows()
 
 const char Board::getValue(const int row, const int col) const
 {
-	if (validCoords(row, col))
+	if (!validCoords(row, col))
 	{
 		throw std::out_of_range("Index out of range");
 	}
 	return fields[row][col].value;
 }
 
+
 void Board::fillField(const int row, const int col, const char value)
 {
-	if (validCoords(row, col))
+	if (!validCoords(row, col))
 	{
 		throw "Index out of range";
 	}
-	if (value == 0)
-	{
-		fields[row][col] = '_';
-	}
+	fields[row][col].value = value;
 }
+
 
 void Board::clear() {
 	for (int i = 0; i < NORows; i++)
@@ -293,7 +296,7 @@ std::istream& operator>>(std::istream& is, Board& b)
 			// starts new field
 			else
 			{
-				b_new.fields[row][col] = value;
+				b_new.fields[row][col].value = value;
 				endl = 1;
 				col += 1;
 				value = 0;
@@ -303,7 +306,7 @@ std::istream& operator>>(std::istream& is, Board& b)
 	// fills last field
 	if (value != 0 || endl)
 	{
-		b_new.fields[row][col] = value;
+		b_new.fields[row][col].value = value;
 		b_new.NOColumns = row + 1;
 	}
 	b_new.NORows = max_col;

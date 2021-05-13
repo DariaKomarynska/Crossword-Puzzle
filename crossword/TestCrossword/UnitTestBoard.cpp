@@ -1,6 +1,7 @@
 #include "CppUnitTest.h"
 #include <iostream>
 #include "..\crossword\Board.cpp"
+#include "..\crossword\Board.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -28,7 +29,7 @@ namespace UnitTestBoard
 
 		TEST_METHOD(fill_out_of_range)
 		{
-			std::string exp;
+			std::string errmsg;
 			std::string expected = "Index out of range";
 			Board b1(3, 3);
 			char test = "t"[0];
@@ -38,21 +39,21 @@ namespace UnitTestBoard
 			}
 			catch (const char* msg)
 			{
-				exp = msg;
+				errmsg = msg;
 			}
-			Assert::AreEqual(exp, expected);
+			Assert::AreEqual(expected, errmsg);
 		}
 
 		TEST_METHOD(get_col_len)
 		{
 			Board b1(3, 3);
-			Assert::IsTrue(b1.getColLen() == 3);
+			Assert::IsTrue(b1.getNOColumns() == 3);
 		}
 
 		TEST_METHOD(get_row_len)
 		{
 			Board b1(3, 3);
-			Assert::IsTrue(b1.getRowLen() == 3);
+			Assert::IsTrue(b1.getNORows() == 3);
 		}
 
 	};

@@ -74,7 +74,7 @@ const char Board::getValue(const int row, const int col) const
 
 void Board::fillField(const int row, const int col, const char value)
 {
-	if (!validCoords(row, col))
+	if (!validCoords(row, col) || fields[row][col].isExpected('#'))
 	{
 		throw "Index out of range";
 	}
@@ -253,7 +253,7 @@ std::ostream& operator<<(std::ostream& os, const Board& b)
 		os << "|";
 		for (int j = 0; j < b.NOColumns; j++)
 		{
-			os << " " << b.getValue(i, j)  << " ";
+			os << " " << b.getValue(i, j)  << " |";
 		}
 		os << std::endl;
 	}
@@ -387,19 +387,21 @@ Board& operator--(Board& b, int)
 
 bool operator==(const Board& b1, const Board& b2)
 {
-	for (int i = 0; i < 20; i++)
+	// assert Board's size is the same
+	if (b1.NORows != b2.NORows || b1.NOColumns != b2.NOColumns) {
+		return false;
+	}
+	for (int i = 0; i < NORows; i++)
 	{
-		for (int j = 0; j < 20; j++)
+		for (int j = 0; j < NOColumns; j++)
 		{	
 			// assert every pair of matching fields have equal values
-			if (b1.fields[i][j].value != b2.fields[i][j].value)
-			{
-				return 0;
+			if (b1.fields[i][j].value != b2.fields[i][j].value) {
+				return false;
 			}
 		}
 	}
-	// assert Board's size is the same
-	return (b1.NORows == b2.NORows && b1.NOColumns == b2.NOColumns);
+	return true;
 }
 
 

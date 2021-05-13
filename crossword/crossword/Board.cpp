@@ -391,9 +391,9 @@ bool operator==(const Board& b1, const Board& b2)
 	if (b1.NORows != b2.NORows || b1.NOColumns != b2.NOColumns) {
 		return false;
 	}
-	for (int i = 0; i < NORows; i++)
+	for (int i = 0; i < b1.NORows; i++)
 	{
-		for (int j = 0; j < NOColumns; j++)
+		for (int j = 0; j < b1.NOColumns; j++)
 		{	
 			// assert every pair of matching fields have equal values
 			if (b1.fields[i][j].value != b2.fields[i][j].value) {

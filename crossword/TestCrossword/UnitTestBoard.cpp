@@ -202,8 +202,23 @@ namespace UnitTestBoard
 
 		}
 
-		TEST_METHOD(setFields)
+		TEST_METHOD(putQuestionOnBoard)
 		{
+			Board b = Board();
+			b.putQuestionOnBoard(0, 0, "vertically", "DZIK", 4);
+
+			Assert::AreEqual(1, b.getNOColumns());
+			Assert::AreEqual(4, b.getNORows());
+
+			Assert::AreEqual('_', b.getValue(0, 0));
+			Assert::AreEqual('_', b.getValue(0, 1));
+			Assert::AreEqual('_', b.getValue(0, 2));
+			Assert::AreEqual('_', b.getValue(0, 3));
+
+			Assert::AreEqual('_', b.getValue(0, 0));
+			Assert::AreEqual('_', b.getValue(0, 1));
+			Assert::AreEqual('_', b.getValue(0, 2));
+			Assert::AreEqual('_', b.getValue(0, 3));
 
 		}
 

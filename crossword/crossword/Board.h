@@ -42,7 +42,7 @@ public:
 	bool isCorrect(const int row, const int col) { return fields[row][col].isCorrect(); };
 	int countPoints();
 
-	void setFields(int start_row, int start_col, std::string orientation, std::string answer, int NOQuestion);
+	void putQuestionOnBoard(int start_row, int start_col, std::string orientation, std::string answer, int NOQuestion);
 };
 
 

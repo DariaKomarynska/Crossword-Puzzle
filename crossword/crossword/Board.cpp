@@ -132,7 +132,7 @@ Board::Board(int NOQuest, std::string filepath) {
 		int start_col = number(data.at(3)) - 1;
 		std::string orientation = data.at(4);
 
-		setFields(start_row, start_col, orientation, answer, count);
+		putQuestionOnBoard(start_row, start_col, orientation, answer, count);
 
 		map_dict[answer] == question;
 		
@@ -156,7 +156,10 @@ void Board::putFirstLetters() {
 }
 
 
-void Board::setFields(int start_row, int start_col, std::string orientation, std::string answer, int NOQuestion) {
+void Board::putQuestionOnBoard(int start_row, int start_col, std::string orientation, std::string answer, int NOQuestion) {
+	// adds new question and soultion
+	// post initialization of fields for reading board from file purpose
+
 	vector<int> vec;
 	vec.push_back(start_row);
 	vec.push_back(start_col);
@@ -165,11 +168,11 @@ void Board::setFields(int start_row, int start_col, std::string orientation, std
 	if (orientation == "vertically") {
 		int last_row = start_row + answer.length() - 1;
 
-		while (NORows < last_row) {
+		while (NORows < last_row + 1) {
 			addRow();
 		}
 
-		fields[start_row][start_col].postInit(NOQuestion, answer.at(0));
+		fields.at(start_row).at(start_col).postInit(NOQuestion, answer[0]);
 
 		fields[start_row][start_col].fill(intToChar(NOQuestion));	// field with index
 
@@ -185,7 +188,7 @@ void Board::setFields(int start_row, int start_col, std::string orientation, std
 	else if (orientation == "horizontally") {
 		int last_col = start_col + answer.length() - 1;
 
-		while (NOColumns < last_col) {
+		while (NOColumns < last_col + 1) {
 			addColumn();
 		}
 

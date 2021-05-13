@@ -159,9 +159,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="TestCrossword.cpp" />
+    <ClCompile Include="TestField.cpp" />
     <ClCompile Include="TestPlayer.cpp" />
     <ClCompile Include="UnitTestsDictionary.cpp" />
-    <ClCompile Include="UnitTest_Board.cpp" />
+    <ClCompile Include="UnitTestBoard.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

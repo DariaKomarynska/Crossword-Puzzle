@@ -40,6 +40,23 @@ namespace testPlayer
 			Assert::AreEqual(3, byk.getPoints());
 		}
 
+		TEST_METHOD(TestPlayerNewName)
+		{
+			Player byk = Player("byczeq");
+			byk.setName("byq");
+			std::string name = "byq";
+			Assert::AreEqual(name, byk.getName());
+			Assert::AreEqual(0, byk.getPoints());
+		}
+
+		TEST_METHOD(TestPlayerEmptyInitNewName)
+		{
+			Player byk = Player();
+			byk.setName("byq");
+			std::string name = "byq";
+			Assert::AreEqual(name, byk.getName());
+			Assert::AreEqual(0, byk.getPoints());
+		}
 
 		TEST_METHOD(TestPlayerPointsNegative)
 		{
@@ -48,6 +65,16 @@ namespace testPlayer
 			Assert::AreEqual(0, byk.getPoints());
 		}
 
+		TEST_METHOD(TestPlayerResetPoints)
+		{
+			Player byk = Player("byczeq");
+
+			byk.addPoints(4);
+			Assert::AreEqual(4, byk.getPoints());
+
+			byk.resetPoints();
+			Assert::AreEqual(0, byk.getPoints());
+		}
 
 		TEST_METHOD(TestPlayerNewGame)
 		{

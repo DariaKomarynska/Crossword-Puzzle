@@ -1,4 +1,4 @@
-#include "CppUnitTest.h"
+﻿#include "CppUnitTest.h"
 #include <iostream>
 #include "..\crossword\Board.cpp"
 #include "..\crossword\Board.h"
@@ -184,12 +184,17 @@ namespace UnitTestBoard
 
 		TEST_METHOD(addRow)
 		{
-			
+			Board board(3, 3);
+			board.addRow();
+			board.addRow();
+			Assert::IsTrue(board.getNORows() == 5);
 		}
 
 		TEST_METHOD(addColumn)
 		{
-
+			Board board(3, 3);
+			board.addColumn();
+			Assert::IsTrue(board.getNOColumns() == 4);
 		}
 
 		TEST_METHOD(clear)
@@ -204,12 +209,20 @@ namespace UnitTestBoard
 
 		TEST_METHOD(initWithCSVFile)
 		{
-
+			/*std::string filename = "test_data1.csv";
+			Board b1(9, filename);
+			Assert::IsTrue('U' == b1.getValue(1, 1));*/
 		}
 
 		TEST_METHOD(getQuestions)
 		{
-
+			/*std::string filename = "test_data1.csv";
+			Board b1(9, filename);
+			std::vector<std::string> correct_ques;
+			correct_ques = { "Zderzak pociągu", "Złączka rur", "Gospodarstwo hodowlane",
+				"Szata liturgiczna", "Działo", "Aktywowiec o l. a. 100", "Prawy dopływ Sekwany", "Kapral na statku",
+				"Co dzień inna w kalendarzu" };
+			Assert::IsTrue(b1.getQuestions() == correct_ques);*/
 		}
 
 		TEST_METHOD(fillAnswer)

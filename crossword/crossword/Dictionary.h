@@ -67,6 +67,8 @@ public:
 
 };
 
+bool operator==(const vector<string> vect1, const vector<string> vect2);
+
 ostream& operator <<(ostream& ss, const map<string, string>& dict);
 
 map<string, string> input_dict();

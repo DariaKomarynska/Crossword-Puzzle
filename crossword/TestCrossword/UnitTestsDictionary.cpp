@@ -227,5 +227,28 @@ namespace Dictionarytest
 			Assert::IsTrue(dict_a == dict_b);
 		}
 
+		TEST_METHOD(Questions_together)
+		{
+			map<string, string> dict1 = { {"apple", "sweet fruit"}, {"pen", "writing instrument"} };
+			Dictionary dict_a(dict1);
+			std::vector<std::string> all_ques;
+			all_ques = dict_a.questions();
+
+			std::vector<std::string> correct_ques = { "sweet fruit" , "writing instrument" };
+
+			Assert::IsTrue(all_ques == correct_ques);
+		}
+
+		TEST_METHOD(Answers_together)
+		{
+			map<string, string> dict1 = { {"apple", "sweet fruit"}, {"pen", "writing instrument"} };
+			Dictionary dict_a(dict1);
+			std::vector<std::string> all_ques;
+			all_ques = dict_a.answers();
+
+			std::vector<std::string> correct_ques = { "apple" , "pen" };
+
+			Assert::IsTrue(all_ques == correct_ques);
+		}
 	};
 }

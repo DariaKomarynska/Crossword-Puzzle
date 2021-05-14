@@ -227,7 +227,7 @@ void Board::fillAnswer(int noQue, std::string answer) {
 	}
 }
 
-int Board::countPoints() {
+int Board::getPoints() {
 	int points = 0;
 	for (int i = 0; i < NORows; i++) {
 		for (int j = 0; j < NOColumns; j++) {
@@ -261,129 +261,62 @@ std::ostream& operator<<(std::ostream& os, const Board& b)
 	return os;
 }
 
-std::istream& operator>>(std::istream& is, Board& b)
-{
-	// creates new Board that replaces Board b
-	// expected input ex.: a|b||c|d
-	// a, b, c, d represent values of fields
-	// | represent start of a new field
-	// || represent start of a new row of fields
-	Board b_new(1, 1);
-	bool endl = 0;	// tells if line has ended	
-	int col = 0;
-	int row = 0;
-	int max_col = 0;	// new column_len
-	char value = 0;	// value to fill field with
-	std::string input;
-	is >> input;
-	for (char elem : input)
-	{
-		// takes a value to fill field
-		if (elem != char(124))
-		{
-			value = elem;
-			endl = 0;
-		}
-		// starts new field or new row of fields
-		else
-		{	
-			// starts new row
-			if (endl || col >= 20)
-			{
-				max_col = std::max(col, max_col);
-				endl = 0;
-				col = 0;
-				row += 1;
-				value = 0;
-			}
-			// starts new field
-			else
-			{
-				b_new.fields[row][col].value = value;
-				endl = 1;
-				col += 1;
-				value = 0;
-			}
-		}
-	}
-	// fills last field
-	if (value != 0 || endl)
-	{
-		b_new.fields[row][col].value = value;
-		b_new.NOColumns = row + 1;
-	}
-	b_new.NORows = max_col;
-	b = b_new;
-	return is;
-}
+//std::istream& operator>>(std::istream& is, Board& b)
+//{
+//	// creates new Board that replaces Board b
+//	// expected input ex.: a|b||c|d
+//	// a, b, c, d represent values of fields
+//	// | represent start of a new field
+//	// || represent start of a new row of fields
+//	Board b_new(1, 1);
+//	bool endl = 0;	// tells if line has ended	
+//	int col = 0;
+//	int row = 0;
+//	int max_col = 0;	// new column_len
+//	char value = 0;	// value to fill field with
+//	std::string input;
+//	is >> input;
+//	for (char elem : input)
+//	{
+//		// takes a value to fill field
+//		if (elem != char(124))
+//		{
+//			value = elem;
+//			endl = 0;
+//		}
+//		// starts new field or new row of fields
+//		else
+//		{	
+//			// starts new row
+//			if (endl || col >= 20)
+//			{
+//				max_col = std::max(col, max_col);
+//				endl = 0;
+//				col = 0;
+//				row += 1;
+//				value = 0;
+//			}
+//			// starts new field
+//			else
+//			{
+//				b_new.fields[row][col].value = value;
+//				endl = 1;
+//				col += 1;
+//				value = 0;
+//			}
+//		}
+//	}
+//	// fills last field
+//	if (value != 0 || endl)
+//	{
+//		b_new.fields[row][col].value = value;
+//		b_new.NOColumns = row + 1;
+//	}
+//	b_new.NORows = max_col;
+//	b = b_new;
+//	return is;
+//}
 
-Board operator+(const Board& b1, const Board& b2)
-{
-	if (b1.NOColumns + b2.NORows >= 20)
-	{
-		throw std::out_of_range("Boards are too big");
-	}
-
-	Board out = b1;	// set output as first Board
-	out.NOColumns = b1.NOColumns + b2.NOColumns;
-	int col = std::max(b1.NORows, b2.NORows);
-	
-	// fill rest of an output with second Board
-	for (int i = 0; i < b2.NOColumns; i++)
-	{
-		for (int j = 0; j < col; j++)
-		{
-			char val = b2.fields[i][j].value;
-			out.fillField(i + b1.NOColumns, j, val);
-		}
-	}
-	return out;
-}
-
-Board& operator++(Board& b)
-{
-	if (b.NOColumns >= 20)
-	{
-		throw "Board is at maximal size";
-	}
-	// add a new row with empty fields
-	b.NOColumns = b.NOColumns + 1;
-	for (int i = 0; i < b.NORows; i++)
-	{
-		b.fillField(b.NOColumns - 1, i, 32);
-	}
-	return b;
-}
-
-
-Board& operator++(Board& b, int)
-{
-	Board temp = b;
-	++b;
-	return temp;
-}
-
-Board& operator--(Board& b)
-{
-	if (b.NOColumns <= 1)
-	{
-		throw "Board is at minimal size";
-	}
-	// reset values of last row
-	for (int i = 0; i < b.NORows; i++)
-	{
-		b.fillField(b.NOColumns - 1, i, 32);
-	}
-	b.NOColumns = b.NOColumns - 1;
-	return b;
-}
-
-Board& operator--(Board& b, int)
-{
-	Board temp = b;
-	--b;
-	return temp;
-}
 
 bool operator==(const Board& b1, const Board& b2)
 {

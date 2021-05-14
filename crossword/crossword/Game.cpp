@@ -84,7 +84,7 @@ void Game::ending() {
 
 
 void Game::countPoints() {
-	player.addPoints(board.countPoints());
+	player.addPoints(board.getPoints());
 }
 
 void Game::checkForPoints(int row, int col) {

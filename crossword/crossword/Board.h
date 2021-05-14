@@ -14,12 +14,7 @@ private:
 	vector<vector<int>> firstLetters;
 	Dictionary solutions;
 	friend std::ostream& operator<<(std::ostream& os, const Board& b);
-	friend std::istream& operator>>(std::istream& is, Board& b);
-	friend Board operator+(const Board& b1, const Board& b2);
-	friend Board& operator++(Board&);
-	friend Board& operator++(Board& , int);
-	friend Board& operator--(Board&);
-	friend Board& operator--(Board&, int);
+	// friend std::istream& operator>>(std::istream& is, Board& b);
 	friend bool operator==(const Board& b1, const Board& b2);
 
 
@@ -40,7 +35,7 @@ public:
 	bool validCoords(const int row, const int col) const;
 	void putFirstLetters();
 	bool isCorrect(const int row, const int col) { return fields[row][col].isCorrect(); };
-	int countPoints();
+	int getPoints();
 
 	void putQuestionOnBoard(int start_row, int start_col, std::string orientation, std::string answer, int NOQuestion);
 };

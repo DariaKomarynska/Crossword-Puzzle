@@ -92,8 +92,8 @@ extern char intToChar(int num) {
 }
 
 
-extern char stringToChar(std::string num) {
+extern char stringToChar(const std::string num) {
 	char *index = new char[num.length() + 1];
-	strcpy(index, num.c_str());
+	strcpy_s(index, num.length() + 1, num.c_str());
 	return *index;
 }

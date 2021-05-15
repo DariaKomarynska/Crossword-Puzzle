@@ -7,19 +7,19 @@
 #include <vector>
 
 
+Board::Board() {
+	std::vector < std::vector<Field> > v;
+	fields = v;
+}
+
+
 Board::Board(const int no_row, const int no_col)
 {
-	// init every field with "#"
-	for (int i = 0; i < no_row; i++)
-	{
-		vector <Field> row;
-		for (int j = 0; j < no_col; j++)
-		{
-			Field f = Field();
-			row.push_back(f);
-		}
-		fields.push_back(row);
-	}
+	// 1. create empty vector
+	// 2. put direct amount of '#' fields there
+	std::vector < std::vector<Field> > v;
+	fields = v;
+	setUpMaxSize(no_row, no_col);
 }
 
 
@@ -41,14 +41,11 @@ void Board::addColumn() {
 }
 
 
-bool Board::isMutable(const int row, const int col) const {
-	// checks range and if it is not '#'
-	return col >= 0 && col < getNOColumns() && row >= 0 && row < getNORows() && fields.at(row).at(col).getValue() != '#';
-}
-
-
 int Board::getNOColumns() const
 {
+	if (getNORows() == 0) {
+		return 0;
+	}
 	return fields.at(0).size();
 }
 
@@ -75,23 +72,20 @@ void Board::setUpField(const int row, const int col) {
 bool Board::coordsValidation(const int row, const int col) const {
 	if (!validCoords(row, col))
 	{
-		throw std::out_of_range("Index out of range");
+		throw std::invalid_argument("Index out of range");
 	}
 	return true;
 }
 
 
 bool Board::validCoords(const int row, const int col) const {
-	return col >= 0 && col < getNOColumns()&& row >= 0 && row < getNORows();
+	return col >= 0 && col < getNOColumns() && row >= 0 && row < getNORows();
 }
 
 
 void Board::fillField(const int row, const int col, const char value)
 {
-	if (!isMutable(row, col))
-	{
-		throw std::invalid_argument("Index out of range");
-	}
+	coordsValidation(row, col);
 	fields.at(row).at(col).fill(value);
 }
 
@@ -125,17 +119,22 @@ void Board::clear() {
 }
 
 
-void Board::setUpMaxSize(const unsigned NORows, const unsigned NOCol) {
-	int diff = NOCol - getNOColumns();
-	if (diff > 0) {
-		for (unsigned i = 0; i < diff; i++) {
-			addColumn();
-		}
+void Board::setUpMaxSize(const int NORows, const int NOCol) {
+
+	if (NORows == 0 || NOCol == 0) {
+		throw std::invalid_argument("Zero board size");
 	}
 	int diff = NORows - getNORows();
 	if (diff > 0) {
-		for (unsigned i = 0; i < diff; i++) {
+		for (int i = 0; i < diff; i++) {
 			addRow();
+		}
+	}
+
+	diff = NOCol - getNOColumns();
+	if (diff > 0) {
+		for (int i = 0; i < diff; i++) {
+			addColumn();
 		}
 	}
 }
@@ -162,33 +161,43 @@ std::istream& operator>>(std::istream& is, Board& b) {
 	// a, b, c, d, # represent values of fields
 	// | represents start of a new field
 	// /n represents new row
+	
 	unsigned NORows = 0;
 	std::vector<std::vector<char>> values;
-	std::string input;
-	is >> input;
-	for (char elem : input) {
-		if (elem != '|' && elem != ' ' && elem != '\n') {
-			values.at(NORows).push_back(elem);
+	std::vector<char> row;
+	values.push_back(row);
+	std::string rowData;
+	while(getline(is, rowData, '\n')) {
+		for (char elem : rowData) {
+			if (elem != '|' && elem != ' ') {
+				values.at(NORows).push_back(elem);
+			}
 		}
-		else if (elem == '\n') {
-			NORows++;
-			std::vector<char> row;
-			values.push_back(row);
-		}
+		
+		NORows++;
+		row = std::vector<char>();
+		values.push_back(row);
 	}
 
+	if (NORows == 0) {
+		throw std::invalid_argument("Zero board size");
+	}
 	unsigned NOCols = values.at(0).size();
+
 	b.setUpMaxSize(NORows, NOCols);
 
 	for (unsigned Nrow = 0; Nrow < NORows; Nrow++) {
 		for (unsigned Ncol = 0; Ncol < NOCols; Ncol++) {
-			b.fillField(Nrow, Ncol, values.at(Nrow).at(Ncol));
+			char v = values.at(Nrow).at(Ncol);
+			if (v != '#') {
+				b.setUpField(Nrow, Ncol);
+			}
+			b.fillField(Nrow, Ncol, v);
 		}
 	}
 
 	return is;
 }
-
 
 
 bool operator==(const Board& b1, const Board& b2)
@@ -197,9 +206,9 @@ bool operator==(const Board& b1, const Board& b2)
 	if (b1.getNORows() != b2.getNORows() || b1.getNOColumns() != b2.getNOColumns()) {
 		return false;
 	}
-	for (unsigned i = 0; i < b1.getNORows(); i++)
+	for (int i = 0; i < b1.getNORows(); i++)
 	{
-		for (unsigned j = 0; j < b1.getNOColumns(); j++)
+		for (int j = 0; j < b1.getNOColumns(); j++)
 		{	
 			// assert every pair of matching fields have equal values
 			if (b1.fields.at(i).at(j).getValue() != b2.fields.at(i).at(j).getValue()) {

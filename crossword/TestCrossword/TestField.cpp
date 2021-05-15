@@ -51,7 +51,7 @@ namespace TestCrossword
 		{
 			Field f = Field('C');
 			f.fill(44);
-			char c = '44';
+			char c = char('44');
 			Assert::AreEqual(c, f.getValue());
 		}
 

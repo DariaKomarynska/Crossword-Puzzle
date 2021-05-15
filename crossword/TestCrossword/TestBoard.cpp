@@ -11,6 +11,14 @@ namespace UnitTestBoard
 	{
 	public:
 
+		TEST_METHOD(basicConstructor)
+		{
+			Board b1 = Board();
+			Assert::AreEqual(0, b1.getNOColumns());
+			Assert::AreEqual(0, b1.getNORows());
+		}
+
+
 		TEST_METHOD(fill_get_normal)
 		{
 			Board b1(3, 3);
@@ -24,9 +32,45 @@ namespace UnitTestBoard
 		{
 			Board b1(3, 3);
 			char test = "t"[0];
+			b1.setUpField(0, 0);
 			b1.fillField(0, 0, test);
 			Assert::IsTrue(test == b1.getValue(0, 0));
 		}
+
+
+		TEST_METHOD(setUpMaxSizeSqare)
+		{
+			Board b1 = Board();
+
+			b1.setUpMaxSize(2, 2);
+			Assert::AreEqual(2, b1.getNORows());
+			Assert::AreEqual(2, b1.getNOColumns());
+			Assert::AreEqual('#', b1.getValue(0, 0));
+			Assert::AreEqual('#', b1.getValue(0, 1));
+			Assert::AreEqual('#', b1.getValue(1, 0));
+			Assert::AreEqual('#', b1.getValue(1, 1));
+		}
+
+
+		TEST_METHOD(setUpMaxSizeSimple)
+		{
+			Board b1 = Board();
+
+			b1.setUpMaxSize(20, 10);
+			Assert::AreEqual(20, b1.getNORows());
+			Assert::AreEqual(10, b1.getNOColumns());
+		}
+
+
+		TEST_METHOD(setUpMaxSizeZeroRows)
+		{
+			Board b1 = Board();
+
+			b1.setUpMaxSize(0, 10);
+			Assert::AreEqual(0, b1.getNORows());
+			Assert::AreEqual(0, b1.getNOColumns());
+		}
+
 
 		TEST_METHOD(fill_out_of_range)
 		{
@@ -38,9 +82,9 @@ namespace UnitTestBoard
 			{
 				b1.fillField(5, 0, "t"[0]);
 			}
-			catch (const char* msg)
+			catch (const std::invalid_argument err)
 			{
-				errmsg = msg;
+				errmsg = err.what();
 			}
 			Assert::AreEqual(expected, errmsg);
 		}
@@ -54,11 +98,11 @@ namespace UnitTestBoard
 			char test = "t"[0];
 			try
 			{
-				b1.fillField(5, 0, "t"[0]);
+				b1.fillField(2, 0, "t"[0]);
 			}
-			catch (const char* msg)
+			catch (const std::invalid_argument err)
 			{
-				errmsg = msg;
+				errmsg = err.what();
 			}
 			Assert::AreEqual(expected, errmsg);
 		}
@@ -107,10 +151,10 @@ namespace UnitTestBoard
 			b.fillField(0, 2, "I"[0]);
 			b.fillField(0, 3, "D"[0]);
 
-			Assert::AreEqual('A', b.getValue(0, 0));
-			Assert::AreEqual('B', b.getValue(0, 1));
-			Assert::AreEqual('I', b.getValue(0, 2));
-			Assert::AreEqual('D', b.getValue(0, 3));
+			Assert::AreEqual('a', b.getValue(0, 0));
+			Assert::AreEqual('b', b.getValue(0, 1));
+			Assert::AreEqual('i', b.getValue(0, 2));
+			Assert::AreEqual('d', b.getValue(0, 3));
 		}
 
 
@@ -119,7 +163,7 @@ namespace UnitTestBoard
 			Board b = Board(1, 3);
 
 			b.setUpField(0, 0);
-			b.setUpField(0, 3);
+			b.setUpField(0, 2);
 
 			b.fillField(0, 0, "A"[0]);
 			b.putIndex(0, 2, 3);
@@ -130,6 +174,8 @@ namespace UnitTestBoard
 			Assert::AreEqual('_', b.getValue(0, 2));
 		}
 	};
+
+
 	TEST_CLASS(OPERATOR_OVERLOAD)
 	{
 		TEST_METHOD(equality)
@@ -138,14 +184,6 @@ namespace UnitTestBoard
 			Assert::IsTrue(b == b);
 		}
 
-		TEST_METHOD(ostream_empty)
-		{
-			std::stringstream os;
-			Board b1(3, 3);
-			os << b1;
-			std::string out = "Empty Board";
-			Assert::IsTrue(os.str() == out);
-		}
 
 		TEST_METHOD(ostream_filled)
 		{
@@ -221,7 +259,7 @@ namespace UnitTestBoard
 			os << b2;
 			Board b1 = Board();
 			os >> b1;
-			Assert::AreEqual(b2, b1);
+			Assert::IsTrue(b2 == b1);
 		}
 	};
 }

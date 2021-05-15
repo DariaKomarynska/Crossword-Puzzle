@@ -22,6 +22,7 @@ public:
 extern bool alphaValidation(const char c);
 extern bool isAlpha(const char c);
 extern bool numberValidation(const char c);
+extern bool isNumber(const char c);
 extern bool isNumber(std::string s);
 extern int number(std::string s);
 extern char intToChar(int num);

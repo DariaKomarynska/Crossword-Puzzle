@@ -9,13 +9,12 @@ class Board
 {
 private:
 	std::vector<std::vector<Field>> fields;
-	vector<vector<int>> firstLetters;
 	friend std::ostream& operator<<(std::ostream& os, const Board& b);
 	friend std::istream& operator>>(std::istream& is, Board& b);
 	friend bool operator==(const Board& b1, const Board& b2);
 
 public:
-	Board() {};
+	Board();
 	Board(const int no_row, const int no_col);
 
 	void addRow();
@@ -32,6 +31,5 @@ public:
 	void clear();
 	bool validCoords(const int row, const int col) const;
 	bool coordsValidation(const int row, const int col) const;
-	bool isMutable(const int row, const int col) const;
-	void setUpMaxSize(const unsigned NORows, const unsigned NOCol);
+	void setUpMaxSize(const int NORows, const int NOCol);
 };

@@ -162,6 +162,66 @@ namespace UnitTestBoard
 			std::string out = "| a | b | c |\n| # | # | # |\n| # | # | # |\n";
 			Assert::IsTrue(os.str() == out);
 		}
-		
+
+
+		TEST_METHOD(istream)
+		{
+			Board b1 = Board();
+			std::stringstream is;
+			std::string input = "| a | b |\n| c | d |\n";
+			is << input;
+			is >> b1;
+
+			Board b2 = Board(2, 2);
+
+			b2.setUpField(0, 0);
+			b2.setUpField(0, 1);
+			b2.setUpField(1, 0);
+			b2.setUpField(1, 1);
+
+			b2.fillField(0, 0, "a"[0]);
+			b2.fillField(0, 1, "b"[0]);
+			b2.fillField(1, 0, "c"[0]);
+			b2.fillField(1, 1, "d"[0]);
+			Assert::IsTrue(b1 == b2);
+		}
+
+
+		TEST_METHOD(iostream)
+		{
+			Board b1 = Board();
+			std::stringstream is;
+			std::stringstream os;
+			std::string input = "| a | b |\n| c | d |\n";
+			is << input;
+			is >> b1;
+			os << b1;
+			std::string out = os.str();
+
+			Assert::AreEqual(input, out);
+		}
+
+
+		TEST_METHOD(oistream)
+		{
+			Board b2 = Board(2, 2);
+
+			b2.setUpField(0, 0);
+			b2.setUpField(0, 1);
+			b2.setUpField(1, 0);
+			b2.setUpField(1, 1);
+
+			b2.fillField(0, 0, "a"[0]);
+			b2.fillField(0, 1, "b"[0]);
+			b2.fillField(1, 0, "c"[0]);
+			b2.fillField(1, 1, "d"[0]);
+
+			std::stringstream is;
+			std::stringstream os;
+			os << b2;
+			Board b1 = Board();
+			os >> b1;
+			Assert::AreEqual(b2, b1);
+		}
 	};
 }

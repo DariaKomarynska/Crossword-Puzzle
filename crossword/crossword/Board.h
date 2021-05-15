@@ -11,7 +11,7 @@ private:
 	std::vector<std::vector<Field>> fields;
 	vector<vector<int>> firstLetters;
 	friend std::ostream& operator<<(std::ostream& os, const Board& b);
-	// friend std::istream& operator>>(std::istream& is, Board& b);
+	friend std::istream& operator>>(std::istream& is, Board& b);
 	friend bool operator==(const Board& b1, const Board& b2);
 
 public:
@@ -33,4 +33,5 @@ public:
 	bool validCoords(const int row, const int col) const;
 	bool coordsValidation(const int row, const int col) const;
 	bool isMutable(const int row, const int col) const;
+	void setUpMaxSize(const unsigned NORows, const unsigned NOCol);
 };

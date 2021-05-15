@@ -125,6 +125,22 @@ void Board::clear() {
 }
 
 
+void Board::setUpMaxSize(const unsigned NORows, const unsigned NOCol) {
+	int diff = NOCol - getNOColumns();
+	if (diff > 0) {
+		for (unsigned i = 0; i < diff; i++) {
+			addColumn();
+		}
+	}
+	int diff = NORows - getNORows();
+	if (diff > 0) {
+		for (unsigned i = 0; i < diff; i++) {
+			addRow();
+		}
+	}
+}
+
+
 std::ostream& operator<<(std::ostream& os, const Board& b)
 {
 	// example: | v | a | l | u | e |
@@ -138,6 +154,41 @@ std::ostream& operator<<(std::ostream& os, const Board& b)
 	}
 	return os;
 }
+
+
+std::istream& operator>>(std::istream& is, Board& b) {
+	// creates new Board that replaces Board b
+	// expected input ex.: | a | b |\n| c | d |
+	// a, b, c, d, # represent values of fields
+	// | represents start of a new field
+	// /n represents new row
+	unsigned NORows = 0;
+	std::vector<std::vector<char>> values;
+	std::string input;
+	is >> input;
+	for (char elem : input) {
+		if (elem != '|' && elem != ' ' && elem != '\n') {
+			values.at(NORows).push_back(elem);
+		}
+		else if (elem == '\n') {
+			NORows++;
+			std::vector<char> row;
+			values.push_back(row);
+		}
+	}
+
+	unsigned NOCols = values.at(0).size();
+	b.setUpMaxSize(NORows, NOCols);
+
+	for (unsigned Nrow = 0; Nrow < NORows; Nrow++) {
+		for (unsigned Ncol = 0; Ncol < NOCols; Ncol++) {
+			b.fillField(Nrow, Ncol, values.at(Nrow).at(Ncol));
+		}
+	}
+
+	return is;
+}
+
 
 
 bool operator==(const Board& b1, const Board& b2)

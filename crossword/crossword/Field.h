@@ -6,7 +6,7 @@ private:
 	char value = '#';
 
 public:
-	Field() {};		// empty - | # | field
+	Field() {};		// empty - '#' field
 	Field(const char c) : value(c) {};
 	Field(const std::string s) : value(s[0]) {};
 	void setUp() { value = '_'; }

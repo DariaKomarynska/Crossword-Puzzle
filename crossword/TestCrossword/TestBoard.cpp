@@ -15,6 +15,7 @@ namespace UnitTestBoard
 		{
 			Board b1(3, 3);
 			char test = "t"[0];
+			b1.setUpField(1, 1);
 			b1.fillField(1, 1, test);
 			Assert::IsTrue(test == b1.getValue(1, 1));
 		}
@@ -31,6 +32,24 @@ namespace UnitTestBoard
 		{
 			std::string errmsg;
 			std::string expected = "Index out of range";
+			Board b1(3, 3);
+			char test = "t"[0];
+			try
+			{
+				b1.fillField(5, 0, "t"[0]);
+			}
+			catch (const char* msg)
+			{
+				errmsg = msg;
+			}
+			Assert::AreEqual(expected, errmsg);
+		}
+
+
+		TEST_METHOD(fillNotSettedUp)
+		{
+			std::string errmsg;
+			std::string expected = "This field should remain empty";
 			Board b1(3, 3);
 			char test = "t"[0];
 			try
@@ -74,25 +93,14 @@ namespace UnitTestBoard
 		}
 
 
-		TEST_METHOD(putQuestionOnBoardInitialValues)
-		{
-			Board b = Board();
-			b.putQuestionOnBoard(0, 0, "vertically", "DZIK", 2);
-
-			Assert::AreEqual(1, b.getNOColumns());
-			Assert::AreEqual(4, b.getNORows());
-
-			Assert::AreEqual('_', b.getValue(0, 0));
-			Assert::AreEqual('_', b.getValue(0, 1));
-			Assert::AreEqual('_', b.getValue(0, 2));
-			Assert::AreEqual('_', b.getValue(0, 3));
-		}
-
-
 		TEST_METHOD(fillFiled)
 		{
-			Board b = Board();
-			b.putQuestionOnBoard(0, 0, "vertically", "DZIK", 2);
+			Board b = Board(4, 4);
+
+			b.setUpField(0, 0);
+			b.setUpField(0, 1);
+			b.setUpField(0, 2);
+			b.setUpField(0, 3);
 
 			b.fillField(0, 0, "A"[0]);
 			b.fillField(0, 1, "B"[0]);
@@ -106,48 +114,20 @@ namespace UnitTestBoard
 		}
 
 
-		TEST_METHOD(countPoints)
-		{
-			Board b = Board();
-			b.putQuestionOnBoard(0, 0, "vertically", "DZIK", 2);
-
-			b.fillField(0, 0, "D"[0]);
-			b.fillField(0, 1, "V"[0]);
-			b.fillField(0, 2, "I"[0]);
-			b.fillField(0, 3, "V"[0]);
-
-			Assert::AreEqual(2, b.getPoints());			
-		}
-
-
 		TEST_METHOD(clear)
 		{
+			Board b = Board(1, 3);
 
-		}
+			b.setUpField(0, 0);
+			b.setUpField(0, 3);
 
+			b.fillField(0, 0, "A"[0]);
+			b.putIndex(0, 2, 3);
+			b.clear();
 
-		TEST_METHOD(initWithCSVFile)
-		{
-			/*std::string filename = "test_data1.csv";
-			Board b1(9, filename);
-			Assert::IsTrue('U' == b1.getValue(1, 1));*/
-		}
-
-		TEST_METHOD(getQuestions)
-		{
-			/*std::string filename = "test_data1.csv";
-			Board b1(9, filename);
-			std::vector<std::string> correct_ques;
-			correct_ques = { "Zderzak pociągu", "Złączka rur", "Gospodarstwo hodowlane",
-				"Szata liturgiczna", "Działo", "Aktywowiec o l. a. 100", "Prawy dopływ Sekwany", "Kapral na statku",
-				"Co dzień inna w kalendarzu" };
-			Assert::IsTrue(b1.getQuestions() == correct_ques);*/
-		}
-
-		TEST_METHOD(fillAnswer)
-		{
-			Board b = Board();
-
+			Assert::AreEqual('_', b.getValue(0, 0));
+			Assert::AreEqual('#',b.getValue(0, 1));
+			Assert::AreEqual('_', b.getValue(0, 2));
 		}
 	};
 	TEST_CLASS(OPERATOR_OVERLOAD)
@@ -171,7 +151,9 @@ namespace UnitTestBoard
 		{
 			std::stringstream os;
 			Board b1(3, 3);
-			b1.putQuestionOnBoard(0, 0, "horizontally", "KOT", 1);
+			b1.setUpField(0, 0);
+			b1.setUpField(0, 1);
+			b1.setUpField(0, 2);
 
 			b1.fillField(0, 0, "a"[0]);
 			b1.fillField(0, 1, "b"[0]);

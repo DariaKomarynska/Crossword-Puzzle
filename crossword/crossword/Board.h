@@ -8,39 +8,29 @@
 class Board
 {
 private:
-	int NOColumns = 0;
-	int NORows = 0;
 	std::vector<std::vector<Field>> fields;
 	vector<vector<int>> firstLetters;
-	Dictionary solutions;
 	friend std::ostream& operator<<(std::ostream& os, const Board& b);
 	// friend std::istream& operator>>(std::istream& is, Board& b);
 	friend bool operator==(const Board& b1, const Board& b2);
 
-
 public:
 	Board() {};
 	Board(const int no_row, const int no_col);
-	Board(int size, std::string filepath);
 
 	void addRow();
 	void addColumn();
-	const int getNORows();
-	const int getNOColumns();
-	void fillField(const int row,const int col,const char value);
+	int getNORows() const;
+	int getNOColumns() const;
+	void fillField(const int row, const int col, const char value);
+	void fillField(const int row, const int col, const std::string value);
+	void putIndex(const int row, const int col, const int value);
+	void putIndex(const int row, const int col, const std::string value);
+	void putIndex(const int row, const int col, const char value);
 	const char getValue(const int row, const int col) const;
+	void setUpField(const int row, const int col);
 	void clear();
-	void fillAnswer(int noQue, std::string answer);
-	std::vector<std::string> getQuestions();
 	bool validCoords(const int row, const int col) const;
-	void putFirstLetters();
-	bool isCorrect(const int row, const int col) { return fields[row][col].isCorrect(); };
-	int getPoints();
-
-	void putQuestionOnBoard(int start_row, int start_col, std::string orientation, std::string answer, int NOQuestion);
+	bool coordsValidation(const int row, const int col) const;
+	bool isMutable(const int row, const int col) const;
 };
-
-
-extern bool isNumber(std::string s);
-extern int number(std::string s);
-extern char const intToChar(int num);

@@ -1,5 +1,6 @@
 #include "Field.h"
 #include <string>
+#include "crosswordErrors.cpp"
 
 
 void Field::fill(const char c) {
@@ -8,7 +9,7 @@ void Field::fill(const char c) {
 		value = tolower(c);
 	}
 	else {
-		throw std::invalid_argument("This field should remain empty");
+		throw FieldNotSettedUp();
 	}
 }
 
@@ -43,7 +44,7 @@ void Field::clear() {
 
 extern bool alphaValidation(const char c) {
 	if (!isAlpha(c)) {
-		throw std::invalid_argument("You can fill this field only with letter");
+		throw NotAlpha();
 	}
 	return true;
 }
@@ -56,7 +57,7 @@ extern bool isAlpha(const char c) {
 
 extern bool numberValidation(const char c) {
 	if (!isNumber(c)) {
-		throw std::invalid_argument("This is not a number");
+		throw NotNumber();
 	}
 	return true;
 }
@@ -76,12 +77,8 @@ extern bool isNumber(std::string s) {
 
 
 extern int number(std::string s) {
-	if (isNumber(s)) {
-		return std::stoi(s);
-	}
-	else {
-		throw std::invalid_argument("Not numeric");
-	}
+	numberValidation(std::stoi(s));
+	return std::stoi(s);
 }
 
 

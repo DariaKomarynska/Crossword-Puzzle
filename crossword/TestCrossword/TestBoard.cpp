@@ -2,6 +2,7 @@
 #include <iostream>
 #include "..\crossword\Board.cpp"
 #include "..\crossword\Board.h"
+#include "..\crossword\crosswordErrors.cpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -35,6 +36,151 @@ namespace UnitTestBoard
 			b1.setUpField(0, 0);
 			b1.fillField(0, 0, test);
 			Assert::IsTrue(test == b1.getValue(0, 0));
+		}
+
+
+		TEST_METHOD(setUpFieldsVer)
+		{
+			Board b1(10, 10);
+			b1.setUpFields(3, 2, 7, "vertically");
+			Assert::AreEqual("_"[0], b1.getValue(3, 2));
+			Assert::AreEqual("_"[0], b1.getValue(4, 2));
+			Assert::AreEqual("_"[0], b1.getValue(5, 2));
+			Assert::AreEqual("_"[0], b1.getValue(6, 2));
+			Assert::AreEqual("_"[0], b1.getValue(7, 2));
+			Assert::AreEqual("_"[0], b1.getValue(8, 2));
+			Assert::AreEqual("_"[0], b1.getValue(9, 2));
+		}
+
+
+		TEST_METHOD(setUpFieldsHor)
+		{
+			Board b1(10, 10);
+			b1.setUpFields(3, 2, 7, "horizontally");
+			Assert::AreEqual("_"[0], b1.getValue(3, 2));
+			Assert::AreEqual("_"[0], b1.getValue(3, 3));
+			Assert::AreEqual("_"[0], b1.getValue(3, 4));
+			Assert::AreEqual("_"[0], b1.getValue(3, 5));
+			Assert::AreEqual("_"[0], b1.getValue(3, 6));
+			Assert::AreEqual("_"[0], b1.getValue(3, 7));
+			Assert::AreEqual("_"[0], b1.getValue(3, 8));
+		}
+
+
+		TEST_METHOD(setUpFieldsOutOfRange)
+		{
+			Board b1(7, 10);
+			b1.setUpFields(3, 2, 7, "vertically");
+			Assert::AreEqual("_"[0], b1.getValue(3, 2));
+			Assert::AreEqual("_"[0], b1.getValue(4, 2));
+			Assert::AreEqual("_"[0], b1.getValue(5, 2));
+			Assert::AreEqual("_"[0], b1.getValue(6, 2));
+		}
+
+
+		TEST_METHOD(fillFieldsVer)
+		{
+			Board b1(10, 10);
+			b1.setUpFields(3, 2, 7, "vertically");
+			b1.fillFields(3, 2, "prequel", "vertically");
+			Assert::AreEqual("p"[0], b1.getValue(3, 2));
+			Assert::AreEqual("r"[0], b1.getValue(4, 2));
+			Assert::AreEqual("e"[0], b1.getValue(5, 2));
+			Assert::AreEqual("q"[0], b1.getValue(6, 2));
+			Assert::AreEqual("u"[0], b1.getValue(7, 2));
+			Assert::AreEqual("e"[0], b1.getValue(8, 2));
+			Assert::AreEqual("l"[0], b1.getValue(9, 2));
+		}
+
+
+		TEST_METHOD(fillFieldsHor)
+		{
+			Board b1(10, 10);
+			b1.setUpFields(3, 2, 7, "horizontally");
+			b1.fillFields(3, 2, "prequel", "horizontally");
+			Assert::AreEqual("p"[0], b1.getValue(3, 2));
+			Assert::AreEqual("r"[0], b1.getValue(3, 3));
+			Assert::AreEqual("e"[0], b1.getValue(3, 4));
+			Assert::AreEqual("q"[0], b1.getValue(3, 5));
+			Assert::AreEqual("u"[0], b1.getValue(3, 6));
+			Assert::AreEqual("e"[0], b1.getValue(3, 7));
+			Assert::AreEqual("l"[0], b1.getValue(3, 8));
+		}
+
+
+		TEST_METHOD(fillFieldsExtraLetters)
+		{
+			Board b1(10, 10);
+			b1.setUpFields(3, 2, 7, "vertically");
+			b1.fillFields(3, 2, "prequelllll", "vertically");
+			Assert::AreEqual("p"[0], b1.getValue(3, 2));
+			Assert::AreEqual("r"[0], b1.getValue(4, 2));
+			Assert::AreEqual("e"[0], b1.getValue(5, 2));
+			Assert::AreEqual("q"[0], b1.getValue(6, 2));
+			Assert::AreEqual("u"[0], b1.getValue(7, 2));
+			Assert::AreEqual("e"[0], b1.getValue(8, 2));
+			Assert::AreEqual("l"[0], b1.getValue(9, 2));
+		}
+
+
+		TEST_METHOD(fillFieldsNotAlpha)
+		{
+			Board b1(10, 10);
+			b1.setUpFields(3, 2, 7, "vertically");
+			b1.fillFields(3, 2, "preque4", "vertically");
+			Assert::AreEqual("p"[0], b1.getValue(3, 2));
+			Assert::AreEqual("r"[0], b1.getValue(4, 2));
+			Assert::AreEqual("e"[0], b1.getValue(5, 2));
+			Assert::AreEqual("q"[0], b1.getValue(6, 2));
+			Assert::AreEqual("u"[0], b1.getValue(7, 2));
+			Assert::AreEqual("e"[0], b1.getValue(8, 2));
+			Assert::AreEqual("_"[0], b1.getValue(9, 2));
+		}
+
+
+		TEST_METHOD(fillFieldsNotAlphaMiddle)
+		{
+			Board b1(10, 10);
+			b1.setUpFields(3, 2, 7, "vertically");
+			b1.fillFields(3, 2, "pro8lem", "vertically");
+			Assert::AreEqual("p"[0], b1.getValue(3, 2));
+			Assert::AreEqual("r"[0], b1.getValue(4, 2));
+			Assert::AreEqual("o"[0], b1.getValue(5, 2));
+			Assert::AreEqual("_"[0], b1.getValue(6, 2));
+			Assert::AreEqual("l"[0], b1.getValue(7, 2));
+			Assert::AreEqual("e"[0], b1.getValue(8, 2));
+			Assert::AreEqual("m"[0], b1.getValue(9, 2));
+		}
+
+
+		TEST_METHOD(fillFieldsNotSettedUpMiddle)
+		{
+			Board b1(10, 10);
+			b1.setUpFields(3, 2, 2, "vertically");
+			b1.setUpFields(6, 2, 4, "vertically");
+			b1.fillFields(3, 2, "problem", "vertically");
+			Assert::AreEqual("p"[0], b1.getValue(3, 2));
+			Assert::AreEqual("r"[0], b1.getValue(4, 2));
+			Assert::AreEqual("#"[0], b1.getValue(5, 2));
+			Assert::AreEqual("b"[0], b1.getValue(6, 2));
+			Assert::AreEqual("l"[0], b1.getValue(7, 2));
+			Assert::AreEqual("e"[0], b1.getValue(8, 2));
+			Assert::AreEqual("m"[0], b1.getValue(9, 2));
+		}
+
+
+		TEST_METHOD(fillFieldsNotSettedUpEnd)
+		{
+			Board b1(10, 10);
+			b1.setUpFields(3, 2, 6, "vertically");
+			b1.fillFields(3, 2, "problem", "vertically");
+			Assert::AreEqual("p"[0], b1.getValue(3, 2));
+			Assert::AreEqual("r"[0], b1.getValue(4, 2));
+			Assert::AreEqual("o"[0], b1.getValue(5, 2));
+			Assert::AreEqual("b"[0], b1.getValue(6, 2));
+			Assert::AreEqual("l"[0], b1.getValue(7, 2));
+			Assert::AreEqual("e"[0], b1.getValue(8, 2));
+			Assert::AreEqual("#"[0], b1.getValue(9, 2));
 		}
 
 
@@ -82,7 +228,7 @@ namespace UnitTestBoard
 			{
 				b1.fillField(5, 0, "t"[0]);
 			}
-			catch (const std::invalid_argument err)
+			catch (const std::out_of_range& err)
 			{
 				errmsg = err.what();
 			}
@@ -100,7 +246,7 @@ namespace UnitTestBoard
 			{
 				b1.fillField(2, 0, "t"[0]);
 			}
-			catch (const std::invalid_argument err)
+			catch (const FieldNotSettedUp& err)
 			{
 				errmsg = err.what();
 			}

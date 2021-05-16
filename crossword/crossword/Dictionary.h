@@ -21,6 +21,8 @@ public:
 
 	}
 
+	int size() const { return dictionary.size(); }
+
 	const std::vector<std::string> questions ();
 	const std::vector<std::string> answers();
 

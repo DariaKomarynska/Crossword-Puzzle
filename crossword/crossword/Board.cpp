@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <sstream>
 #include <vector>
+#include "crosswordErrors.cpp"
 
 
 Board::Board() {
@@ -69,10 +70,43 @@ void Board::setUpField(const int row, const int col) {
 }
 
 
+void Board::setUpFields(const int begin_row, const int begin_col, const int size, const std::string orientation) {
+	int dx = 0;
+	int dy = 0;
+
+	int x = begin_col;
+	int y = begin_row;
+
+	if (orientation == "vertically") {
+		dy = 1;
+	}
+	else if (orientation == "horizontally") {
+		dx = 1;
+	}
+	else {
+		throw InvalidOrientation();
+	}
+
+	for (int i = 0; i < size; i++) {
+		try {
+			coordsValidation(y, x);
+			setUpField(y, x);
+		}
+		// if there are errors, program uses only correct values
+		catch (const std::out_of_range&) {
+			break;		// if index is out of range looop breaks
+		}
+
+		x += dx;
+		y += dy;
+	}
+}
+
+
 bool Board::coordsValidation(const int row, const int col) const {
 	if (!validCoords(row, col))
 	{
-		throw std::invalid_argument("Index out of range");
+		throw std::out_of_range("Index out of range");
 	}
 	return true;
 }
@@ -92,6 +126,48 @@ void Board::fillField(const int row, const int col, const char value)
 
 void Board::fillField(const int row, const int col, const std::string value) {
 	fields.at(row).at(col).fill(value);
+}
+
+
+void Board::fillFields(const int begin_row, const int begin_col, const std::string answer, const std::string orientation) {
+	int dx = 0;
+	int dy = 0;
+
+	int x = begin_col;
+	int y = begin_row;
+
+	if (orientation == "vertically") {
+		dy = 1;
+	}
+	else if (orientation == "horizontally") {
+		dx = 1;
+	}
+	else {
+		throw InvalidOrientation();
+	}
+	
+	for (unsigned i = 0; i < answer.size(); i++) {
+		try {
+			coordsValidation(y, x);
+			fillField(y, x, answer.at(i));
+		}
+		// if there are errors, program uses only correct values
+		catch (const FieldNotSettedUp&) {
+			x += dx;
+			y += dy;
+			continue;		// if there is more letters than needed, program passes them
+		}
+		catch (const NotAlpha&) {
+			x += dx;
+			y += dy;
+			continue;		// if index is out of range looop breaks
+		}
+		catch (const std::out_of_range&) {
+			break;		// if index is out of range looop breaks
+		}
+		x += dx;
+		y += dy;
+	}
 }
 
 
@@ -122,7 +198,7 @@ void Board::clear() {
 void Board::setUpMaxSize(const int NORows, const int NOCol) {
 
 	if (NORows == 0 || NOCol == 0) {
-		throw std::invalid_argument("Zero board size");
+		throw BoardSizeException();
 	}
 	int diff = NORows - getNORows();
 	if (diff > 0) {
@@ -180,7 +256,7 @@ std::istream& operator>>(std::istream& is, Board& b) {
 	}
 
 	if (NORows == 0) {
-		throw std::invalid_argument("Zero board size");
+		throw BoardSizeException();
 	}
 	unsigned NOCols = values.at(0).size();
 

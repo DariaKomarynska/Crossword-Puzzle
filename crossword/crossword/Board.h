@@ -23,11 +23,13 @@ public:
 	int getNOColumns() const;
 	void fillField(const int row, const int col, const char value);
 	void fillField(const int row, const int col, const std::string value);
+	void fillFields(const int begin_row, const int begin_col, const std::string answer, const std::string orientation);
 	void putIndex(const int row, const int col, const int value);
 	void putIndex(const int row, const int col, const std::string value);
 	void putIndex(const int row, const int col, const char value);
 	const char getValue(const int row, const int col) const;
 	void setUpField(const int row, const int col);
+	void setUpFields(const int begin_row, const int begin_col, const int size, const std::string orientation);
 	void clear();
 	bool validCoords(const int row, const int col) const;
 	bool coordsValidation(const int row, const int col) const;

@@ -47,7 +47,7 @@ void Game::filling() {
 		std::cout << "Enter answer: ";
 		std::cin >> answer;
 
-		board.fillAnswer(number(input), answer);
+		// board.fillAnswer(number(input), answer);
 	}
 	else if (input == "2") {
 		std::string row;
@@ -77,16 +77,16 @@ void Game::filling() {
 
 void Game::ending() {
 	board.clear();
-	board.putFirstLetters();
+	// board.putFirstLetters();
 	countPoints();
 	std::cout << player <<'\n';
 }
 
 
 void Game::countPoints() {
-	player.addPoints(board.getPoints());
+	// player.addPoints(board.getPoints());
 }
 
 void Game::checkForPoints(int row, int col) {
-	if (board.isCorrect(row, col)) player++;
+	// if (board.isCorrect(row, col)) player++;
 }

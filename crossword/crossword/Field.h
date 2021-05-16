@@ -3,12 +3,12 @@
 
 class Field {
 private:
-	char value = '#';
+	char value;
 
 public:
-	Field() {};		// empty - '#' field
-	Field(const char c) : value(c) {};
-	Field(const std::string s) : value(s[0]) {};
+	Field() : value('#') {};		// empty - '#' field
+	Field(const char c) { fill(c); }
+	Field(const std::string s) { fill(s[0]); }
 	void setUp() { value = '_'; }
 	void fill(char c);
 	void fill(const std::string s);

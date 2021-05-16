@@ -12,7 +12,7 @@ public:
 class NotAlpha : public std::exception
 {
 public:
-    virtual char const* what() const { return "You can fill this field only with letter."; }
+    virtual char const* what() const { return "This is not a letter."; }
 };
 
 

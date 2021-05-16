@@ -1,6 +1,7 @@
 #include "CppUnitTest.h"
 #include "../crossword/Field.h"
 #include "../crossword/Field.cpp"
+#include "../crossword/crosswordErrors.cpp"
 
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -50,45 +51,39 @@ namespace TestCrossword
 		TEST_METHOD(fillInt)
 		{
 			Field f = Field('C');
-			f.fill(44);
+			f.putIndex(44);
 			char c = char('44');
 			Assert::AreEqual(c, f.getValue());
 		}
 
 		TEST_METHOD(fillNotSettedUp)
 		{
-			std::string errmsg;
-			std::string expected = "This field should remain empty";
+			const char* expected = "This field should remain empty.";
 			Field f = Field();
 			
 			try
 			{
 				f.fill('V');
 			}
-			catch (const char* msg)
+			catch (const FieldNotSettedUp& err)
 			{
-				errmsg = msg;
+				Assert::AreEqual(expected, err.what());
 			}
-			Assert::AreEqual(expected, errmsg);
 		}
 
 
 		TEST_METHOD(fillIncorrectChar)
 		{
-			std::string errmsg;
-			std::string expected = "You can fill this field only with letter or number";
+			const char* expected = "This is not a letter.";
 			Field f = Field();
 			f.setUp();
 
-			try
-			{
+			try {
 				f.fill(',');
 			}
-			catch (const char* msg)
-			{
-				errmsg = msg;
+			catch (const NotAlpha& err) {
+				Assert::AreEqual(expected, err.what());
 			}
-			Assert::AreEqual(expected, errmsg);
 		}
 
 
@@ -114,6 +109,15 @@ namespace TestCrossword
 			Field f = Field();
 			f.clear();
 			Assert::AreEqual('#', f.getValue());
+		}
+
+
+		TEST_METHOD(fillSpace)
+		{
+			Field f = Field();
+			f.setUp();
+			f.fill(' ');
+			Assert::AreEqual(' ', f.getValue());
 		}
 	};
 }

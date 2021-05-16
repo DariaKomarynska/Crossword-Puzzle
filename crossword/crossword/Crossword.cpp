@@ -23,6 +23,7 @@ Crossword::Crossword(const Dictionary sol, const std::vector< std::vector<int>> 
 		}
 	}
 
+	
 	Board b = Board();
 }
 

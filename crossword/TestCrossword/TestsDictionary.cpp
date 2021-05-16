@@ -250,5 +250,19 @@ namespace Dictionarytest
 
 			Assert::IsTrue(all_ques == correct_ques);
 		}
+
+
+		TEST_METHOD(Answer_not_alpha)
+		{
+			const char* expected_msg = "Answer has unalloved character.";
+			map<string, string> dict1 = { {"apple", "fru1t"}, {"pen", "writing instrument"} };
+			try {
+				Dictionary dict_a(dict1);
+			}
+			catch(const std::invalid_argument& err){
+				Assert::AreEqual(expected_msg, err.what());
+			}
+			
+		}
 	};
 }

@@ -11,19 +11,19 @@ void Dictionary::add_word(string word, string meaning)
 	dictionary[word] = meaning;
 }
 
-string Dictionary::find_meaning(string& word)
+string Dictionary::find_meaning(string& word) const
 {
 	// find meaning by word
-	transform(word.begin(), word.end(), word.begin(), ::tolower);
+	/*transform(word.begin(), word.end(), word.begin(), ::tolower);
 	it = dictionary.find(word);
 	if (it != dictionary.end()) {
 		return it->second;
 	}
-	else { return "There is no such word in the dictionary"; }
+	else { return "There is no such word in the dictionary"; }*/
 }
 
 
-string Dictionary::find_meaning(int index) {
+string Dictionary::find_meaning(int index) const {
 	int count = 0;
 	for (auto& it : dictionary) {
 		if (count == index) {
@@ -34,7 +34,7 @@ string Dictionary::find_meaning(int index) {
 	return "There is no such a question in the dictionary";
 }
 
-string Dictionary::find_word(int index) {
+string Dictionary::find_word(int index) const {
 	int count = 0;
 	for (auto& it : dictionary) {
 		count++;
@@ -45,7 +45,7 @@ string Dictionary::find_word(int index) {
 	return "There is no such a word in the dictionary";
 }
 
-string Dictionary::find_word(string& meaning)
+string Dictionary::find_word(string& meaning) const
 {
 	// find word using its meaning
 	transform(meaning.begin(), meaning.end(), meaning.begin(), ::tolower);

@@ -29,6 +29,7 @@ public:
 	void putIndex(const int row, const int col, const char value);
 	const char getValue(const int row, const int col) const;
 	void setUpField(const int row, const int col);
+	void createAndSetUpFields(const int begin_row, const int begin_col, const int size, const std::string orientation);
 	void setUpFields(const int begin_row, const int begin_col, const int size, const std::string orientation);
 	void clear();
 	bool validCoords(const int row, const int col) const;

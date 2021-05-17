@@ -15,7 +15,7 @@ private:
 public:
 	Crossword() {};
 	Crossword(std::string filePath);
-	Crossword(const Dictionary sol, const std::vector< std::vector<int>> fLett, const std::vector<std::string> orient);
+	Crossword(const Dictionary n_solutions, const std::vector< std::vector<int>> first_letters, const std::vector<std::string> n_orientations);
 
 	void fillAnswer(const int NOQuestion, const std::string answer);
 	std::vector<int> getFirstLetterCoords(const int NOQuestion);

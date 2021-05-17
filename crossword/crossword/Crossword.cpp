@@ -6,25 +6,40 @@ Crossword::Crossword(std::string filepath) {
 }
 
 
-Crossword::Crossword(const Dictionary sol, const std::vector< std::vector<int>> fLett, const std::vector<std::string> orients) {
-	if (sol.size() != fLett.size() || sol.size() != orients.size()) {
+Crossword::Crossword(const Dictionary n_solutions, const std::vector< std::vector<int>> first_letters, const std::vector<std::string> n_orientations) {
+	unsigned size = n_solutions.size();
+	if (size != first_letters.size() || size != n_orientations.size()) {
 		throw std::invalid_argument("Invalid data size");
 	}
 
-	for (auto& point : fLett) {
+	solutions = n_solutions;
+
+	// check if first_letters coords is vector nx2
+	for (auto& point : first_letters) {
 		if (point.size() != 2) {
 			throw std::invalid_argument("Invalid data size");
 		}
 	}
 
-	for (auto& orient : orients) {
+	firstLettersCoords = first_letters;
+
+	// check if orientations are correct 
+	for (auto& orient : n_orientations) {
 		if (orient != "vertically" && orient != "horizontally") {
 			throw std::invalid_argument("Invalid orientation");
 		}
 	}
 
-	
-	Board b = Board();
+	orientations = n_orientations;
+
+	for (unsigned i = 0; i < size; i++) {
+		std::string answer = solutions.find_word(i);
+		unsigned a_size = answer.size();
+		std::string orientation = orientations.at(i);
+		std::vector<int> fst_letter_pos = firstLettersCoords.at(i);
+
+		board.createAndSetUpFields(fst_letter_pos.at(0), fst_letter_pos.at(1), a_size, orientation);
+	}
 }
 
 

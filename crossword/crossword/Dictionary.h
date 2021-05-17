@@ -32,13 +32,13 @@ public:
 
 	void add_dictionary(map<string, string> second_dict);
 
-	string find_meaning(string& word);
+	string find_meaning(string& word) const;
 
-	string find_word(string& meaning);
+	string find_word(string& meaning) const;
 
-	string find_meaning(int index);
+	string find_meaning(int index) const;
 
-	string find_word(int index);
+	string find_word(int index) const;
 
 	map<string, string> find_by_letter(char first_char);
 

@@ -70,6 +70,20 @@ void Board::setUpField(const int row, const int col) {
 }
 
 
+void Board::createAndSetUpFields(const int begin_row, const int begin_col, const int size, const std::string orientation) {
+	int end_row = begin_row;
+	int end_col = begin_col;
+	if (orientation == "vertically") {
+		end_row += size - 1;
+	}
+	else if (orientation == "horizontally") {
+		end_col += size - 1;
+	}
+	setUpMaxSize(end_row + 1, end_col + 1);
+	setUpFields(begin_row, begin_col, size, orientation);
+}
+
+
 void Board::setUpFields(const int begin_row, const int begin_col, const int size, const std::string orientation) {
 	int dx = 0;
 	int dy = 0;

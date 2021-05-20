@@ -255,14 +255,31 @@ namespace Dictionarytest
 		TEST_METHOD(Answer_not_alpha)
 		{
 			const char* expected_msg = "Answer has unalloved character.";
-			map<string, string> dict1 = { {"apple", "fru1t"}, {"pen", "writing instrument"} };
+			map<string, string> dict1 = { {"apple", "fru1t"}, {"pen", "writinginstrument"} };
 			try {
 				Dictionary dict_a(dict1);
 			}
 			catch(const std::invalid_argument& err){
 				Assert::AreEqual(expected_msg, err.what());
 			}
-			
+		}
+
+
+		TEST_METHOD(Answer_space)
+		{
+			const char* expected_msg = "Answer has unalloved character.";
+			map<string, string> dict1 = { {"red apple", "fruit"}, {"pen", "writing instrument"} };
+			Dictionary dict_a(dict1);
+
+			std::string s1 = "red apple";
+			std::string s2 = "fruit";
+
+			std::string s3 = "pen";
+			std::string s4 = "writing instrument";
+
+
+			Assert::AreEqual(s1, dict_a.find_word(s2));
+			Assert::AreEqual(s3, dict_a.find_word(s4));
 		}
 	};
 }

@@ -43,3 +43,19 @@ Crossword::Crossword(const Dictionary n_solutions, const std::vector< std::vecto
 }
 
 
+void Crossword::fillAnswer(const int NOQuestion, const std::string answer) {
+	board.fillFields(firstLettersCoords[NOQuestion][0], firstLettersCoords[NOQuestion][1], answer, orientations[NOQuestion]);
+}
+
+void Crossword::fillField(const int row, const int col, const char value) {
+	if (board.validCoords(row, col)) { board.fillField(row, col, value); }
+}
+
+std::ostream& operator<<(std::ostream& os, Crossword& c) {
+	os << c.board;
+	return os;
+}
+
+std::vector<std::string> Crossword::getQuestions() {
+	return solutions.questions();
+}

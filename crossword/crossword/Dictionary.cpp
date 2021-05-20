@@ -14,12 +14,12 @@ void Dictionary::add_word(string word, string meaning)
 string Dictionary::find_meaning(string& word) const
 {
 	// find meaning by word
-	/*transform(word.begin(), word.end(), word.begin(), ::tolower);
-	it = dictionary.find(word);
+	transform(word.begin(), word.end(), word.begin(), ::tolower);
+	//it = dictionary.find(word);
 	if (it != dictionary.end()) {
 		return it->second;
 	}
-	else { return "There is no such word in the dictionary"; }*/
+	else { return "There is no such word in the dictionary"; }
 }
 
 

@@ -108,6 +108,81 @@ namespace UnitTestBoard
 		}
 
 
+		TEST_METHOD(createAndSetUpFieldsHor)
+		{
+			Board b1 = Board();
+			b1.createAndSetUpFields(0, 0, 5, "horizontally");
+
+			Assert::AreEqual(5, b1.getNOColumns());
+			Assert::AreEqual(1, b1.getNORows());
+
+			Assert::AreEqual("_"[0], b1.getValue(0, 0));
+			Assert::AreEqual("_"[0], b1.getValue(0, 1));
+			Assert::AreEqual("_"[0], b1.getValue(0, 2));
+			Assert::AreEqual("_"[0], b1.getValue(0, 3));
+			Assert::AreEqual("_"[0], b1.getValue(0, 4));
+		}
+
+
+		TEST_METHOD(createAndSetUpFieldsVer)
+		{
+			Board b1 = Board();
+			b1.createAndSetUpFields(0, 0, 5, "vertically");
+
+			Assert::AreEqual(1, b1.getNOColumns());
+			Assert::AreEqual(5, b1.getNORows());
+
+			Assert::AreEqual("_"[0], b1.getValue(0, 0));
+			Assert::AreEqual("_"[0], b1.getValue(1, 0));
+			Assert::AreEqual("_"[0], b1.getValue(2, 0));
+			Assert::AreEqual("_"[0], b1.getValue(3, 0));
+			Assert::AreEqual("_"[0], b1.getValue(4, 0));
+		}
+
+
+		TEST_METHOD(createAndSetUpFieldsTrickyBeg)
+		{
+			Board b1 = Board();
+			b1.createAndSetUpFields(3, 2, 5, "horizontally");
+
+			Assert::AreEqual(7, b1.getNOColumns());
+			Assert::AreEqual(4, b1.getNORows());
+
+			Assert::AreEqual("_"[0], b1.getValue(3, 2));
+			Assert::AreEqual("_"[0], b1.getValue(3, 3));
+			Assert::AreEqual("_"[0], b1.getValue(3, 4));
+			Assert::AreEqual("_"[0], b1.getValue(3, 5));
+			Assert::AreEqual("_"[0], b1.getValue(3, 6));
+
+			Assert::AreEqual("#"[0], b1.getValue(3, 0));
+			Assert::AreEqual("#"[0], b1.getValue(3, 1));
+
+			Assert::AreEqual("#"[0], b1.getValue(0, 0));
+			Assert::AreEqual("#"[0], b1.getValue(0, 1));
+			Assert::AreEqual("#"[0], b1.getValue(0, 1));
+			Assert::AreEqual("#"[0], b1.getValue(0, 3));
+			Assert::AreEqual("#"[0], b1.getValue(0, 4));
+			Assert::AreEqual("#"[0], b1.getValue(0, 5));
+			Assert::AreEqual("#"[0], b1.getValue(0, 6));
+
+			Assert::AreEqual("#"[0], b1.getValue(1, 0));
+			Assert::AreEqual("#"[0], b1.getValue(1, 1));
+			Assert::AreEqual("#"[0], b1.getValue(1, 1));
+			Assert::AreEqual("#"[0], b1.getValue(1, 3));
+			Assert::AreEqual("#"[0], b1.getValue(1, 4));
+			Assert::AreEqual("#"[0], b1.getValue(1, 5));
+			Assert::AreEqual("#"[0], b1.getValue(1, 6));
+
+			Assert::AreEqual("#"[0], b1.getValue(2, 0));
+			Assert::AreEqual("#"[0], b1.getValue(2, 1));
+			Assert::AreEqual("#"[0], b1.getValue(2, 1));
+			Assert::AreEqual("#"[0], b1.getValue(2, 3));
+			Assert::AreEqual("#"[0], b1.getValue(2, 4));
+			Assert::AreEqual("#"[0], b1.getValue(2, 5));
+			Assert::AreEqual("#"[0], b1.getValue(2, 6));
+		}
+
+
 		TEST_METHOD(fillFieldsExtraLetters)
 		{
 			Board b1(10, 10);

@@ -19,7 +19,7 @@ public:
 	char getValue() const { return value; }
 };
 
-extern bool alphaValidation(const char c);
+extern bool alphaOrSpaceValidation(const char c);
 extern bool isAlpha(const char c);
 extern bool numberValidation(const char c);
 extern bool isNumber(const char c);

@@ -38,6 +38,15 @@ namespace UnitTestBoard
 			Assert::IsTrue(test == b1.getValue(0, 0));
 		}
 
+		TEST_METHOD(fillWithSpace)
+		{
+			Board b1(1, 1);
+			const char expected = ' ';
+			b1.setUpField(0, 0);
+			b1.fillField(0, 0, expected);
+			Assert::AreEqual(expected, b1.getValue(0, 0));
+		}
+
 
 		TEST_METHOD(setUpFieldsVer)
 		{

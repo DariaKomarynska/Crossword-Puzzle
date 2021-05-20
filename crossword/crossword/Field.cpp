@@ -4,13 +4,16 @@
 
 
 void Field::fill(const char c) {
-	alphaValidation(c);
-	if (value != '#') {
+	alphaOrSpaceValidation(c);
+	if (value == '#') throw FieldNotSettedUp();
+
+	if (c != '_') {
 		value = tolower(c);
 	}
 	else {
-		throw FieldNotSettedUp();
+		value = c;
 	}
+		
 }
 
 
@@ -42,8 +45,8 @@ void Field::clear() {
 }
 
 
-extern bool alphaValidation(const char c) {
-	if (!isAlpha(c)) {
+extern bool alphaOrSpaceValidation(const char c) {
+	if (!isAlpha(c) && c != ' ') {
 		throw NotAlpha();
 	}
 	return true;

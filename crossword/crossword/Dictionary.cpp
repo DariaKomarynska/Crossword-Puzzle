@@ -38,10 +38,10 @@ string Dictionary::find_meaning(int index) const {
 string Dictionary::find_word(int index) const {
 	int count = 0;
 	for (auto& it : dictionary) {
-		count++;
 		if (count == index) {
 			return it.first;
 		}
+		count++;
 	}
 	return "There is no such a word in the dictionary";
 }

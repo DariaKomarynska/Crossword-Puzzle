@@ -48,7 +48,7 @@ void Crossword::fillAnswer(const int NOQuestion, const std::string answer) {
 }
 
 void Crossword::fillField(const int row, const int col, const char value) {
-	if (board.validCoords(row, col)) { board.fillField(row, col, value); }
+	board.fillField(row, col, value);
 }
 
 std::ostream& operator<<(std::ostream& os, Crossword& c) {

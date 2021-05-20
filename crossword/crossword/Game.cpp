@@ -2,8 +2,12 @@
 #include "Game.h"
 
 
-Game::Game(Player nPlayer, Board nBoard) : player(nPlayer), board(nBoard) {
-	board.clear();
+Game::Game(Player nPlayer, Crossword nCrossword) : player(nPlayer), crossword(nCrossword) {
+	std::vector<std::string> questions = crossword.getQuestions();
+	for (int i = 0; i < questions.size(); i++) {
+		questionString << i << ". " << questions[i] << std::endl;
+	}
+	//board.clear();
 }
 
 
@@ -12,7 +16,8 @@ void Game::play() {
 
 	bool end = false;
 	while (!end) {
-		std::cout << board;
+		std::cout << crossword << std::endl;
+		std::cout << questionString.str();
 
 		std::string input="0";
 
@@ -36,7 +41,7 @@ void Game::play() {
 
 
 void Game::filling() {
-	std::string input = 0;
+	std::string input = "0";
 	std::cout << "\n1. QUESTION\n2. FIELD\n";
 	std::cin >> input;
 	if (input == "1") {
@@ -47,9 +52,9 @@ void Game::filling() {
 		std::cout << "Enter answer: ";
 		std::cin >> answer;
 
-		// board.fillAnswer(number(input), answer);
+		crossword.fillAnswer(number(input), answer);
 	}
-	else if (input == "2") {
+	else if (input == "2") {	// czy na pewno potrzebujemy wstawiaæ w konkretne miejsce?
 		std::string row;
 		std::string col;
 
@@ -57,14 +62,13 @@ void Game::filling() {
 		std::cin >> row;
 		std::cout << "COLUMN: ";
 		std::cin >> col;
+		std::cout << "Enter letter: \n";
+		std::cin >> input;
 		if (isNumber(row) && isNumber(col)) {
 			int nRow = number(row) - 1;
 			int nCol = number(col) - 1;
-			if (board.validCoords(nRow, nCol)) {
-				std::cout << "Enter letter: \n";
-				std::cin >> input;
-				board.fillField(nRow, nCol, input[0]);
-			}
+			crossword.fillField(nRow, nCol, input[0]);
+
 		}
 		else input = "-1";
 	}
@@ -76,7 +80,7 @@ void Game::filling() {
 
 
 void Game::ending() {
-	board.clear();
+	// board.clear();
 	// board.putFirstLetters();
 	countPoints();
 	std::cout << player <<'\n';

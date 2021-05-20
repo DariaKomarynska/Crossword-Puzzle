@@ -28,9 +28,9 @@ string Dictionary::find_meaning(int index) const {
 	int count = 0;
 	for (auto& it : dictionary) {
 		if (count == index) {
-			count++;
 			return it.second;
 		}
+		count++;
 	}
 	return "There is no such a question in the dictionary";
 }

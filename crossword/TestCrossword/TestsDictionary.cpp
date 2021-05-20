@@ -8,7 +8,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace Dictionarytest
 {
-	TEST_CLASS(Dictionarytest)
+	TEST_CLASS(TestDictionary)
 	{
 	public:
 

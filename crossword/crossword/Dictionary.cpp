@@ -15,11 +15,12 @@ string Dictionary::find_meaning(string& word) const
 {
 	// find meaning by word
 	transform(word.begin(), word.end(), word.begin(), ::tolower);
-	//it = dictionary.find(word);
-	if (it != dictionary.end()) {
-		return it->second;
+	for (auto& it : dictionary) {
+		if (it.first == word) {
+			return it.second;
+		}
 	}
-	else { return "There is no such word in the dictionary"; }
+	return "There is no such word in the dictionary";
 }
 
 

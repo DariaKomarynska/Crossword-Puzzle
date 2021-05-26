@@ -39,15 +39,27 @@ void Game::play() {
 	}
 }
 
+std::string Game::numberOfQuestion() {
+	std::string input = "0";
+	std::cout << "Enter number of question: ";
+	std::cin >> input;
+	return input;
+}
 
 void Game::filling() {
 	std::string input = "0";
 	std::cout << "\n1. QUESTION\n2. FIELD\n";
 	std::cin >> input;
+	if (input != "1" && input != "2") {
+		cout << "Choose QUESTION or FIELD. Try again!\n"; // to see where is problem
+		filling();
+	}
 	if (input == "1") {
-		std::cout << "Enter number of question: ";
-		std::cin >> input;
-
+		input = numberOfQuestion();
+		while (!crossword.isNumberOfQuestion(number(input))) {
+			cout << "Try again!\n";
+			input = numberOfQuestion();
+		}
 		std::string answer;
 		std::cout << "Enter answer: ";
 		std::cin >> answer;

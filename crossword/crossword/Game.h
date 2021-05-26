@@ -18,4 +18,5 @@ public:
 	void ending();
 	void checkForPoints(int row, int col);
 	void countPoints();
+	std::string numberOfQuestion();
 };

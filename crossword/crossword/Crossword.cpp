@@ -48,12 +48,16 @@ void Crossword::fillAnswer(const int NOQuestion, const std::string answer) {
 		board.fillFields(getFirstLetterX(NOQuestion), getFirstLetterY(NOQuestion), answer, getOrientation(NOQuestion));
 	}
 	else {
-		cout << "Try again!\n\n";
+		cout << "Incorrect answer. Try again!\n\n";
 	}
 }
 
 bool Crossword::isCorrectAnswer(const int NOQuestion, const std::string answer) {
 	return (answer == solutions.find_word(NOQuestion));
+}
+
+bool Crossword::isNumberOfQuestion(const int NOQuestion) {
+	return (NOQuestion < solutions.size());
 }
 
 void Crossword::fillField(const int row, const int col, const char value) {

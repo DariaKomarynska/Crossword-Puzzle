@@ -27,4 +27,5 @@ public:
 	int getFirstLetterX(const int NOQuestion);
 	int getFirstLetterY(const int NOQuestion);
 	Board getBoard() { return board; };
+	bool isCorrectAnswer(const int NOQuestion, const std::string answer);
 };

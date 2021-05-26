@@ -10,12 +10,6 @@ namespace TestCrossword
 	TEST_CLASS(TestCrossword)
 	{
 	public:
-
-		TEST_METHOD(TestMethod1)
-		{
-			Assert::AreEqual(3, 3);
-		}
-
 		TEST_METHOD(TestCrosswordQuestions)
 		{
 			vector<vector<int>> pair = { {1, 1}, {1, 1} };
@@ -100,6 +94,35 @@ namespace TestCrossword
 			Assert::AreEqual("p"[0], crossword.getBoard().getValue(1, 1));
 			Assert::AreEqual("s"[0], crossword.getBoard().getValue(1, 2));
 			Assert::AreEqual("z"[0], crossword.getBoard().getValue(1, 3));
+		}
+
+		TEST_METHOD(TestCrosswordIncorrectAnswer)
+		{
+			vector<vector<int>> pair = { {1,1}, {1, 1} };
+			vector<std::string> orientations = { "vertically", "horizontally" };
+
+			Dictionary dict = Dictionary();
+			dict.add_word("paliwo", "piwo to moje");
+			dict.add_word("psz", "pszczola bez czola");
+
+			Crossword crossword = Crossword(dict, pair, orientations);
+			Assert::IsFalse(crossword.isCorrectAnswer(1, "peppa"));
+		}
+
+		TEST_METHOD(TestCrosswordIncorrectNotFill)
+		{
+			vector<vector<int>> pair = { {1,1}, {1, 1} };
+			vector<std::string> orientations = { "vertically", "horizontally" };
+
+			Dictionary dict = Dictionary();
+			dict.add_word("paliwo", "piwo to moje");
+			dict.add_word("psz", "pszczola bez czola");
+
+			Crossword crossword = Crossword(dict, pair, orientations);
+			crossword.fillAnswer(1, "niepsz");
+			Assert::AreEqual("_"[0], crossword.getBoard().getValue(1, 1));
+			Assert::AreEqual("_"[0], crossword.getBoard().getValue(1, 2));
+			Assert::AreEqual("_"[0], crossword.getBoard().getValue(1, 3));
 		}
 	};
 }

@@ -44,8 +44,16 @@ Crossword::Crossword(const Dictionary n_solutions, const std::vector< std::vecto
 
 
 void Crossword::fillAnswer(const int NOQuestion, const std::string answer) {
+	if (isCorrectAnswer(NOQuestion, answer)) {
+		board.fillFields(getFirstLetterX(NOQuestion), getFirstLetterY(NOQuestion), answer, getOrientation(NOQuestion));
+	}
+	else {
+		cout << "Try again!\n\n";
+	}
+}
 
-	board.fillFields(getFirstLetterX(NOQuestion), getFirstLetterY(NOQuestion), answer, getOrientation(NOQuestion));
+bool Crossword::isCorrectAnswer(const int NOQuestion, const std::string answer) {
+	return (answer == solutions.find_word(NOQuestion));
 }
 
 void Crossword::fillField(const int row, const int col, const char value) {

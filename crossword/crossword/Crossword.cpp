@@ -44,7 +44,8 @@ Crossword::Crossword(const Dictionary n_solutions, const std::vector< std::vecto
 
 
 void Crossword::fillAnswer(const int NOQuestion, const std::string answer) {
-	board.fillFields(firstLettersCoords[NOQuestion][0], firstLettersCoords[NOQuestion][1], answer, orientations[NOQuestion]);
+
+	board.fillFields(getFirstLetterX(NOQuestion), getFirstLetterY(NOQuestion), answer, getOrientation(NOQuestion));
 }
 
 void Crossword::fillField(const int row, const int col, const char value) {
@@ -58,4 +59,20 @@ std::ostream& operator<<(std::ostream& os, Crossword& c) {
 
 std::vector<std::string> Crossword::getQuestions() {
 	return solutions.questions();
+}
+
+std::string Crossword::getOrientation(const int NOQuestion) {
+	return orientations[NOQuestion];
+};
+
+std::vector<int> Crossword::getFirstLetterCoords(const int NOQuestion){
+	return firstLettersCoords[NOQuestion];
+}
+
+int Crossword::getFirstLetterX(const int NOQuestion){
+	return getFirstLetterCoords(NOQuestion)[0];
+}
+
+int Crossword::getFirstLetterY(const int NOQuestion) {
+	return getFirstLetterCoords(NOQuestion)[1];
 }

@@ -24,4 +24,7 @@ public:
 	int countPoints();
 	friend std::ostream& operator<<(std::ostream& os, Crossword& c);
 	std::vector<std::string> getQuestions();
+	int getFirstLetterX(const int NOQuestion);
+	int getFirstLetterY(const int NOQuestion);
+	Board getBoard() { return board; };
 };

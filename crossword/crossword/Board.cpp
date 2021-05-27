@@ -211,8 +211,8 @@ void Board::clear() {
 
 void Board::setUpMaxSize(const int NORows, const int NOCol) {
 
-	if (NORows == 0 || NOCol == 0) {
-		throw BoardSizeException();
+	if (NORows <= 0 || NOCol <= 0) {
+		return;
 	}
 	int diff = NORows - getNORows();
 	if (diff > 0) {

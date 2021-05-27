@@ -323,7 +323,7 @@ namespace UnitTestBoard
 		TEST_METHOD(fillNotSettedUp)
 		{
 			std::string errmsg;
-			std::string expected = "This field should remain empty";
+			std::string expected = "This field should remain empty.";
 			Board b1(3, 3);
 			char test = "t"[0];
 			try

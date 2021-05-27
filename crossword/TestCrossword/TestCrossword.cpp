@@ -120,9 +120,9 @@ namespace TestCrossword
 
 			Crossword crossword = Crossword(dict, pair, orientations);
 			crossword.fillAnswer(1, "niepsz");
-			Assert::AreEqual("_"[0], crossword.getBoard().getValue(1, 1));
-			Assert::AreEqual("_"[0], crossword.getBoard().getValue(1, 2));
-			Assert::AreEqual("_"[0], crossword.getBoard().getValue(1, 3));
+			Assert::AreEqual("n"[0], crossword.getBoard().getValue(1, 1));
+			Assert::AreEqual("i"[0], crossword.getBoard().getValue(1, 2));
+			Assert::AreEqual("e"[0], crossword.getBoard().getValue(1, 3));
 		}
 
 		TEST_METHOD(TestCrosswordIncorrectAnswerFill)

@@ -109,7 +109,7 @@ namespace TestCrossword
 			Assert::IsFalse(crossword.isCorrectAnswer(1, "peppa"));
 		}
 
-		TEST_METHOD(TestCrosswordIncorrectNotFill)
+		TEST_METHOD(TestCrosswordIncorrectSizeNotFill)
 		{
 			vector<vector<int>> pair = { {1,1}, {1, 1} };
 			vector<std::string> orientations = { "vertically", "horizontally" };
@@ -125,6 +125,21 @@ namespace TestCrossword
 			Assert::AreEqual("_"[0], crossword.getBoard().getValue(1, 3));
 		}
 
+		TEST_METHOD(TestCrosswordIncorrectAnswerFill)
+		{
+			vector<vector<int>> pair = { {1,1}, {1, 1} };
+			vector<std::string> orientations = { "vertically", "horizontally" };
+
+			Dictionary dict = Dictionary();
+			dict.add_word("paliwo", "piwo to moje");
+			dict.add_word("psz", "pszczola bez czola");
+
+			Crossword crossword = Crossword(dict, pair, orientations);
+			crossword.fillAnswer(1, "poo");
+			Assert::AreEqual("p"[0], crossword.getBoard().getValue(1, 1));
+			Assert::AreEqual("o"[0], crossword.getBoard().getValue(1, 2));
+			Assert::AreEqual("o"[0], crossword.getBoard().getValue(1, 3));
+		}
 		TEST_METHOD(TestCrosswordCorrectNumberQuestion)
 		{
 			vector<vector<int>> pair = { {1,1}, {1, 1} };

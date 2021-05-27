@@ -44,9 +44,7 @@ Crossword::Crossword(const Dictionary n_solutions, const std::vector< std::vecto
 
 
 void Crossword::fillAnswer(const int NOQuestion, const std::string answer) {
-	if (answer.size() == correctAnswer(NOQuestion).size()) {
-		board.fillFields(getFirstLetterX(NOQuestion), getFirstLetterY(NOQuestion), answer, getOrientation(NOQuestion));
-	}
+	board.fillFields(getFirstLetterX(NOQuestion), getFirstLetterY(NOQuestion), answer, getOrientation(NOQuestion));
 }
 
 string Crossword::correctAnswer(const int NOQuestion) {

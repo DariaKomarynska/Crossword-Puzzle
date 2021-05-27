@@ -22,6 +22,7 @@ public:
 extern bool alphaOrSpaceValidation(const char c);
 extern bool isAlpha(const char c);
 extern bool numberValidation(const char c);
+extern bool numberValidation(std::string c);
 extern bool isNumber(const char c);
 extern bool isNumber(std::string s);
 extern int number(std::string s);

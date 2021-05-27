@@ -43,3 +43,48 @@ Crossword::Crossword(const Dictionary n_solutions, const std::vector< std::vecto
 }
 
 
+void Crossword::fillAnswer(const int NOQuestion, const std::string answer) {
+	if (isCorrectAnswer(NOQuestion, answer)) {
+		board.fillFields(getFirstLetterX(NOQuestion), getFirstLetterY(NOQuestion), answer, getOrientation(NOQuestion));
+	}
+	else {
+		cout << "Incorrect answer. Try again!\n\n";
+	}
+}
+
+bool Crossword::isCorrectAnswer(const int NOQuestion, const std::string answer) {
+	return (answer == solutions.find_word(NOQuestion));
+}
+
+bool Crossword::isNumberOfQuestion(const int NOQuestion) {
+	return (NOQuestion < solutions.size());
+}
+
+void Crossword::fillField(const int row, const int col, const char value) {
+	board.fillField(row, col, value);
+}
+
+std::ostream& operator<<(std::ostream& os, Crossword& c) {
+	os << c.board;
+	return os;
+}
+
+std::vector<std::string> Crossword::getQuestions() {
+	return solutions.questions();
+}
+
+std::string Crossword::getOrientation(const int NOQuestion) {
+	return orientations[NOQuestion];
+};
+
+std::vector<int> Crossword::getFirstLetterCoords(const int NOQuestion){
+	return firstLettersCoords[NOQuestion];
+}
+
+int Crossword::getFirstLetterX(const int NOQuestion){
+	return getFirstLetterCoords(NOQuestion)[0];
+}
+
+int Crossword::getFirstLetterY(const int NOQuestion) {
+	return getFirstLetterCoords(NOQuestion)[1];
+}

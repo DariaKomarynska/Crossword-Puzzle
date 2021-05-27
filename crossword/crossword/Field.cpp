@@ -65,6 +65,12 @@ extern bool numberValidation(const char c) {
 	return true;
 }
 
+extern bool numberValidation(std::string c) {
+	if (!isNumber(c)) {
+		throw NotNumber();
+	}
+	return true;
+}
 
 extern bool isNumber(const char c) {
 	return c >= 48 && c <= 57;
@@ -80,7 +86,7 @@ extern bool isNumber(std::string s) {
 
 
 extern int number(std::string s) {
-	numberValidation(std::stoi(s));
+	numberValidation(s);
 	return std::stoi(s);
 }
 

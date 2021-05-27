@@ -5,7 +5,8 @@
 Game::Game(Player nPlayer, Crossword nCrossword) : player(nPlayer), crossword(nCrossword) {
 	std::vector<std::string> questions = crossword.getQuestions();
 	for (int i = 0; i < questions.size(); i++) {
-		questionString << i << ". " << questions[i] << std::endl;
+		int index = i + 1;
+		questionString << index << ". " << questions[i] << std::endl;
 	}
 	//board.clear();
 }
@@ -64,7 +65,8 @@ void Game::filling() {
 		std::cout << "Enter answer: ";
 		std::cin >> answer;
 
-		crossword.fillAnswer(number(input), answer);
+		int qIndex = number(input) - 1;
+		crossword.fillAnswer(qIndex, answer);
 	}
 	else if (input == "2") {	// czy na pewno potrzebujemy wstawiaæ w konkretne miejsce?
 		std::string row;

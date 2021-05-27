@@ -56,7 +56,7 @@ bool Crossword::isCorrectAnswer(const int NOQuestion, const std::string answer) 
 }
 
 bool Crossword::isNumberOfQuestion(const int NOQuestion) {
-	return (NOQuestion < solutions.size());						// zmienic, kiedy pytania będą zaczynać się od 1
+	return (0 < NOQuestion && NOQuestion < solutions.size() + 1);						// zmienic, kiedy pytania będą zaczynać się od 1
 }
 
 void Crossword::fillField(const int row, const int col, const char value) {

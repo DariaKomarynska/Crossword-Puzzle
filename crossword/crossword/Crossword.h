@@ -29,4 +29,5 @@ public:
 	Board getBoard() { return board; };
 	bool isCorrectAnswer(const int NOQuestion, const std::string answer);
 	bool isNumberOfQuestion(const int NOQuestion);
+	string correctAnswer(const int NOQuestion);
 };

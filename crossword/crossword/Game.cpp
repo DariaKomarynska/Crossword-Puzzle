@@ -51,7 +51,7 @@ void Game::filling() {
 	std::cout << "\n1. QUESTION\n2. FIELD\n";
 	std::cin >> input;
 	if (input != "1" && input != "2") {
-		cout << "Choose QUESTION or FIELD. Try again!\n"; // to see where is problem
+		cout << "Try again!\n"; 
 		filling();
 	}
 	if (input == "1") {

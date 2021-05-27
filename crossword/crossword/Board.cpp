@@ -238,7 +238,7 @@ std::ostream& operator<<(std::ostream& os, const Board& b)
 	// 2 | _ | _ | _ | # | # |
 	if (b.getNOColumns() == 0 || b.getNORows() == 0) return os;
 	os << "   ";
-	for (int i; i < b.getNOColumns(); i++) {
+	for (int i = 0; i < b.getNOColumns(); i++) {
 		int index = i + 1;
 		os << "  " << index;
 	}

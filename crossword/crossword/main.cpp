@@ -1,13 +1,7 @@
-#include "Game.h"
-#include "Board.h"
-#include "Player.h"
+#include <iostream>
 
 int main(){
-	/*Player jacus = Player("Jacex");
-	Board board = Board(9, "test_data1.csv");
-
-	Game game = Game(jacus, board);
-	game.play();*/
+	std::cout<<"     1   2   3\n 1 | a | b | c | \n 2 | # | # | # | \n 3 | # | # | # | \n";
 
 	return 0;
 }

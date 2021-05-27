@@ -460,7 +460,7 @@ namespace UnitTestBoard
 			Board b1 = Board();
 			std::stringstream is;
 			std::stringstream os;
-			std::string input = "     1  2\n 1 | a | b |\n 2 | c | d |\n";
+			std::string input = "     1   2\n 1 | a | b |\n 2 | c | d |\n";
 			is << input;
 			is >> b1;
 			os << b1;

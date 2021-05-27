@@ -52,7 +52,7 @@ void Game::filling() {
 	std::cout << "\n1. QUESTION\n2. FIELD\n";
 	std::cin >> input;
 	if (input != "1" && input != "2") {
-		cout << "Try again!\n"; 
+		cout << "Try again!\n";
 		filling();
 	}
 	if (input == "1") {
@@ -68,7 +68,7 @@ void Game::filling() {
 		int qIndex = number(input) - 1;
 		crossword.fillAnswer(qIndex, answer);
 	}
-	else if (input == "2") {	// czy na pewno potrzebujemy wstawiaæ w konkretne miejsce?
+	else if (input == "2") {
 		std::string row;
 		std::string col;
 
@@ -105,6 +105,7 @@ void Game::countPoints() {
 	// player.addPoints(board.getPoints());
 }
 
+
 void Game::checkForPoints(int row, int col) {
-	// if (board.isCorrect(row, col)) player++;
+	// if (board.isCorrect(row, col));
 }

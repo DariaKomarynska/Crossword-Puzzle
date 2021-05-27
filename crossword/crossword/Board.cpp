@@ -237,10 +237,10 @@ std::ostream& operator<<(std::ostream& os, const Board& b)
 	// 1 | v | a | l | u | e |
 	// 2 | _ | _ | _ | # | # |
 	if (b.getNOColumns() == 0 || b.getNORows() == 0) return os;
-	os << "   ";
+	os << "  ";
 	for (int i = 0; i < b.getNOColumns(); i++) {
 		int index = i + 1;
-		os << "  " << index << " ";
+		os << "   " << index;
 	}
 	os << std::endl;
 	int index = 1;
@@ -254,6 +254,17 @@ std::ostream& operator<<(std::ostream& os, const Board& b)
 		os << std::endl;
 	}
 	return os;
+}
+
+
+std::vector <char> separateRow(std::string rowData) {
+	std::vector<char> rowSep;
+	for (char elem : rowData) {
+		if (elem != '|' && elem != ' ') {
+			rowSep.push_back(elem);
+		}
+	}
+	return rowSep;
 }
 
 
@@ -271,35 +282,31 @@ std::istream& operator>>(std::istream& is, Board& b) {
 	std::string rowData;
 	while(getline(is, rowData, '\n')) {
 		if (NORows == 0) {
-			continue;
 			NORows++;
+			continue;
 		}
 
-		for (char elem : rowData) {
-			if (elem != '|' && elem != ' ') {
-				values.at(NORows).push_back(elem);
-			}
-		}
-
+		int rowIndex = NORows - 1;
+		std::vector <char> rowSep = separateRow(rowData);
+	
 		// making sure if first (0) character is a number (index) and if value is correct
-		if (!isNumber(values.at(NORows).at(0)) || number(values.at(NORows).at(0)) != NORows) throw InvalidData();
+		if (!isNumber(rowSep.at(0)) || number(rowSep.at(0)) != NORows) throw InvalidData();
 
-		std::vector<std::string> m_row;
 		int temp = 0;
 
-
-		for (auto& elem : values.at(NORows)) {
-			if (temp != 0) {
-				m_row.push_back(&elem);
+		for (auto& elem : rowSep) {
+			if (temp > 0) {
+				values.at(rowIndex).push_back(elem);
 			}
+			temp++;
 		}
-		
 
 		NORows++;
 		row = std::vector<char>();
 		values.push_back(row);
 	}
 
+	NORows--;
 	if (NORows == 0) {
 		throw BoardSizeException();
 	}

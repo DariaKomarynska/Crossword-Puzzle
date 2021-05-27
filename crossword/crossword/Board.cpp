@@ -240,13 +240,14 @@ std::ostream& operator<<(std::ostream& os, const Board& b)
 	os << "   ";
 	for (int i = 0; i < b.getNOColumns(); i++) {
 		int index = i + 1;
-		os << "  " << index;
+		os << "  " << index << " ";
 	}
 	os << std::endl;
 	int index = 1;
 	for (auto row : b.fields) {
 		os << ' ' << index << ' ';
 		os << "|";
+		index++;
 		for (auto field : row) {
 			os << " " << field.getValue() << " |";
 		}
@@ -271,6 +272,7 @@ std::istream& operator>>(std::istream& is, Board& b) {
 	while(getline(is, rowData, '\n')) {
 		if (NORows == 0) {
 			continue;
+			NORows++;
 		}
 
 		for (char elem : rowData) {

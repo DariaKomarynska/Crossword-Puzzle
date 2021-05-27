@@ -232,9 +232,20 @@ void Board::setUpMaxSize(const int NORows, const int NOCol) {
 
 std::ostream& operator<<(std::ostream& os, const Board& b)
 {
-	// example: | v | a | l | u | e |
-	//			| _ | _ | _ | # | # |
+	// example: 
+	//	   1   2   3   4   5	
+	// 1 | v | a | l | u | e |
+	// 2 | _ | _ | _ | # | # |
+	if (b.getNOColumns() == 0 || b.getNORows() == 0) return os;
+	os << "   ";
+	for (int i; i < b.getNOColumns(); i++) {
+		int index = i + 1;
+		os << "  " << index;
+	}
+	os << std::endl;
+	int index = 1;
 	for (auto row : b.fields) {
+		os << ' ' << index << ' ';
 		os << "|";
 		for (auto field : row) {
 			os << " " << field.getValue() << " |";
@@ -247,7 +258,7 @@ std::ostream& operator<<(std::ostream& os, const Board& b)
 
 std::istream& operator>>(std::istream& is, Board& b) {
 	// creates new Board that replaces Board b
-	// expected input ex.: | a | b |\n| c | d |
+	// expected input ex.:"     1  2\n 1 | a | b |\n 2 | c | d |
 	// a, b, c, d, # represent values of fields
 	// | represents start of a new field
 	// /n represents new row
@@ -258,12 +269,30 @@ std::istream& operator>>(std::istream& is, Board& b) {
 	values.push_back(row);
 	std::string rowData;
 	while(getline(is, rowData, '\n')) {
+		if (NORows == 0) {
+			continue;
+		}
+
 		for (char elem : rowData) {
 			if (elem != '|' && elem != ' ') {
 				values.at(NORows).push_back(elem);
 			}
 		}
+
+		// making sure if first (0) character is a number (index) and if value is correct
+		if (!isNumber(values.at(NORows).at(0)) || number(values.at(NORows).at(0)) != NORows) throw InvalidData();
+
+		std::vector<std::string> m_row;
+		int temp = 0;
+
+
+		for (auto& elem : values.at(NORows)) {
+			if (temp != 0) {
+				m_row.push_back(&elem);
+			}
+		}
 		
+
 		NORows++;
 		row = std::vector<char>();
 		values.push_back(row);

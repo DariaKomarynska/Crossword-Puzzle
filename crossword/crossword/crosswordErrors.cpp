@@ -35,3 +35,11 @@ class BoardSizeException : public std::exception
 public:
     virtual char const* what() const { return "Invalid board size."; }
 };
+
+
+class InvalidData : public std::exception
+{
+public:
+    virtual char const* what() const { return "Invalid input data."; }
+};
+

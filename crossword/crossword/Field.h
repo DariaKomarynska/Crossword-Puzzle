@@ -25,5 +25,6 @@ extern bool numberValidation(const char c);
 extern bool isNumber(const char c);
 extern bool isNumber(std::string s);
 extern int number(std::string s);
+extern int number(const char s);
 extern char intToChar(int num);
 extern char stringToChar(std::string num);

@@ -427,7 +427,7 @@ namespace UnitTestBoard
 			b1.fillField(0, 1, "b"[0]);
 			b1.fillField(0, 2, "c"[0]);
 			os << b1;
-			std::string out = "| a | b | c |\n| # | # | # |\n| # | # | # |\n";
+			std::string out = "     1   2   3\n 1 | a | b | c |\n 2 | # | # | # |\n 3 | # | # | # |\n";
 			Assert::IsTrue(os.str() == out);
 		}
 
@@ -436,7 +436,7 @@ namespace UnitTestBoard
 		{
 			Board b1 = Board();
 			std::stringstream is;
-			std::string input = "| a | b |\n| c | d |\n";
+			std::string input = "     1   2\n 1 | a | b |\n 2 | c | d |\n";
 			is << input;
 			is >> b1;
 
@@ -460,7 +460,7 @@ namespace UnitTestBoard
 			Board b1 = Board();
 			std::stringstream is;
 			std::stringstream os;
-			std::string input = "| a | b |\n| c | d |\n";
+			std::string input = "     1  2\n 1 | a | b |\n 2 | c | d |\n";
 			is << input;
 			is >> b1;
 			os << b1;

@@ -85,6 +85,14 @@ extern int number(std::string s) {
 }
 
 
+extern int number(const char s) {
+	numberValidation(s);
+	std::string st;
+	st.push_back(s);
+	return number(st);
+}
+
+
 extern char intToChar(int num) {
 	std::string s = std::to_string(num);
 	char const* pchar = s.c_str();

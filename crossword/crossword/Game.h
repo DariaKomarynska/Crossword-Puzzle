@@ -4,6 +4,7 @@
 #include "Board.h"
 #include "Dictionary.h"
 #include "Crossword.h"
+#include "crosswordErrors.cpp"
 
 
 class Game {

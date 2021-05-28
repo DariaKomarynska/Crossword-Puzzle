@@ -74,14 +74,14 @@ namespace TestCrossword
 
 		TEST_METHOD(fillIncorrectChar)
 		{
-			const char* expected = "This is not a letter.";
+			const char* expected = "This field should store alpha or space.";
 			Field f = Field();
 			f.setUp();
 
 			try {
 				f.fill(',');
 			}
-			catch (const NotAlpha& err) {
+			catch (const NotAlphaOrSpace& err) {
 				Assert::AreEqual(expected, err.what());
 			}
 		}

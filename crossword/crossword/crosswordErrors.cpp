@@ -9,10 +9,17 @@ public:
 };
 
 
+class NotAlphaOrSpace : public std::exception
+{
+public:
+    virtual char const* what() const { return "This field should store alpha or space."; }
+};
+
+
 class NotAlpha : public std::exception
 {
 public:
-    virtual char const* what() const { return "This is not a letter."; }
+    virtual char const* what() const { return "This shoule be an alpha."; }
 };
 
 

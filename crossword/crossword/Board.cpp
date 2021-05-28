@@ -139,6 +139,8 @@ void Board::fillField(const int row, const int col, const char value)
 
 
 void Board::fillField(const int row, const int col, const std::string value) {
+
+	coordsValidation(row, col);
 	fields.at(row).at(col).fill(value);
 }
 
@@ -165,19 +167,18 @@ void Board::fillFields(const int begin_row, const int begin_col, const std::stri
 			coordsValidation(y, x);
 			fillField(y, x, answer.at(i));
 		}
-		// if there are errors, program uses only correct values
 		catch (const FieldNotSettedUp&) {
 			x += dx;
 			y += dy;
-			continue;		// if there is more letters than needed, program passes them
+			continue;
 		}
-		catch (const NotAlpha&) {
+		catch (const NotAlphaOrSpace&) {
 			x += dx;
 			y += dy;
-			continue;		// if index is out of range looop breaks
+			continue;
 		}
 		catch (const std::out_of_range&) {
-			break;		// if index is out of range looop breaks
+			break;
 		}
 		x += dx;
 		y += dy;

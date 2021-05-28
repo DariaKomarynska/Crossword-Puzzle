@@ -47,7 +47,7 @@ void Field::clear() {
 
 extern bool alphaOrSpaceValidation(const char c) {
 	if (!isAlpha(c) && c != ' ') {
-		throw NotAlpha();
+		throw NotAlphaOrSpace();
 	}
 	return true;
 }

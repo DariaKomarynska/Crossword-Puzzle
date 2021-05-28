@@ -30,24 +30,17 @@ void Game::play() {
 }
 
 
-std::string Game::numberOfQuestion() {
-	std::string input = "0";
-	std::cout << "Enter number of question: ";
-	std::cin >> input;
-	return input;
-}
-
 void Game::filling() {
 	std::string input = "0";
 	std::cout << "\n1. QUESTION\n2. FIELD\n";
 	std::cin >> input;
-	if (input != "1" && input != "2") {
+	while(input != "1" && input != "2") {
 		cout << "Try again!\n";
-		filling();
+		std::cin >> input;
 	}
 	if (input == "1") {
 		input = numberOfQuestion();
-		while (!crossword.isNumberOfQuestion(number(input))) {
+		while (!isNumber(input) || !crossword.isNumberOfQuestion(number(input))) {
 			cout << "Try again!\n";
 			input = numberOfQuestion();
 		}
@@ -71,15 +64,36 @@ void Game::filling() {
 		if (isNumber(row) && isNumber(col)) {
 			int nRow = number(row) - 1;
 			int nCol = number(col) - 1;
-			crossword.fillField(nRow, nCol, input[0]);
+			try {
+				crossword.fillField(nRow, nCol, input[0]);
+
+			}
+			catch (const std::out_of_range& err) {
+				std::cout << err.what();
+
+			}
+
+			catch (const NotAlphaOrSpace& err) {
+				std::cout << err.what();
+
+			}
+
+			catch (const FieldNotSettedUp& err) {
+				std::cout << err.what();
+
+			}
 
 		}
 		else input = "-1";
 	}
-	else input = "-1";
-	if (input == "-1") {
-		throw std::invalid_argument("Invalid input");
-	}
+}
+
+
+std::string Game::numberOfQuestion() {
+	std::string input = "0";
+	std::cout << "Enter number of question: ";
+	std::cin >> input;
+	return input;
 }
 
 

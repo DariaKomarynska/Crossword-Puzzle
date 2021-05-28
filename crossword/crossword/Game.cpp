@@ -2,23 +2,12 @@
 #include "Game.h"
 
 
-Game::Game(Player nPlayer, Crossword nCrossword) : player(nPlayer), crossword(nCrossword) {
-	std::vector<std::string> questions = crossword.getQuestions();
-	for (int i = 0; i < questions.size(); i++) {
-		int index = i + 1;
-		questionString << index << ". " << questions[i] << std::endl;
-	}
-	//board.clear();
-}
-
-
 void Game::play() {
 	std::cout << "Welcome! Good luck! Have fun!\n";
 
 	bool end = false;
 	while (!end) {
 		std::cout << crossword << std::endl;
-		std::cout << questionString.str();
 
 		std::string input="0";
 
@@ -39,6 +28,7 @@ void Game::play() {
 		}
 	}
 }
+
 
 std::string Game::numberOfQuestion() {
 	std::string input = "0";

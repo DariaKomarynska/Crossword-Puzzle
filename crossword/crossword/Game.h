@@ -10,9 +10,8 @@ class Game {
 private:
 	Player player;
 	Crossword crossword;
-	std::stringstream questionString;
 public:
-	Game(Player nPlayer, Crossword nCrossword);
+	Game(Player nPlayer, Crossword nCrossword) : player(nPlayer), crossword(nCrossword) {}
 	void play();
 	void filling();
 	void ending();

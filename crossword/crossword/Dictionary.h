@@ -40,6 +40,8 @@ public:
 
 	string find_word(int index) const;
 
+	int find_index(string word) const;
+
 	map<string, string> find_by_letter(char first_char);
 
 	//void add_dict_file(const string& file_name);

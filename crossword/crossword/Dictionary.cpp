@@ -46,6 +46,17 @@ string Dictionary::find_word(int index) const {
 	return "There is no such a word in the dictionary";
 }
 
+int Dictionary::find_index(string word) const {
+	int index = 0;
+	for (auto it : dictionary) {
+		if (it.first == word) {
+			return index;
+		}
+		index++;
+	}
+	//return 0;
+};
+
 string Dictionary::find_word(string& meaning) const
 {
 	// find word using its meaning

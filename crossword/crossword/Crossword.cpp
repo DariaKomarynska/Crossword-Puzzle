@@ -42,6 +42,96 @@ Crossword::Crossword(const Dictionary n_solutions, const std::vector< std::vecto
 	}
 }
 
+
+Crossword::Crossword(const Dictionary n_solutions) {
+	unsigned size = n_solutions.size();
+	//Dictionary n_solutions, vector< vector<int>> first_letters, vector<string> n_orientations
+	solutions = n_solutions;
+	vector <string> words = solutions.answers();
+	std::vector<string> onBoard;
+	for (unsigned i = 0; i < size; i++) {
+		std::string answer = correctAnswer(i);
+		unsigned a_size = answer.size();
+		std::vector<int> coords;
+		//std::string orientation = getOrientation(i);
+		int x = 0, y = 0;
+		bool placed = false;
+		if (i == 0) {
+			orientations.push_back("horizontally");
+			
+			if (a_size % 2 == 0) { x = 4; y = 4; }
+			else { x = 5; y = 4;}
+			placed = true;
+		}
+		else if (i % 2 == 0) {
+			for (int i = 0; i < onBoard.size(); i++) { // iterate vector of words which are already on board
+				string preWord = onBoard[i];
+				if (checkOrientation(preWord) == "horizontally") {
+					continue;
+				}
+				if (placed == false) {
+					for (int j = 0; j < a_size; j++) { // iterate letter of current word
+						if (placed == false) {
+							for (int k = 0; k < preWord.size(); k++) { // iterate letter of previous word
+								if (answer[j] == preWord[k]) {
+									
+									int comX = getLetterY(preWord);
+									int comY = getLetterX(preWord, preWord[k]);
+									char comLetter = answer[j]; // HORIZONTAL NOW	
+									int curPos = findPosition(answer, answer[j]);	// position of letter in current answer
+									int prePos = findPosition(preWord, preWord[k]);
+									y = comY ;
+									x = comX - (curPos -1);
+									orientations.push_back("horizontally");
+									placed = true;
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		else {
+			if (placed == false){
+				for (int i = 0; i < onBoard.size(); i++) { // iterate vector of words which are already on board
+					string preWord = onBoard[i];
+					if (checkOrientation(preWord) == "vertically") {
+						continue;
+					}
+					if (placed == false) {
+						for (int j = 0; j < a_size; j++) { // iterate letter of current word
+							if (placed == false) {
+								for (int k = 0; k < preWord.size(); k++) { // iterate letter of previous word
+									if (answer[j] == preWord[k]) {
+										
+										int comY = getLetterX(preWord);
+										int comX = getLetterY(preWord, preWord[k]);
+										char comLetter = answer[j]; // VERTICAL NOW	
+										int curPos = findPosition(answer, answer[j]) ;	// position of letter in current answer
+										int prePos = findPosition(preWord, preWord[k]);
+										y = comY - (curPos - 2);
+										x = comX;
+										orientations.push_back("vertically");
+										placed = true;
+										break;
+										
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		coords.push_back(y - 1);
+		coords.push_back(x - 1);
+		firstLettersCoords.push_back(coords);
+		onBoard.push_back(answer);
+	}
+	fillCrossword();
+}
+
 void Crossword::fillCrossword() {
 	for (int i = 0; i < solutions.size(); i++) {
 		std::string answer = correctAnswer(i);
@@ -55,6 +145,10 @@ void Crossword::fillAnswer(const int NOQuestion, const std::string answer) {
 	board.fillFields(getFirstLetterX(NOQuestion), getFirstLetterY(NOQuestion), answer, getOrientation(NOQuestion));
 }
 
+string Crossword::checkOrientation(const string word) {
+	int index = getIndexAnswer(word);
+	return getOrientation(index);
+}
 
 string Crossword::correctAnswer(const int NOQuestion) {
 	return solutions.find_word(NOQuestion);
@@ -102,6 +196,20 @@ std::vector<int> Crossword::getFirstLetterCoords(const int NOQuestion) {
 	return firstLettersCoords[NOQuestion];
 }
 
+int Crossword::getIndexAnswer(const string word) {
+	return solutions.find_index(word);
+}
+
+int Crossword::findPosition(const string word, const char letter) {
+	int position = 0;
+	for (int i = 0; i < word.size(); i++) {
+		if (word[i] == letter) {
+			position = i;
+			return position +1;
+		}
+	}
+}
+
 int Crossword::getLetterX(const string word, const char letter) {
 	int NOQuestion = getIndexAnswer(word);
 	int x = getFirstLetterX(NOQuestion);
@@ -118,20 +226,17 @@ int Crossword::getLetterY(const string word, const char letter) {
 	return y;
 }
 
-int Crossword::getIndexAnswer(const string word) {
-	return solutions.find_index(word);
+int Crossword::getLetterY(const string word) {
+	int NOQuestion = getIndexAnswer(word);
+	int y = getFirstLetterY(NOQuestion)+1;
+	return y;
 }
 
-int Crossword::findPosition(const string word, const char letter) {
-	int position = 0;
-	for (int i = 0; i < word.size(); i++) {
-		if (word[i] == letter) {
-			position = i;
-			return position;
-		}
-	}
+int Crossword::getLetterX(const string word) {
+	int NOQuestion = getIndexAnswer(word);
+	int x = getFirstLetterX(NOQuestion);
+	return x;
 }
-
 
 int Crossword::getFirstLetterX(const int NOQuestion) {
 	return getFirstLetterCoords(NOQuestion)[0];

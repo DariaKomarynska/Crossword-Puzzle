@@ -16,18 +16,38 @@ public:
 	Crossword() {};
 	Crossword(std::string filePath);
 	Crossword(const Dictionary n_solutions, const std::vector< std::vector<int>> first_letters, const std::vector<std::string> n_orientations);
+	Crossword(const Dictionary n_solutions);
 
+	void fillCrossword();
 	void fillAnswer(const int NOQuestion, const std::string answer);
 	void fillField(const int row, const int col, const char value);
-	std::vector<int> getFirstLetterCoords(const int NOQuestion);
-	std::string getOrientation(const int NOQuestion);
+	
 	int countPoints();
 	friend std::ostream& operator<<(std::ostream& os, Crossword& c);
 	std::vector<std::string> getQuestions();
+
+	std::vector<int> getFirstLetterCoords(const int NOQuestion);
+	std::string getOrientation(const int NOQuestion);
+	Board getBoard() { return board; };
+	
+	int getLetterX(const string word);
+	int getLetterX(const string word, const char letter);
+	int getLetterY(const string word, const char letter);
+	int getLetterY(const string word);
 	int getFirstLetterX(const int NOQuestion);
 	int getFirstLetterY(const int NOQuestion);
-	Board getBoard() { return board; };
+	
+	int getIndexAnswer(const string word);
+	int letterPosition(const string word, const char letter);
+
 	bool isCorrectAnswer(const int NOQuestion, const std::string answer);
 	bool isNumberOfQuestion(const int NOQuestion);
 	string correctAnswer(const int NOQuestion);
+	string checkOrientation(const string word);
+
+	void choosePositionAnswers();
+	void putWordHorizontally(const string answer, const string preWord, const int curIndex, const int preIndex, const int curLetterPos);
+	void putWordVertically(const string answer, const string preWord, const int curIndex, const int preIndex, const int curLetterPos);
+	void putFirstWord(const int answerSize);
+	void putAnotherWord(const string answer, const int answerSize, vector<string> onBoard);
 };

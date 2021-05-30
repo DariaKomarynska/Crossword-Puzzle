@@ -40,6 +40,20 @@ namespace Dictionarytest
 			Assert::AreEqual(meaning, horse_meaning);
 		}
 
+		TEST_METHOD(find_index)
+		{
+			map<string, string> dict1 = { {"apple", "fruit"}, {"pen", "writing instrument"} };
+			Dictionary dict_a(dict1);
+			string word, meaning;
+			word = "pen";
+			int index = dict_a.find_index(word);
+
+			int found_index;
+			found_index = 1;
+
+			Assert::AreEqual(index, found_index);
+		}
+
 		TEST_METHOD(find_word)
 		{
 			map<string, string> dict1 = { {"apple", "fruit"}, {"pen", "writing instrument"} };

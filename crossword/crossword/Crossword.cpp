@@ -44,59 +44,39 @@ Crossword::Crossword(const Dictionary n_solutions, const std::vector< std::vecto
 
 
 Crossword::Crossword(const Dictionary n_solutions) {
-	unsigned size = n_solutions.size();
-	//Dictionary n_solutions, vector< vector<int>> first_letters, vector<string> n_orientations
 	solutions = n_solutions;
+	choosePositionAnswers();
+	fillCrossword();
+}
+
+void Crossword::choosePositionAnswers() {
 	vector <string> words = solutions.answers();
 	std::vector<string> onBoard;
+	unsigned size = solutions.size();
+
 	for (unsigned i = 0; i < size; i++) {
+
 		std::string answer = words[i];
 		unsigned a_size = answer.size();
 		std::vector<int> coords;
-		//std::string orientation = getOrientation(i);
 		int x = 0, y = 0;
 		bool placed = false;
+
 		if (i == 0) {
+			// put first word on the board
 			orientations.push_back("horizontally");
-			
+
 			if (a_size % 2 == 0) { x = 4; y = 4; }
-			else { x = 5; y = 4;}
+			else { x = 5; y = 4; }
 			placed = true;
-		}
-		else if (i % 2 == 0) {
-			for (int i = 0; i < onBoard.size(); i++) { // iterate vector of words which are already on board
-				string preWord = onBoard[i];
-				if (checkOrientation(preWord) == "horizontally") {
-					continue;
-				}
-				if (placed == false) {
-					for (int j = 0; j < a_size; j++) { // iterate letter of current word
-						if (placed == false) {
-							for (int k = 0; k < preWord.size(); k++) { // iterate letter of previous word
-								if (answer[j] == preWord[k]) {
-									
-									int comX = getLetterY(preWord);
-									int comY = getLetterX(preWord, preWord[k]);
-									char comLetter = answer[j]; // HORIZONTAL NOW	
-									int curPos = letterPosition(answer, answer[j]);	// position of letter in current answer
-									int prePos = letterPosition(preWord, preWord[k]);
-									y = comY ;
-									x = comX - (curPos -1);
-									orientations.push_back("horizontally");
-									placed = true;
-									break;
-								}
-							}
-						}
-					}
-				}
-			}
+			coords.push_back(y - 1);
+			coords.push_back(x - 1);
 		}
 		else {
-			if (placed == false){
+			if (i % 2 == 0) {
 				for (int i = 0; i < onBoard.size(); i++) { // iterate vector of words which are already on board
 					string preWord = onBoard[i];
-					if (checkOrientation(preWord) == "vertically") {
+					if (sameOrientation(preWord, "horizontally") == true) {
 						continue;
 					}
 					if (placed == false) {
@@ -104,18 +84,18 @@ Crossword::Crossword(const Dictionary n_solutions) {
 							if (placed == false) {
 								for (int k = 0; k < preWord.size(); k++) { // iterate letter of previous word
 									if (answer[j] == preWord[k]) {
-										
-										int comY = getLetterX(preWord);
-										int comX = getLetterY(preWord, preWord[k]);
-										char comLetter = answer[j]; // VERTICAL NOW	
-										int curPos = letterPosition(answer, answer[j]) ;	// position of letter in current answer
+
+										int comY = getLetterY(preWord);
+										int comX = getLetterX(preWord, preWord[k]);
+										char comLetter = answer[j]; // HORIZONTAL NOW	
+										int curPos = letterPosition(answer, answer[j]);	// position of letter in current answer
 										int prePos = letterPosition(preWord, preWord[k]);
-										y = comY - (curPos - 2);
-										x = comX;
-										orientations.push_back("vertically");
+										x = comX - 1;
+										y = comY - (curPos - 1) - 1;
+										orientations.push_back("horizontally");
 										placed = true;
+
 										break;
-										
 									}
 								}
 							}
@@ -123,15 +103,45 @@ Crossword::Crossword(const Dictionary n_solutions) {
 					}
 				}
 			}
+			else {
+				if (placed == false) {
+					for (int i = 0; i < onBoard.size(); i++) { // iterate vector of words which are already on board
+						string preWord = onBoard[i];
+						if (sameOrientation(preWord, "vertically") == true) {
+							continue;
+						}
+						if (placed == false) {
+							for (int j = 0; j < a_size; j++) { // iterate letter of current word
+								if (placed == false) {
+									for (int k = 0; k < preWord.size(); k++) { // iterate letter of previous word
+										if (answer[j] == preWord[k]) {
+
+											int comX = getLetterX(preWord);
+											int comY = getLetterY(preWord, preWord[k]);
+											char comLetter = answer[j]; // VERTICAL NOW	
+											int curPos = letterPosition(answer, answer[j]);	// position of letter in current answer
+											int prePos = letterPosition(preWord, preWord[k]);
+											x = comX - (curPos - 2) - 1;
+											y = comY - 1;
+											orientations.push_back("vertically");
+											placed = true;
+											break;
+
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			coords.push_back(x);
+			coords.push_back(y);
 		}
-		coords.push_back(y - 1);
-		coords.push_back(x - 1);
 		firstLettersCoords.push_back(coords);
 		onBoard.push_back(answer);
 	}
-	fillCrossword();
 }
-
 void Crossword::fillCrossword() {
 	for (int i = 0; i < solutions.size(); i++) {
 		std::string answer = correctAnswer(i);
@@ -145,10 +155,15 @@ void Crossword::fillAnswer(const int NOQuestion, const std::string answer) {
 	board.fillFields(getFirstLetterX(NOQuestion), getFirstLetterY(NOQuestion), answer, getOrientation(NOQuestion));
 }
 
-string Crossword::checkOrientation(const string word) {
+bool Crossword::sameOrientation(const string word, const string comparedOrient) {
 	// return what orientation has word on the board 
 	int index = getIndexAnswer(word);
-	return getOrientation(index);
+	bool same = false;
+	string answerOrientation = getOrientation(index);
+	if (comparedOrient == answerOrientation) {
+		same = true;
+	}
+	return same;
 }
 
 string Crossword::correctAnswer(const int NOQuestion) {

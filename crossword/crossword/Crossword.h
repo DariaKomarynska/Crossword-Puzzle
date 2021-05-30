@@ -43,6 +43,7 @@ public:
 	bool isCorrectAnswer(const int NOQuestion, const std::string answer);
 	bool isNumberOfQuestion(const int NOQuestion);
 	string correctAnswer(const int NOQuestion);
-	string checkOrientation(const string word);
+	bool sameOrientation(const string word, const string comparedOrient);
 
+	void choosePositionAnswers();
 };

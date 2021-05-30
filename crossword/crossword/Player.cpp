@@ -145,12 +145,14 @@ std::istream& operator>>(std::istream& input, Player& player)
 		data.push_back(temp);
 	}
 
-	if (data.size() < 2) {
+	if (data.size() < 1) {
 		std::cout << "Invalid data";
 		return input;
 	}
 
 	player.setName(data.at(0));
+
+	if (data.size() == 1) return input;
 
 	if (!stringDigit(data.at(1))) return input;
 	player.setPoints(stoi(data.at(1)));

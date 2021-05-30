@@ -149,6 +149,29 @@ namespace testPlayer
 		}
 
 
+		TEST_METHOD(IstreamNoPoints)
+		{
+			Player byk;
+			std::stringstream s;
+			s << "Olcix";
+			s >> byk;
+
+			Assert::AreEqual((std::string)"Olcix", byk.getName());
+		}
+
+
+		TEST_METHOD(IOstreamNoPoints)
+		{
+			Player byk;
+			std::stringstream s;
+			s << "Olcix";
+			s >> byk;
+			s << byk;
+
+			Assert::AreEqual((std::string)"Olcix", s.str());
+		}
+
+
 		TEST_METHOD(TestPlayerIostream)
 		{
 			std::stringstream ss;

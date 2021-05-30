@@ -43,7 +43,11 @@ public:
 	bool isCorrectAnswer(const int NOQuestion, const std::string answer);
 	bool isNumberOfQuestion(const int NOQuestion);
 	string correctAnswer(const int NOQuestion);
-	bool sameOrientation(const string word, const string comparedOrient);
+	string checkOrientation(const string word);
 
 	void choosePositionAnswers();
+	void putWordHorizontally(const string answer, const string preWord, const int curIndex, const int preIndex, const int curLetterPos);
+	void putWordVertically(const string answer, const string preWord, const int curIndex, const int preIndex, const int curLetterPos);
+	void putFirstWord(const int answerSize);
+	void putAnotherWord(const string answer, const int answerSize, vector<string> onBoard);
 };

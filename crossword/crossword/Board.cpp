@@ -69,13 +69,6 @@ void Board::setUpField(const int row, const int col) {
 	fields.at(row).at(col).setUp();
 }
 
-bool Board::checkUpField(const int row, const int col) {
-	coordsValidation(row, col);
-	if (fields.at(row).at(col).getValue() != '#') {
-		return false;
-	}
-	return true;
-}
 
 void Board::createAndSetUpFields(const int begin_row, const int begin_col, const int size, const std::string orientation) {
 	int end_row = begin_row;
@@ -90,18 +83,6 @@ void Board::createAndSetUpFields(const int begin_row, const int begin_col, const
 	setUpFields(begin_row, begin_col, size, orientation);
 }
 
-bool Board::createAndCheckFields(const int begin_row, const int begin_col, const int size, const std::string orientation, const int commonX, const int commonY) {
-	int end_row = begin_row;
-	int end_col = begin_col;
-	if (orientation == "vertically") {
-		end_row += size - 1;
-	}
-	else if (orientation == "horizontally") {
-		end_col += size - 1;
-	}
-	setUpMaxSize(end_row + 1, end_col + 1);
-	return checkUpFields(begin_row, begin_col, size, orientation, commonX, commonY);
-}
 
 void Board::setUpFields(const int begin_row, const int begin_col, const int size, const std::string orientation) {
 	int dx = 0;
@@ -135,43 +116,6 @@ void Board::setUpFields(const int begin_row, const int begin_col, const int size
 	}
 }
 
-bool Board::checkUpFields(const int begin_row, const int begin_col, const int size, const std::string orientation, const int commonX, const int commonY) {
-	int dx = 0;
-	int dy = 0;
-
-	int x = begin_col;
-	int y = begin_row;
-
-	if (orientation == "vertically") {
-		dy = 1;
-	}
-	else if (orientation == "horizontally") {
-		dx = 1;
-	}
-	else {
-		throw InvalidOrientation();
-	}
-
-	for (int i = 0; i < size; i++) {
-		try {
-			if (x == commonX && y == commonY) {
-				continue;
-			}
-			coordsValidation(y, x);
-			if (checkUpField(y, x) == false) {
-				return false;
-			};
-		}
-		// if there are errors, program uses only correct values
-		catch (const std::out_of_range&) {
-			break;		// if index is out of range looop breaks
-		}
-
-		x += dx;
-		y += dy;
-	}
-	return true;
-}
 
 bool Board::coordsValidation(const int row, const int col) const {
 	if (!validCoords(row, col))
@@ -255,15 +199,7 @@ bool Board::isBadPosition(const int begin_row, const int begin_col, const std::s
 	else {
 		throw InvalidOrientation();
 	}
-	/*int end_row = begin_row;
-	int end_col = begin_col;
-	if (orientation == "vertically") {
-		end_row += answer.size() - 1;
-	}
-	else if (orientation == "horizontally") {
-		end_col += answer.size() - 1;
-	}
-	setUpMaxSize(end_row + 1, end_col + 1);*/
+	
 	int x = begin_row;
 	int y = begin_col;
 	bool badPosition = false;
@@ -276,7 +212,6 @@ bool Board::isBadPosition(const int begin_row, const int begin_col, const std::s
 				x += dx;
 				y += dy;
 			}
-
 			else {
 				return true;
 			}

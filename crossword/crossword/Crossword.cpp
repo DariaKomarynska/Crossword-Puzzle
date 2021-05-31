@@ -46,7 +46,7 @@ Crossword::Crossword(const Dictionary n_solutions, const std::vector< std::vecto
 Crossword::Crossword(const Dictionary n_solutions) {
 	solutions = n_solutions;
 	choosePositionAnswers();
-	fillCrossword();
+	//fillCrossword();
 }
 
 
@@ -80,13 +80,13 @@ void Crossword::putFirstWord(const int answerSize) {
 	std::vector <int> coordinates;
 	orientations.push_back("horizontally");
 	int x = 0, y = 0;
-	if (answerSize % 2 == 0) { x = 5; y = 5; }
-	else { x = 6; y = 5; }
+	if (answerSize % 2 == 0) { x = 3; y = 3; }
+	else { x = 4; y = 3; }
 	// (x, y) = (4,4) or (5,4) on the board
 	coordinates.push_back(y);
 	coordinates.push_back(x);
 	firstLettersCoords.push_back(coordinates);
-	board.createAndSetUpFields(x, y, answerSize, "horizontally");
+	board.createAndSetUpFields(y, x, answerSize, "horizontally");
 }
 
 
@@ -110,7 +110,7 @@ void Crossword::putAnotherWord(const string answer, const int answerSize, vector
 								xy = putWordHorizontally(answer, preWord, j, k, curPos);
 								orientation = "horizontally";
 							}
-							bool isBad = board.isBadPosition(xy[0], xy[1], answer, orientation, xy[2], xy[3]-1);
+							bool isBad = board.isBadPosition(xy[0], xy[1], answer, orientation, xy[2]-1, xy[3]-1);
 							if (isBad == true && i != onBoard.size()-1) {
 								continue;
 							}
@@ -139,13 +139,10 @@ vector<int> Crossword::putWordHorizontally(const string answer, const string pre
 	int comX = getLetterX(preWord, preWord[preIndex]); // common x
 	int x = comX - 1;
 	int y = comY - (curLetterPos - 1) - 1;
-	// orientations.push_back("horizontally");
 	coordinates.push_back(x);
 	coordinates.push_back(y);
 	coordinates.push_back(comX);
 	coordinates.push_back(comY);
-	
-	// firstLettersCoords.push_back(coordinates);
 	return coordinates;
 }
 
@@ -156,24 +153,20 @@ vector<int> Crossword::putWordVertically(const string answer, const string preWo
 	int comY = getLetterY(preWord, preWord[preIndex]); // common y
 	int x = comX - (curLetterPos - 2) - 1;
 	int y = comY - 1;
-	// orientations.push_back("vertically");
 	coordinates.push_back(x);
 	coordinates.push_back(y);
 	coordinates.push_back(comX);
 	coordinates.push_back(comY);
-	
-	// firstLettersCoords.push_back(coordinates);
 	return coordinates;
 }
 
 
 void Crossword::fillCrossword() {
+	// НІЧО НЕ РОБИТЬ
 	for (int i = 0; i < solutions.size(); i++) {
 		std::string answer = correctAnswer(i);
 		unsigned a_size = answer.size();
 		std::string orientation = getOrientation(i);
-
-		// board.createAndSetUpFields(getFirstLetterX(i), getFirstLetterY(i), a_size, orientation);
 	}
 }
 void Crossword::fillAnswer(const int NOQuestion, const std::string answer) {

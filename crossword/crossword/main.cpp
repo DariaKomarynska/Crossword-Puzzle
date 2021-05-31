@@ -17,7 +17,7 @@ int main(){
 	dict.add_word("pingwin", "ptak, ktory lubi laskotki");
 	dict.add_word("zajac", "bajki o grafach");
 	dict.add_word("orzeszki", "zimne");
-	
+	dict.add_word("mleko", "napój");
 	//Crossword crossword = Crossword(dict, pair, orientation);
 	Crossword crossword = Crossword(dict);
 	Game game = Game(jacus, crossword);

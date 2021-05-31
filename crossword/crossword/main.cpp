@@ -7,14 +7,14 @@
 #include <vector>
 
 int main(){
-	std::vector<std::vector<int>> pair = { {10, 10}, {2, 1} };
-	std::vector<std::string> orientation = { "vertically", "horizontally" };
+	//std::vector<std::vector<int>> pair = { {1, 1}, {1, 1} };
+	//std::vector<std::string> orientation = { "vertically", "horizontally" };
 	
 	Player jacus = Player("Jacex");
 	Dictionary dict = Dictionary();
 	dict.add_word("paliwko", "piwo to moje");
 	dict.add_word("psz", "pszczola bez czola");
-	dict.add_word("pingwin", "ptak, ktory lubi laskotki");
+	//dict.add_word("pingwin", "ptak, ktory lubi laskotki");
 	dict.add_word("zajac", "bajki o grafach");
 	dict.add_word("orzeszki", "zimne");
 	

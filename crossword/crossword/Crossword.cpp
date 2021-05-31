@@ -91,6 +91,8 @@ void Crossword::putFirstWord(const int answerSize) {
 
 void Crossword::putAnotherWord(const string answer, const int answerSize, vector<string> onBoard) {
 	bool placed = false;
+	vector<int> position;
+	string orientation;
 	for (int i = 0; i < onBoard.size(); i++) { // iterate vector of words which are already on board
 		string preWord = onBoard[i];
 		if (placed == false) {
@@ -100,13 +102,16 @@ void Crossword::putAnotherWord(const string answer, const int answerSize, vector
 						if (answer[j] == preWord[k]) {
 							int curPos = letterPosition(answer, answer[j]);	// position of letter in current answer
 							if (checkOrientation(preWord) == "horizontally") {
-								putWordVertically(answer, preWord, j, k, curPos);
+								position = putWordVertically(answer, preWord, j, k, curPos);
+								// orientation = "vertically";
 							}
 							else if (checkOrientation(preWord) == "vertically") {
-								putWordHorizontally(answer, preWord, j, k, curPos);
+								position = putWordHorizontally(answer, preWord, j, k, curPos);
+								// orientation = "horizontally";
 							}
-							placed = true;
-							break;
+								placed = true;
+								break;
+							
 						}
 					}
 				}
@@ -116,7 +121,7 @@ void Crossword::putAnotherWord(const string answer, const int answerSize, vector
 }
 
 
-void Crossword::putWordHorizontally(const string answer, const string preWord, const int curIndex, const int preIndex, const int curLetterPos) {
+vector<int> Crossword::putWordHorizontally(const string answer, const string preWord, const int curIndex, const int preIndex, const int curLetterPos) {
 	std::vector <int> coordinates;
 	int comY = getLetterY(preWord); // common y
 	int comX = getLetterX(preWord, preWord[preIndex]); // common x
@@ -125,11 +130,13 @@ void Crossword::putWordHorizontally(const string answer, const string preWord, c
 	orientations.push_back("horizontally");
 	coordinates.push_back(x);
 	coordinates.push_back(y);
+	
 	firstLettersCoords.push_back(coordinates);
+	return coordinates;
 }
 
 
-void Crossword::putWordVertically(const string answer, const string preWord, const int curIndex, const int preIndex, const int curLetterPos) {
+vector<int> Crossword::putWordVertically(const string answer, const string preWord, const int curIndex, const int preIndex, const int curLetterPos) {
 	std::vector <int> coordinates;
 	int comX = getLetterX(preWord);	// common x
 	int comY = getLetterY(preWord, preWord[preIndex]); // common y
@@ -138,7 +145,9 @@ void Crossword::putWordVertically(const string answer, const string preWord, con
 	orientations.push_back("vertically");
 	coordinates.push_back(x);
 	coordinates.push_back(y);
+	
 	firstLettersCoords.push_back(coordinates);
+	return coordinates;
 }
 
 
@@ -191,6 +200,10 @@ std::ostream& operator<<(std::ostream& os, Crossword& c) {
 	int index = 0;
 	for (auto& question : c.getQuestions()) {
 		os << '\n' << index + 1 << ". " << question;
+		if (question.size() < 15) {		// distance should be changed
+			os << '\t';
+		}
+		os << '\t' << "(" << c.getFirstLetterY(index) + 1 << ", " << c.getFirstLetterX(index) + 1 << ")";
 		index++;
 	}
 	return os;

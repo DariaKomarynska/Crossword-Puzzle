@@ -206,11 +206,9 @@ std::ostream& operator<<(std::ostream& os, Crossword& c) {
 
 	int index = 0;
 	for (auto& question : c.getQuestions()) {
-		os << '\n' << index + 1 << ". " << question;
-		if (question.size() < 15) {		// distance should be changed
-			os << '\t';
-		}
-		os << '\t' << "(" << c.getFirstLetterY(index) + 1 << ", " << c.getFirstLetterX(index) + 1 << ")";
+		os << '\n' << index + 1 << ". ";
+		os << '\t' << "(" << c.getFirstLetterY(index) + 1 << ", " << c.getFirstLetterX(index) + 1 << ") ";
+		os << question;
 		index++;
 	}
 	return os;

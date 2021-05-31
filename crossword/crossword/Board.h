@@ -29,12 +29,16 @@ public:
 	void putIndex(const int row, const int col, const char value);
 	const char getValue(const int row, const int col) const;
 	void setUpField(const int row, const int col);
+	bool checkUpField(const int row, const int col);
 	void createAndSetUpFields(const int begin_row, const int begin_col, const int size, const std::string orientation);
+	bool createAndCheckFields(const int begin_row, const int begin_col, const int size, const std::string orientation, const int commonX, const int commonY);
 	void setUpFields(const int begin_row, const int begin_col, const int size, const std::string orientation);
+	bool checkUpFields(const int begin_row, const int begin_col, const int size, const std::string orientation, const int commonX, const int commonY);
 	void clear();
 	bool validCoords(const int row, const int col) const;
 	bool coordsValidation(const int row, const int col) const;
 	void setUpMaxSize(const int NORows, const int NOCol);
-	bool checkField(const int row, const int col);
-	bool isBadPosition(const int begin_row, const int begin_col, const std::string answer, const std::string orientation);
+	//bool checkField(const int row, const int col);
+	
+	bool isBadPosition(const int begin_row, const int begin_col, const std::string answer, const std::string orientation, const int commonX, const int commonY);
 };

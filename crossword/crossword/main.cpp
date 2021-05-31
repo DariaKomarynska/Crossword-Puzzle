@@ -14,7 +14,7 @@ int main(){
 	Dictionary dict = Dictionary();
 	dict.add_word("paliwko", "piwo to moje");
 	dict.add_word("psz", "pszczola bez czola");
-	//dict.add_word("pingwin", "ptak, ktory lubi laskotki");
+	dict.add_word("pingwin", "ptak, ktory lubi laskotki");
 	dict.add_word("zajac", "bajki o grafach");
 	dict.add_word("orzeszki", "zimne");
 	

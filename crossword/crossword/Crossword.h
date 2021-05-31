@@ -18,7 +18,7 @@ public:
 	Crossword(const Dictionary n_solutions, const std::vector< std::vector<int>> first_letters, const std::vector<std::string> n_orientations);
 	Crossword(const Dictionary n_solutions);
 
-	void fillCrossword();
+	void fillCrossword(const int beginRow, const int beginCol, const string answer, const string orientation);
 	void fillAnswer(const int NOQuestion, const std::string answer);
 	void fillField(const int row, const int col, const char value);
 	
@@ -45,9 +45,10 @@ public:
 	string correctAnswer(const int NOQuestion);
 	string checkOrientation(const string word);
 
-	void choosePositionAnswers();
+	void choosePositionPutAnswers();
 	vector<int> putWordHorizontally(const string answer, const string preWord, const int curIndex, const int preIndex, const int curLetterPos);
 	vector<int> putWordVertically(const string answer, const string preWord, const int curIndex, const int preIndex, const int curLetterPos);
-	void putFirstWord(const int answerSize);
+	void putFirstWord(const string answer);
 	void putAnotherWord(const string answer, const int answerSize, vector<string> onBoard);
+	pair<vector<int>, string>choosePosition(const string curWord, const string prevWord, const int curIndex, const int prevIndex);
 };

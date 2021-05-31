@@ -103,14 +103,21 @@ void Crossword::putAnotherWord(const string answer, const int answerSize, vector
 							int curPos = letterPosition(answer, answer[j]);	// position of letter in current answer
 							if (checkOrientation(preWord) == "horizontally") {
 								position = putWordVertically(answer, preWord, j, k, curPos);
-								// orientation = "vertically";
+								orientation = "vertically";
 							}
 							else if (checkOrientation(preWord) == "vertically") {
 								position = putWordHorizontally(answer, preWord, j, k, curPos);
-								// orientation = "horizontally";
+								orientation = "horizontally";
 							}
+							if (board.isBadPosition(position.at(0), position.at(1), answer, orientation)) {
+								continue;
+							}
+							else {
+								orientations.push_back(orientation);
+								firstLettersCoords.push_back(position);
 								placed = true;
 								break;
+							}
 							
 						}
 					}
@@ -127,11 +134,11 @@ vector<int> Crossword::putWordHorizontally(const string answer, const string pre
 	int comX = getLetterX(preWord, preWord[preIndex]); // common x
 	int x = comX - 1;
 	int y = comY - (curLetterPos - 1) - 1;
-	orientations.push_back("horizontally");
+	// orientations.push_back("horizontally");
 	coordinates.push_back(x);
 	coordinates.push_back(y);
 	
-	firstLettersCoords.push_back(coordinates);
+	// firstLettersCoords.push_back(coordinates);
 	return coordinates;
 }
 
@@ -142,11 +149,11 @@ vector<int> Crossword::putWordVertically(const string answer, const string preWo
 	int comY = getLetterY(preWord, preWord[preIndex]); // common y
 	int x = comX - (curLetterPos - 2) - 1;
 	int y = comY - 1;
-	orientations.push_back("vertically");
+	// orientations.push_back("vertically");
 	coordinates.push_back(x);
 	coordinates.push_back(y);
 	
-	firstLettersCoords.push_back(coordinates);
+	// firstLettersCoords.push_back(coordinates);
 	return coordinates;
 }
 

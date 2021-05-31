@@ -186,6 +186,61 @@ void Board::fillFields(const int begin_row, const int begin_col, const std::stri
 }
 
 
+bool Board::checkField(const int row, const int col){
+	coordsValidation(row, col);
+	if (fields.at(row).at(col).getValue() == '#') {
+		return true; // empty
+	}
+	//else if (fields.at(row).at(col).getValue() == '_') {
+		//////
+	//}
+	return false; // filled
+}
+bool Board::isBadPosition(const int begin_row, const int begin_col, const std::string answer, const std::string orientation) {
+	int dx = 0;
+	int dy = 0;
+
+	int x = begin_col;
+	int y = begin_row;
+
+	if (orientation == "vertically") {
+		dy = 1;
+	}
+	else if (orientation == "horizontally") {
+		dx = 1;
+	}
+	else {
+		throw InvalidOrientation();
+	}
+	bool badPosition = false;
+	for (unsigned i = 0; i < answer.size(); i++) {
+		try {
+			coordsValidation(y, x);
+			if (!checkField(y, x)) {
+				badPosition = true;
+				return badPosition;
+			};
+		}
+		catch (const FieldNotSettedUp&) {
+			x += dx;
+			y += dy;
+			continue;
+		}
+		catch (const NotAlphaOrSpace&) {
+			x += dx;
+			y += dy;
+			continue;
+		}
+		catch (const std::out_of_range&) {
+			break;
+		}
+		x += dx;
+		y += dy;
+	}
+	return false;
+}
+
+
 void Board::putIndex(const int row, const int col, const int value) {
 	fields.at(row).at(col).putIndex(value);
 }

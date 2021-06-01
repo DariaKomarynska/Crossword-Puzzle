@@ -80,8 +80,8 @@ void Crossword::putFirstWord(const string answer) {
 	string orientation = "horizontally";
 	int x = 0, y = 0;
 	int answerSize = answer.size();
-	if (answerSize % 2 == 0) { x = 3; y = 3; }
-	else { x = 4; y = 3; }
+	if (answerSize % 2 == 0) { x = 6; y = 6; }
+	else { x = 7; y = 6; }
 	// (x, y) = (4,4) or (5,4) on the board
 	fillCrossword(y, x, answer, orientation);
 }
@@ -104,11 +104,13 @@ void Crossword::putAnotherWord(const string answer, const int answerSize, vector
 							orientation = position.second;
 							int x = coords[0];
 							int y = coords[1];
-							int comX = coords[2] - 1;
+							int comX = coords[2] ;
 							int comY = coords[3] - 1;
 							
 							bool isBad = board.isBadPosition(x, y, answer, orientation, comX, comY);
-							if (isBad == true && i != onBoard.size()-1) {
+							
+							if (isBad == true &&  (i != onBoard.size()-1)) {
+							//if (isBad == true){
 								continue;
 							}
 							else {
@@ -125,6 +127,13 @@ void Crossword::putAnotherWord(const string answer, const int answerSize, vector
 	}
 }
 
+bool Crossword::isNotLastAnswer(const string answer) {
+	int index = getIndexAnswer(answer);
+	if (index != solutions.size() - 1) {
+		return true;
+	}
+	return false;
+}
 
 pair<vector<int>, string>Crossword::choosePosition(const string curWord, const string prevWord, const int curIndex, const int prevIndex) {
 	

@@ -51,4 +51,5 @@ public:
 	void putFirstWord(const string answer);
 	void putAnotherWord(const string answer, const int answerSize, vector<string> onBoard);
 	pair<vector<int>, string>choosePosition(const string curWord, const string prevWord, const int curIndex, const int prevIndex);
+	bool isNotLastAnswer(const string answer);
 };

@@ -18,13 +18,12 @@ int main(){
 	dict.add_word("zajac", "bajki o grafach");
 	dict.add_word("winiary", "czerwone");
 	dict.add_word("enkapsulacja", "enkapsulacja");
+	dict.add_word("enkapsulacjr", "enkapsulacjm");
 	dict.add_word("orzeszki", "zimne");
 	dict.add_word("mleko", "napoj");
-	// wino - bląd!!!
-	//dict.add_word("rozzzzzzz", "costam");
+	dict.add_word("wino", "wino");
+	dict.add_word("mlekoq", "costam");
 
-	/*dict.add_word("siostra", "siostra");
-	dict.add_word("brat", "brat");*/
 	//Crossword crossword = Crossword(dict, pair, orientation);
 	Crossword crossword = Crossword(dict);
 	Game game = Game(jacus, crossword);

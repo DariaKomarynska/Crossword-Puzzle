@@ -35,7 +35,7 @@ void Board::addRow() {
 
 
 void Board::addColumn() {
-	for (auto & row : fields) {
+	for (auto& row : fields) {
 		Field f = Field();
 		row.push_back(f);
 	}
@@ -161,7 +161,7 @@ void Board::fillFields(const int begin_row, const int begin_col, const std::stri
 	else {
 		throw InvalidOrientation();
 	}
-	
+
 	for (unsigned i = 0; i < answer.size(); i++) {
 		try {
 			coordsValidation(y, x);
@@ -186,10 +186,11 @@ void Board::fillFields(const int begin_row, const int begin_col, const std::stri
 }
 
 
-bool Board::isBadPosition(const int begin_row, const int begin_col, const std::string answer, const std::string orientation, const int commonX, const int commonY) {
+bool Board::isBadPosition( vector<int> coordinates, const std::string answer, const std::string orientation) {
 	int dx = 0;
 	int dy = 0;
-
+	int comRow, comCol;
+	bool notCommon = true; // without common letters
 	if (orientation == "vertically") {
 		dy = 1;
 	}
@@ -199,18 +200,24 @@ bool Board::isBadPosition(const int begin_row, const int begin_col, const std::s
 	else {
 		throw InvalidOrientation();
 	}
-	
-	int y = begin_row;
-	int x = begin_col;
+	if (coordinates.size() == 4) {
+		comRow = coordinates[2];
+		comCol = coordinates[3];
+		notCommon = false;
+	}
+	int y = coordinates[0];
+	int x = coordinates[1];
 	bool badPosition = false;
 	for (unsigned i = 0; i < answer.size(); i++) {
 		try {
-			if (x == commonX && y == commonY) {
-				x += dx;
-				y += dy;
-				continue;
+			if (!notCommon) {
+				if (x == comCol && y == comRow) {
+					x += dx;
+					y += dy;
+					continue;
+				}
 			}
-			else if (fields.at(y).at(x).getValue() == '#') {
+			if (fields.at(y).at(x).getValue() == '#') {
 				x += dx;
 				y += dy;
 			}
@@ -226,7 +233,7 @@ bool Board::isBadPosition(const int begin_row, const int begin_col, const std::s
 		catch (const std::out_of_range&) {
 			break;
 		}
-		
+
 	}
 	return false;
 }
@@ -321,13 +328,13 @@ std::istream& operator>>(std::istream& is, Board& b) {
 	// a, b, c, d, # represent values of fields
 	// | represents start of a new field
 	// /n represents new row
-	
+
 	unsigned NORows = 0;
 	std::vector<std::vector<char>> values;
 	std::vector<char> row;
 	values.push_back(row);
 	std::string rowData;
-	while(getline(is, rowData, '\n')) {
+	while (getline(is, rowData, '\n')) {
 		if (NORows == 0) {
 			NORows++;
 			continue;
@@ -335,7 +342,7 @@ std::istream& operator>>(std::istream& is, Board& b) {
 
 		int rowIndex = NORows - 1;
 		std::vector <char> rowSep = separateRow(rowData);
-	
+
 		// making sure if first (0) character is a number (index) and if value is correct
 		if (!isNumber(rowSep.at(0)) || number(rowSep.at(0)) != NORows) throw InvalidData();
 
@@ -384,7 +391,7 @@ bool operator==(const Board& b1, const Board& b2)
 	for (int i = 0; i < b1.getNORows(); i++)
 	{
 		for (int j = 0; j < b1.getNOColumns(); j++)
-		{	
+		{
 			// assert every pair of matching fields have equal values
 			if (b1.fields.at(i).at(j).getValue() != b2.fields.at(i).at(j).getValue()) {
 				return false;

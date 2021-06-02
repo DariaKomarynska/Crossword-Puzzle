@@ -1,6 +1,5 @@
 #include "Crossword.h"
 
- 
 Crossword::Crossword(std::string filepath) {
 
 }
@@ -82,7 +81,7 @@ void Crossword::putFirstWord(const string answer) {
 	int answerSize = answer.size();
 	if (answerSize % 2 == 0) { row = 6; col = 6; }
 	else { row = 6; col = 7; }
-	// (row, y) = (5, 5) or (5, 6) on the board
+	// (row, y) = (7, 7) or (7, 8) on the board
 	fillCrossword(row, col, answer, orientation);
 }
 
@@ -95,30 +94,20 @@ void Crossword::putAnotherWord(const string answer, const int answerSize, vector
 	for (int i = 0; i < onBoard.size(); i++) { // iterate vector of words which are already on board
 		string preWord = onBoard[i];
 		if (placed == false) {
-			for (unsigned j = 0; j < answerSize; j++) { // iterate letter of current word
+			for (int j = 0; j < answerSize; j++) { // iterate letter of current word
 				if (placed == false) {
 					for (int k = 0; k < preWord.size(); k++) { // iterate letter of previous word
 						if (answer[j] == preWord[k]) {
-							position = choosePosition(answer, preWord, j, k);
-							coords = position.first;
-							orientation = position.second;
-							int row = coords[0];
-							int col = coords[1];
-							int comRow = coords[2] ;
-							int comCol = coords[3] ;
-							
-							bool isBad = board.isBadPosition(row, col, answer, orientation, comRow, comCol);
-							
-							if (isBad == true &&  (i != onBoard.size()-1)) {
-							//if (isBad == true){
-								continue;
-							}
-							else {
-								fillCrossword(row, col, answer, orientation);
+							bool notLastPrevWord = (i != onBoard.size() - 1);
+							placed = foundCommonLetter(answer, preWord, j, k, notLastPrevWord);
+							if (placed == true) {
 								placed = true;
 								break;
 							}
-							
+							else {
+								placed = false;
+								continue;
+							}
 						}
 					}
 				}
@@ -126,6 +115,7 @@ void Crossword::putAnotherWord(const string answer, const int answerSize, vector
 		}
 	}
 }
+
 
 bool Crossword::isNotLastAnswer(const string answer) {
 	int index = getIndexAnswer(answer);
@@ -135,8 +125,81 @@ bool Crossword::isNotLastAnswer(const string answer) {
 	return false;
 }
 
+
+//void Crossword::notFoundCommonLetter(const string answer, const string preWord) {
+//	bool placed = false;
+//	pair<vector<int>, string> position;
+//	vector<int> coords;
+//	string orientation;
+//	while (!placed) {
+//		position = chooseRandomPosition(answer, preWord);
+//		coords = position.first;
+//		orientation = position.second;
+//		bool isBad = board.isBadPosition(coords, answer, orientation);
+//		if (isBad == true) {
+//			continue;
+//		}
+//		else {
+//			int row = coords[0];
+//			int col = coords[1];
+//			fillCrossword(row, col, answer, orientation);
+//			placed = true;
+//		}
+//	}
+//}
+//
+//
+//pair<vector<int>, string>Crossword::chooseRandomPosition(const string curWord, const string prevWord) {
+//	string orientation;
+//	vector<int> coordinates;
+//	if (checkOrientation(prevWord) == "horizontally") {
+//		orientation = "vertically";
+//	}
+//	else if (checkOrientation(prevWord) == "vertically") {
+//		orientation = "horizontally";
+//	}
+//	coordinates = putWordRandomly(curWord);
+//	return (make_pair(coordinates, orientation));
+//}
+//
+//
+//vector<int> putWordRandomly(const string curWord) {
+//	std::random_device rd; // obtain a random number from hardware
+//	std::mt19937 gen(rd()); // seed the generator
+//	std::uniform_int_distribution<> distr(0, curWord.size()); // define the range
+//	int randRow = distr(gen);
+//	int randCol = distr(gen);
+//	int randRow = 1;
+//	int randCol = 1;
+//	std::vector <int> coordinates = { randRow, randCol };
+//	return coordinates;
+//}
+
+
+bool Crossword::foundCommonLetter(const string answer, const string preWord, const int ansIndex, const int prevIndex, bool notLastPrevWord) {
+	bool yes = false;
+	pair<vector<int>, string> position;
+	vector<int> coords;
+	string orientation;
+	position = choosePosition(answer, preWord, ansIndex, prevIndex);
+	coords = position.first;
+	orientation = position.second;
+	int row = coords[0];
+	int col = coords[1];
+	bool isBad = board.isBadPosition(coords, answer, orientation);
+
+	if (isBad == true && notLastPrevWord) {
+		return yes; // false
+	}
+	else {
+		fillCrossword(row, col, answer, orientation);
+		yes = true;
+		return yes;
+	}
+}
+
 pair<vector<int>, string>Crossword::choosePosition(const string curWord, const string prevWord, const int curIndex, const int prevIndex) {
-	
+
 	// int curPos = letterPosition(curWord, curWord[curIndex]);	// position of letter in current answer
 	string orientation;
 	vector<int> coordinates;
@@ -151,7 +214,6 @@ pair<vector<int>, string>Crossword::choosePosition(const string curWord, const s
 	return (make_pair(coordinates, orientation));
 }
 
-
 vector<int> Crossword::putWordHorizontally(const string answer, const string preWord, const int curIndex, const int preIndex) {
 	int comCol = getLetterCol(preWord);
 	int comRow = getLetterRow(preWord, preWord[preIndex]);
@@ -163,7 +225,7 @@ vector<int> Crossword::putWordHorizontally(const string answer, const string pre
 
 
 vector<int> Crossword::putWordVertically(const string answer, const string preWord, const int curIndex, const int preIndex) {
-	
+
 	int comCol = getLetterCol(preWord, preWord[preIndex]);
 	int comRow = getLetterRow(preWord);
 	int col = comCol;
@@ -174,7 +236,7 @@ vector<int> Crossword::putWordVertically(const string answer, const string preWo
 
 
 void Crossword::fillCrossword(const int beginRow, const int beginCol, const string answer, const string orientation) {
-	
+
 	orientations.push_back(orientation);
 	vector<int> coordinates = { beginRow , beginCol };
 	firstLettersCoords.push_back(coordinates);
@@ -228,7 +290,7 @@ std::ostream& operator<<(std::ostream& os, Crossword& c) {
 		if (question.size() < 15) {		// distance should be changed
 			os << '\t';
 		}
-		os << '\t' << "(" << c.getFirstLetterRow(index) + 1 << ", " << c.getFirstLetterCol(index) + 1  << ")";
+		os << '\t' << "(" << c.getFirstLetterRow(index) + 1 << ", " << c.getFirstLetterCol(index) + 1 << ")";
 		index++;
 	}
 	return os;

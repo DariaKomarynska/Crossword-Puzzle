@@ -1,4 +1,4 @@
-﻿#include "Crossword.h"
+#include "Crossword.h"
 
  
 Crossword::Crossword(std::string filepath) {
@@ -45,7 +45,7 @@ Crossword::Crossword(const Dictionary n_solutions, const std::vector< std::vecto
 
 Crossword::Crossword(const Dictionary n_solutions) {
 	solutions = n_solutions;
-	//choosePositionPutAnswers();
+	choosePositionPutAnswers();
 	//fillCrossword();
 }
 

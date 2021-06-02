@@ -191,17 +191,17 @@ bool Board::isBadPosition(const int begin_row, const int begin_col, const std::s
 	int dy = 0;
 
 	if (orientation == "vertically") {
-		dx = 1;
+		dy = 1;
 	}
 	else if (orientation == "horizontally") {
-		dy = 1;
+		dx = 1;
 	}
 	else {
 		throw InvalidOrientation();
 	}
 	
-	int y = begin_col;
-	int x = begin_row;
+	int y = begin_row;
+	int x = begin_col;
 	bool badPosition = false;
 	for (unsigned i = 0; i < answer.size(); i++) {
 		try {
@@ -210,7 +210,7 @@ bool Board::isBadPosition(const int begin_row, const int begin_col, const std::s
 				y += dy;
 				continue;
 			}
-			if (fields.at(x).at(y).getValue() == '#') {
+			else if (fields.at(y).at(x).getValue() == '#') {
 				x += dx;
 				y += dy;
 			}

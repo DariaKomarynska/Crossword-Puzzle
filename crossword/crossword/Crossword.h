@@ -29,15 +29,15 @@ public:
 	std::vector<int> getFirstLetterCoords(const int NOQuestion);
 	std::string getOrientation(const int NOQuestion);
 	Board getBoard() { return board; };
-	
-	int getLetterX(const string word);
-	int getLetterX(const string word, const char letter);
-	int getLetterY(const string word, const char letter);
-	int getLetterY(const string word);
-	int getFirstLetterX(const int NOQuestion);
-	int getFirstLetterY(const int NOQuestion);
-	
 	int getIndexAnswer(const string word);
+	
+	int getLetterRow(const string word);
+	int getLetterRow(const string word, const char letter);
+	int getLetterCol(const string word, const char letter);
+	int getLetterCol(const string word);
+	int getFirstLetterRow(const int NOQuestion);
+	int getFirstLetterCol(const int NOQuestion);
+	
 	int letterPosition(const string word, const char letter);
 
 	bool isCorrectAnswer(const int NOQuestion, const std::string answer);
@@ -46,8 +46,8 @@ public:
 	string checkOrientation(const string word);
 
 	void choosePositionPutAnswers();
-	vector<int> putWordHorizontally(const string answer, const string preWord, const int curIndex, const int preIndex, const int curLetterPos);
-	vector<int> putWordVertically(const string answer, const string preWord, const int curIndex, const int preIndex, const int curLetterPos);
+	vector<int> putWordHorizontally(const string answer, const string preWord, const int curIndex, const int preIndex);
+	vector<int> putWordVertically(const string answer, const string preWord, const int curIndex, const int preIndex);
 	void putFirstWord(const string answer);
 	void putAnotherWord(const string answer, const int answerSize, vector<string> onBoard);
 	pair<vector<int>, string>choosePosition(const string curWord, const string prevWord, const int curIndex, const int prevIndex);

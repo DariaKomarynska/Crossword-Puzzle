@@ -14,15 +14,17 @@ int main(){
 	Dictionary dict = Dictionary();
 	dict.add_word("paliwko", "piwo to moje");
 	dict.add_word("psz", "pszczola bez czola");
+	dict.add_word("psa", "pszczola bez czola");
 	dict.add_word("pingwin", "ptak");
 	dict.add_word("zajac", "bajki o grafach");
 	dict.add_word("winiary", "czerwone");
 	dict.add_word("enkapsulacja", "enkapsulacja");
-	dict.add_word("enkapsulacjr", "enkapsulacjm");
+	dict.add_word("emkapsulacjr", "enkapsulacjm");
 	dict.add_word("orzeszki", "zimne");
-	dict.add_word("mleko", "napoj");
+	dict.add_word("lmeko", "napoj");
 	dict.add_word("wino", "wino");
-	dict.add_word("mlekoq", "costam");
+	dict.add_word("mleko", "costam");
+	dict.add_word("q", "qq");
 
 	//Crossword crossword = Crossword(dict, pair, orientation);
 	Crossword crossword = Crossword(dict);

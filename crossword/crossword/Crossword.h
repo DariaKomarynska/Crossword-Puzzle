@@ -48,7 +48,7 @@ public:
 	bool isNotLastAnswer(const string answer);
 
 	void notFoundCommonLetter(const string answer, const string preWord);
-	bool foundCommonLetter(const string answer, const string preWord, const int ansIndex, const int prevIndex, bool notLastPrevWord);
+	bool foundCommonLetter(const string answer, const string preWord, const int ansIndex, const int prevIndex);
 	void choosePositionPutAnswers();
 	pair<vector<int>, string>choosePosition(const string curWord, const string prevWord, const int curIndex, const int prevIndex);
 	pair<vector<int>, string>chooseRandomPosition(const string curWord, const string preWord);

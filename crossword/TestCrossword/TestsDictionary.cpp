@@ -265,6 +265,84 @@ namespace Dictionarytest
 			Assert::IsTrue(all_ques == correct_ques);
 		}
 
+		TEST_METHOD(Word_in_vector)
+		{
+			const vector<string> vect = { "apple", "banana", "peach" };
+			Dictionary dict_a;
+			bool isWord = dict_a.isWordInVector("apple", vect);
+
+			Assert::IsTrue(isWord);
+		}
+
+		TEST_METHOD(Word_not_in_vector)
+		{
+			const vector<string> vect = { "apple", "banana", "peach" };
+			Dictionary dict_a;
+			bool isWord = dict_a.isWordInVector("pineapple", vect);
+
+			Assert::IsFalse(isWord);
+		}
+
+		TEST_METHOD(Numbers_Words_With_Letter)
+		{
+			const vector<string> words = { "apple", "banana", "peach" };
+			Dictionary dict_a;
+			const vector<int> correct = { 3,1,1,0,2,0,0,1,0,0,0,1,0,1,0,2,0,0,0,0,0,0,0,0,0,0 };
+			const vector<int> numbers = dict_a.numbersWordsWithLetter(words);
+
+			Assert::IsTrue(correct == numbers);
+		}
+
+		TEST_METHOD(Letter_Frequency)
+		{
+			const vector<string> words = { "apple", "banana", "peach" };
+			Dictionary dict_a;
+			const vector<int> correct = { 5,1,1,0,2,0,0,1,0,0,0,1,0,2,0,3,0,0,0,0,0,0,0,0,0,0 };
+			const vector<int> numbers = dict_a.letterFrequencyInWord(words);
+
+			Assert::IsTrue(correct == numbers);
+		}
+
+		TEST_METHOD(Letter_Score)
+		{
+			const vector<string> words = { "apple", "banana", "peach" };
+			Dictionary dict_a;
+			const vector<int> number_of_words = dict_a.numbersWordsWithLetter(words);
+			const vector<int> frequency = dict_a.letterFrequencyInWord(words);
+			
+			const vector<int> scores = dict_a.letterScores(number_of_words, frequency);
+			const vector<int> correct = { 10,0,0,0,2,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0 };
+			Assert::IsTrue(correct == scores);
+		}
+
+		TEST_METHOD(Word_Score)
+		{
+			const vector<string> words = { "apple", "banana", "peach" };
+			Dictionary dict_a;
+			vector<int> number_of_words = dict_a.numbersWordsWithLetter(words);
+			vector<int> frequency = dict_a.letterFrequencyInWord(words);
+			vector<int> letterScores = dict_a.letterScores(number_of_words, frequency);
+			multimap<int, string> wordScores = dict_a.wordScore(words, letterScores);
+			multimap<int, string> correct = { {15, "peach"}, {18, "apple"}, {30, "banana"} };
+			multimap<int, string>::iterator it1 = wordScores.begin();
+			multimap<int, string>::iterator it2 = correct.begin();
+			for (it2; it2 != correct.end(); ++it2) {
+				Assert::AreEqual(it1->first, it2->first);
+				Assert::AreEqual(it1->second, it2->second);
+				it1++;
+			}
+			
+		}
+
+		TEST_METHOD(Sorted_answers)
+		{
+			const vector<string> words = { "apple", "banana", "peach" };
+			Dictionary dict_a;
+			multimap<int, string> wordScores = { {15, "peach"}, {18, "apple"}, {30, "banana"} };
+			vector<string> correct = { "peach" , "apple" , "banana" };
+			vector<string> answers = dict_a.sortedAnswers(wordScores);
+			Assert::IsTrue(correct == answers);
+		}
 
 		TEST_METHOD(Answer_not_alpha)
 		{

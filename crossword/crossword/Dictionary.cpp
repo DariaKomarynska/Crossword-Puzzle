@@ -156,9 +156,10 @@ vector<string> Dictionary::randomAnswers() {
 vector<int> Dictionary::numbersWordsWithLetter(const vector<string> answers) {
 	// in how many words letter appears
 	vector<int> numberOfWords;
-	for (char &letter : alphabet) {
-		int countLetter = 0, countWord = 0;
+	for (char& letter : alphabet) {
+		int countWord = 0;
 		for (auto& answer : answers) {
+			int countLetter = 0;
 			for (auto& letterInWord : answer) {
 				if (letterInWord == letter) {
 					countLetter++;
@@ -172,13 +173,14 @@ vector<int> Dictionary::numbersWordsWithLetter(const vector<string> answers) {
 	}
 	return numberOfWords;
 
-} 
-vector< vector<int>> Dictionary::letterFrequencyInWord(const vector<string> answers) {
+}
+
+
+vector<int> Dictionary::letterFrequencyInWord(const vector<string> answers) {
 	// how many times letter appears in word
-	// { {0, 1, 1}, {0,0,3}} - letter A appears 0 time in 1 word, 1 time in 2 word, 1 time in 3 word
-	vector< vector<int>> letterFrequencies;
-	vector<int> timesInWord;
-	for (char& letter : alphabet) {
+	// {1, 5, 3} - letter A appears 1 time in all words, B - 5 times
+	vector<int> letterFrequencies;
+	for (auto& letter : alphabet) {
 		int countLetter = 0, countWord = 0;
 		for (auto& answer : answers) {
 			for (auto& letterInWord : answer) {
@@ -186,24 +188,54 @@ vector< vector<int>> Dictionary::letterFrequencyInWord(const vector<string> answ
 					countLetter++;
 				}
 			}
-			timesInWord.push_back(countLetter);
 		}
-		letterFrequencies.push_back(timesInWord);
+		letterFrequencies.push_back(countLetter);
 	}
 	return letterFrequencies;
 } 
-//vector<int> Dictionary::letterScore(const vector<string> answers) {
-//	// calculate value of each letter
-//
-//} 
-//vector<int> Dictionary::wordScore(const vector<string> answers) {
-//	// calculate value of each word
-//
-//}
-//vector<string> Dictionary::sortedAnswers(const vector<string> answers) {
-//	// sorted list of words, from least
-//
-//}
+
+
+vector<int> Dictionary::letterScores(const vector<int> numberWords, const vector<int> letterFrequency) {
+	// calculate value of each letter
+	vector<int> letterScore;
+	int score = 0;
+	for (int i = 0; i < alphSize(); i++) {
+		score = (numberWords[i] - 1) * letterFrequency[i];
+		letterScore.push_back(score);
+	}
+	return letterScore;
+} 
+
+
+multimap<int, string> Dictionary::wordScore(const vector<string> answers, const vector<int> letterScores) {
+	// calculate value of each word
+	multimap<int, string> scores;
+	pair<int, string> pairScoreWord;
+	for (auto& word : answers) {
+		int score = 0;
+		for (auto& letterInWord : word) {
+			for (int i = 0; i < alphSize(); i++) {
+				if (letterInWord == alphabet[i]) {
+					score += letterScores[i];
+				}
+			}
+		}
+		pairScoreWord = (make_pair(score, word));
+		scores.emplace(pairScoreWord);
+	}
+	return scores;
+}
+
+
+vector<string> Dictionary::sortedAnswers(const multimap<int, string> wordScores) {
+	// sorted list of words, from least
+	multimap<int, string> wordsRank = wordScores;
+	vector<string> answers;
+	for (auto& pair : wordsRank) {
+		answers.push_back(pair.second);
+	}
+	return answers;
+}
 
 Dictionary& Dictionary::operator = (const Dictionary& another_dict)
 {
@@ -242,12 +274,20 @@ bool operator==(const vector<string> vect1, const vector<string> vect2)
 	return result;
 }
 
+bool operator==(const multimap<int, string> mlmap1, const multimap<int, string> mlmap2)
+{
+	bool result;
+	// compare contents of two vectors
+	result = std::equal(mlmap1.begin(), mlmap1.end(), mlmap2.begin());
+	return result;
+}
+
 istream& operator >>(istream& is, Dictionary& dict)
 {
 	// input the pair into dictionary
 	string words;
 	getline(is, words);
-	auto pos = words.find("\t");
+	auto pos = words.find(",");
 	if (pos != string::npos)
 	{
 		string word = words.substr(0, pos);
@@ -261,7 +301,7 @@ ostream& operator<<(ostream& os, const Dictionary& dict)
 {
 	// output the dictionary - object of class
 	for (auto& element : dict.dictionary) {
-		os << element.first << "\t" << element.second << endl;
+		os << element.first << "," << element.second << endl;
 	}
 	return os;
 }
@@ -284,7 +324,7 @@ fstream& operator >>(fstream& fs, Dictionary& dict)
 	string words;
 	if (fs.is_open()) {
 		while (getline(fs, words)) {
-			auto pos = words.find("\t");
+			auto pos = words.find(",");
 			if (pos != string::npos)
 			{
 				string word = words.substr(0, pos);
@@ -303,7 +343,7 @@ fstream& operator <<(fstream& fs, Dictionary& dict)
 	string path = ask_file_name();
 	fs.open(path, fstream::out);
 	for (auto& element : dict.dictionary) {
-		fs << element.first << "\t" << element.second << endl;
+		fs << element.first << "," << element.second << endl;
 	}
 	fs.close();
 	return fs;
@@ -314,7 +354,7 @@ ostream& operator<<(ostream& ss, const map<string, string>& dict)
 {
 	// output map - for printing for example map of words with one first letter
 	for (auto& element : dict) {
-		ss << element.first << "\t" << element.second << endl;
+		ss << element.first << "," << element.second << endl;
 	}
 	return ss;
 }

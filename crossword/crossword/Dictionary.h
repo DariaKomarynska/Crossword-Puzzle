@@ -54,13 +54,13 @@ public:
 
 	vector<int> numbersWordsWithLetter(const vector<string> answers);
 
-	vector< vector<int>> letterFrequencyInWord(const vector<string> answers);
+	vector<int> letterFrequencyInWord(const vector<string> answers);
 
-	vector<int> letterScore(const vector<string> answers);
+	vector<int> letterScores(const vector<int> numberWords, const vector<int> letterFrequency);
 
-	vector<int> wordScore(const vector<string> answers);
+	multimap<int, string> wordScore(const vector<string> answers, const vector<int> letterScores);
 
-	vector<string> sortedAnswers(const vector<string> answers);
+	vector<string> sortedAnswers(const multimap<int, string> wordScores);
 
 
 	//void add_dict_file(const string& file_name);
@@ -88,6 +88,8 @@ public:
 };
 
 bool operator==(const vector<string> vect1, const vector<string> vect2);
+
+bool operator==(const multimap<int, string> mlmap1, const multimap<int, string> mlmap2);
 
 ostream& operator <<(ostream& ss, const map<string, string>& dict);
 

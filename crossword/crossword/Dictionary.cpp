@@ -207,9 +207,10 @@ vector<int> Dictionary::letterScores(const vector<int> numberWords, const vector
 } 
 
 
-map<int, string> Dictionary::wordScore(const vector<string> answers, const vector<int> letterScores) {
+multimap<int, string> Dictionary::wordScore(const vector<string> answers, const vector<int> letterScores) {
 	// calculate value of each word
-	map<int, string> scores;
+	multimap<int, string> scores;
+	pair<int, string> pairScoreWord;
 	for (auto& word : answers) {
 		int score = 0;
 		for (auto& letterInWord : word) {
@@ -219,15 +220,16 @@ map<int, string> Dictionary::wordScore(const vector<string> answers, const vecto
 				}
 			}
 		}
-		scores[score] = word;
+		pairScoreWord = (make_pair(score, word));
+		scores.emplace(pairScoreWord);
 	}
 	return scores;
 }
 
 
-vector<string> Dictionary::sortedAnswers(const map<int, string> wordScores) {
+vector<string> Dictionary::sortedAnswers(const multimap<int, string> wordScores) {
 	// sorted list of words, from least
-	map<int, string> wordsRank = wordScores;
+	multimap<int, string> wordsRank = wordScores;
 	vector<string> answers;
 	for (auto& pair : wordsRank) {
 		answers.push_back(pair.second);
@@ -272,12 +274,20 @@ bool operator==(const vector<string> vect1, const vector<string> vect2)
 	return result;
 }
 
+bool operator==(const multimap<int, string> mlmap1, const multimap<int, string> mlmap2)
+{
+	bool result;
+	// compare contents of two vectors
+	result = std::equal(mlmap1.begin(), mlmap1.end(), mlmap2.begin());
+	return result;
+}
+
 istream& operator >>(istream& is, Dictionary& dict)
 {
 	// input the pair into dictionary
 	string words;
 	getline(is, words);
-	auto pos = words.find("\t");
+	auto pos = words.find(",");
 	if (pos != string::npos)
 	{
 		string word = words.substr(0, pos);
@@ -291,7 +301,7 @@ ostream& operator<<(ostream& os, const Dictionary& dict)
 {
 	// output the dictionary - object of class
 	for (auto& element : dict.dictionary) {
-		os << element.first << "\t" << element.second << endl;
+		os << element.first << "," << element.second << endl;
 	}
 	return os;
 }
@@ -333,7 +343,7 @@ fstream& operator <<(fstream& fs, Dictionary& dict)
 	string path = ask_file_name();
 	fs.open(path, fstream::out);
 	for (auto& element : dict.dictionary) {
-		fs << element.first << "\t" << element.second << endl;
+		fs << element.first << "," << element.second << endl;
 	}
 	fs.close();
 	return fs;
@@ -344,7 +354,7 @@ ostream& operator<<(ostream& ss, const map<string, string>& dict)
 {
 	// output map - for printing for example map of words with one first letter
 	for (auto& element : dict) {
-		ss << element.first << "\t" << element.second << endl;
+		ss << element.first << "," << element.second << endl;
 	}
 	return ss;
 }

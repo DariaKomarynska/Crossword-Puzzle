@@ -289,6 +289,7 @@ std::ostream& operator<<(std::ostream& os, Crossword& c) {
 	os << '\n' << c.board;
 
 	int index = 0;
+
 	for (auto& question : c.getQuestions()) {
 		os << '\n' << index + 1 << ". " << question;
 		if (question.size() < 15) {		// distance should be changed

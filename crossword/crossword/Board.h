@@ -37,3 +37,6 @@ public:
 	void setUpMaxSize(const int NORows, const int NOCol);
 	bool isBadPosition( vector<int> coordinates, const std::string answer, const std::string orientation);
 };
+
+extern int getLenOfNumber(const int number);
+extern std::string getSpaces(const int index);

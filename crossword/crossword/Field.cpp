@@ -13,7 +13,6 @@ void Field::fill(const char c) {
 	else {
 		value = c;
 	}
-
 }
 
 

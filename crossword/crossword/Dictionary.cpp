@@ -54,7 +54,7 @@ int Dictionary::find_index(string word) const {
 		}
 		index++;
 	}
-	//return 0;
+	throw std::out_of_range("Invalid index");
 };
 
 string Dictionary::find_word(string& meaning) const
@@ -190,19 +190,20 @@ vector< vector<int>> Dictionary::letterFrequencyInWord(const vector<string> answ
 		}
 		letterFrequencies.push_back(timesInWord);
 	}
+	return letterFrequencies;
 } 
-vector<int> Dictionary::letterScore(const vector<string> answers) {
-	// calculate value of each letter
-
-} 
-vector<int> Dictionary::wordScore(const vector<string> answers) {
-	// calculate value of each word
-
-}
-vector<string> Dictionary::sortedAnswers(const vector<string> answers) {
-	// sorted list of words, from least
-
-}
+//vector<int> Dictionary::letterScore(const vector<string> answers) {
+//	// calculate value of each letter
+//
+//} 
+//vector<int> Dictionary::wordScore(const vector<string> answers) {
+//	// calculate value of each word
+//
+//}
+//vector<string> Dictionary::sortedAnswers(const vector<string> answers) {
+//	// sorted list of words, from least
+//
+//}
 
 Dictionary& Dictionary::operator = (const Dictionary& another_dict)
 {

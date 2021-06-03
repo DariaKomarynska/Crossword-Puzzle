@@ -289,22 +289,53 @@ std::ostream& operator<<(std::ostream& os, const Board& b)
 	// 2 | _ | _ | _ | # | # |
 	if (b.getNOColumns() == 0 || b.getNORows() == 0) return os;
 	os << "  ";
+
+	int maxColIdLen = getLenOfNumber(b.getNOColumns());
+	int maxRowIdLen = getLenOfNumber(b.getNORows());
 	for (int i = 0; i < b.getNOColumns(); i++) {
 		int index = i + 1;
 		os << "   " << index;
+		if (getLenOfNumber(index) < maxColIdLen) {
+			os << getSpaces(maxColIdLen - getLenOfNumber(index));
+		}
 	}
 	os << std::endl;
 	int index = 1;
 	for (auto row : b.fields) {
 		os << ' ' << index << ' ';
+		if (getLenOfNumber(index) < maxRowIdLen) {
+			os << getSpaces(maxRowIdLen - getLenOfNumber(index));
+		}
 		os << "|";
 		index++;
+		int colid = 1;
 		for (auto field : row) {
-			os << " " << field.getValue() << " |";
+			os << " " << field.getValue();
+			os << getSpaces(maxColIdLen - getLenOfNumber(colid));
+			os << " |";
+			colid++;
 		}
 		os << std::endl;
 	}
 	return os;
+}
+
+
+
+int getLenOfNumber(const int number) {
+	std::string smindex = std::to_string(number);
+	return smindex.length();
+}
+
+
+std::string getSpaces(const int index) {
+	//  returns string of spaces that has the same length as a given number
+	int NOSpaces = getLenOfNumber(index);
+	std::string spaces = "";
+	for (int i = 0; i < NOSpaces; i++) {
+		spaces.append(" ");
+	}
+	return spaces;
 }
 
 

@@ -24,7 +24,7 @@ public:
 	Crossword(const Dictionary n_solutions);
 
 	void init(const Dictionary n_solutions, const std::vector< std::vector<int>> first_letters, const std::vector < std::string > n_orientations);
-	void setName(const std::string newName) : name(newName) {};
+	void setName(const std::string newName) { name = newName; };
 
 	void fillCrossword(const int beginRow, const int beginCol, const string answer, const string orientation);
 	void fillAnswer(const int NOQuestion, const std::string answer);

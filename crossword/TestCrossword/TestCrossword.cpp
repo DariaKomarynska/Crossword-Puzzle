@@ -10,6 +10,29 @@ namespace TestCrossword
 	TEST_CLASS(TestCrossword)
 	{
 	public:
+
+		TEST_METHOD(CreateFromFile) {
+			Crossword cross = Crossword("../crossword/test_data1.txt");
+			Assert::AreEqual(9, cross.getNOQuestions());
+			Board b = Board();
+			std::stringstream s;
+			s << "     1   2   3   4   5   6\n 1 | # | _ | # | _ | # | # |\n 2 | _ | _ | _ | _ | # | _ |\n 3 | # | _ | _ | _ | _ | _ |\n 4 | # | _ | _ | _ | _ | _ |\n 5 | _ | _ | _ | _ | _ | _ |\n";
+			s >> b;
+
+			Assert::AreEqual((string)"armata", cross.correctAnswer(0));
+			Assert::AreEqual((string)"bufor", cross.correctAnswer(1));
+			Assert::AreEqual((string)"data", cross.correctAnswer(2));
+			Assert::AreEqual((string)"ferm", cross.correctAnswer(3));
+			Assert::AreEqual((string)"ferma", cross.correctAnswer(4));
+			Assert::AreEqual((string)"marna", cross.correctAnswer(5));
+			Assert::AreEqual((string)"mat", cross.correctAnswer(6));
+			Assert::AreEqual((string)"mufa", cross.correctAnswer(7));
+			Assert::AreEqual((string)"ornat", cross.correctAnswer(8));
+
+			Assert::IsTrue(b == cross.getBoard());
+		}
+
+
 		TEST_METHOD(TestCrosswordQuestions)
 		{
 			vector<vector<int>> pair = { {1, 1}, {1, 1} };

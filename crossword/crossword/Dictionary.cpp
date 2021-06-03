@@ -137,7 +137,8 @@ vector<string> Dictionary::randomAnswers() {
 	string answer;
 	std::random_device rd; // obtain a random number from hardware
 	std::mt19937 gen(rd()); // seed the generator
-	std::uniform_int_distribution<> distr(1, 12); // define the range
+	unsigned maxSize = size() - 1;
+	std::uniform_int_distribution<> distr(2, maxSize); // define the range
 	int randAmount = distr(gen); // random amount of words
 
 	for(int i = 0; randomAnswers.size() != randAmount; i++){

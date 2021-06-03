@@ -54,13 +54,13 @@ public:
 
 	vector<int> numbersWordsWithLetter(const vector<string> answers);
 
-	vector< vector<int>> letterFrequencyInWord(const vector<string> answers);
+	vector<int> letterFrequencyInWord(const vector<string> answers);
 
-	vector<int> letterScore(const vector<string> answers);
+	vector<int> letterScores(const vector<int> numberWords, const vector<int> letterFrequency);
 
-	vector<int> wordScore(const vector<string> answers);
+	map<int, string> wordScore(const vector<string> answers, const vector<int> letterScores);
 
-	vector<string> sortedAnswers(const vector<string> answers);
+	vector<string> sortedAnswers(const map<int, string> wordScores);
 
 
 	//void add_dict_file(const string& file_name);

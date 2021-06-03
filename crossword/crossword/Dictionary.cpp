@@ -156,9 +156,10 @@ vector<string> Dictionary::randomAnswers() {
 vector<int> Dictionary::numbersWordsWithLetter(const vector<string> answers) {
 	// in how many words letter appears
 	vector<int> numberOfWords;
-	for (char &letter : alphabet) {
-		int countLetter = 0, countWord = 0;
+	for (char& letter : alphabet) {
+		int countWord = 0;
 		for (auto& answer : answers) {
+			int countLetter = 0;
 			for (auto& letterInWord : answer) {
 				if (letterInWord == letter) {
 					countLetter++;
@@ -172,13 +173,14 @@ vector<int> Dictionary::numbersWordsWithLetter(const vector<string> answers) {
 	}
 	return numberOfWords;
 
-} 
-vector< vector<int>> Dictionary::letterFrequencyInWord(const vector<string> answers) {
+}
+
+
+vector<int> Dictionary::letterFrequencyInWord(const vector<string> answers) {
 	// how many times letter appears in word
-	// { {0, 1, 1}, {0,0,3}} - letter A appears 0 time in 1 word, 1 time in 2 word, 1 time in 3 word
-	vector< vector<int>> letterFrequencies;
-	vector<int> timesInWord;
-	for (char& letter : alphabet) {
+	// {1, 5, 3} - letter A appears 1 time in all words, B - 5 times
+	vector<int> letterFrequencies;
+	for (auto& letter : alphabet) {
 		int countLetter = 0, countWord = 0;
 		for (auto& answer : answers) {
 			for (auto& letterInWord : answer) {
@@ -186,24 +188,52 @@ vector< vector<int>> Dictionary::letterFrequencyInWord(const vector<string> answ
 					countLetter++;
 				}
 			}
-			timesInWord.push_back(countLetter);
 		}
-		letterFrequencies.push_back(timesInWord);
+		letterFrequencies.push_back(countLetter);
 	}
 	return letterFrequencies;
 } 
-//vector<int> Dictionary::letterScore(const vector<string> answers) {
-//	// calculate value of each letter
-//
-//} 
-//vector<int> Dictionary::wordScore(const vector<string> answers) {
-//	// calculate value of each word
-//
-//}
-//vector<string> Dictionary::sortedAnswers(const vector<string> answers) {
-//	// sorted list of words, from least
-//
-//}
+
+
+vector<int> Dictionary::letterScores(const vector<int> numberWords, const vector<int> letterFrequency) {
+	// calculate value of each letter
+	vector<int> letterScore;
+	int score = 0;
+	for (int i = 0; i < alphSize(); i++) {
+		score = (numberWords[i] - 1) * letterFrequency[i];
+		letterScore.push_back(score);
+	}
+	return letterScore;
+} 
+
+
+map<int, string> Dictionary::wordScore(const vector<string> answers, const vector<int> letterScores) {
+	// calculate value of each word
+	map<int, string> scores;
+	for (auto& word : answers) {
+		int score = 0;
+		for (auto& letterInWord : word) {
+			for (int i = 0; i < alphSize(); i++) {
+				if (letterInWord == alphabet[i]) {
+					score += letterScores[i];
+				}
+			}
+		}
+		scores[score] = word;
+	}
+	return scores;
+}
+
+
+vector<string> Dictionary::sortedAnswers(const map<int, string> wordScores) {
+	// sorted list of words, from least
+	map<int, string> wordsRank = wordScores;
+	vector<string> answers;
+	for (auto& pair : wordsRank) {
+		answers.push_back(pair.second);
+	}
+	return answers;
+}
 
 Dictionary& Dictionary::operator = (const Dictionary& another_dict)
 {
@@ -284,7 +314,7 @@ fstream& operator >>(fstream& fs, Dictionary& dict)
 	string words;
 	if (fs.is_open()) {
 		while (getline(fs, words)) {
-			auto pos = words.find("\t");
+			auto pos = words.find(",");
 			if (pos != string::npos)
 			{
 				string word = words.substr(0, pos);

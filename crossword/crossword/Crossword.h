@@ -10,6 +10,7 @@ class Crossword {
 private:
 	Board board = Board();
 	Dictionary solutions = Dictionary();
+	std::vector<std::string> answerList;
 	std::vector< std::vector<int>> firstLettersCoords;
 	std::vector<std::string> orientations;
 
@@ -18,7 +19,7 @@ public:
 	Crossword(std::string filePath);
 	Crossword(const Dictionary n_solutions, const std::vector< std::vector<int>> first_letters, const std::vector<std::string> n_orientations);
 	Crossword(const Dictionary n_solutions);
-
+	
 	void fillCrossword(const int beginRow, const int beginCol, const string answer, const string orientation);
 	void fillAnswer(const int NOQuestion, const std::string answer);
 	void fillField(const int row, const int col, const char value);
@@ -31,7 +32,10 @@ public:
 	std::string getOrientation(const int NOQuestion);
 	Board getBoard() { return board; };
 	int getIndexAnswer(const string word);
-
+	int getIndexAnswerList(const string word);
+	std::vector<std::string> getRandomQuestions();
+	vector <string> getRandomAnswers();
+	int sizeListAnswers();
 	int getLetterRow(const string word);
 	int getLetterRow(const string word, const char letter);
 	int getLetterCol(const string word, const char letter);

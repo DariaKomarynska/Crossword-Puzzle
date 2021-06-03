@@ -44,19 +44,28 @@ Crossword::Crossword(const Dictionary n_solutions, const std::vector< std::vecto
 
 Crossword::Crossword(const Dictionary n_solutions) {
 	solutions = n_solutions;
+	answerList = solutions.getRankedRandomAnswers();
 	choosePositionPutAnswers();
 	//fillCrossword();
 }
 
 
+vector <string> Crossword::getRandomAnswers() {
+	return answerList;
+}
+
+
+int Crossword::sizeListAnswers() {
+	return answerList.size();
+}
+
 void Crossword::choosePositionPutAnswers() {
-	vector <string> words = solutions.answers();
 	std::vector<string> onBoard;
-	unsigned amountOfWords = solutions.size();
+	unsigned amountOfWords = sizeListAnswers();
 
 	for (unsigned i = 0; i < amountOfWords; i++) {
 
-		std::string answer = words[i];
+		std::string answer = answerList[i];
 		unsigned answerSize = answer.size();
 
 		bool placed = false;
@@ -135,8 +144,8 @@ vector<int> Crossword::putWordRandomly(const string curWord)
 
 
 bool Crossword::isNotLastAnswer(const string answer) {
-	int index = getIndexAnswer(answer);
-	if (index != solutions.size() - 1) {
+	int index = getIndexAnswerList(answer);
+	if (index != sizeListAnswers() - 1) {
 		return true;
 	}
 	return false;
@@ -181,7 +190,7 @@ pair<vector<int>, string>Crossword::chooseRandomPosition(const string curWord, c
 
 
 bool Crossword::foundCommonLetter(const string answer, const string preWord, const int ansIndex, const int prevIndex) {
-	bool yes = false;
+	bool found = false;
 	pair<vector<int>, string> position;
 	vector<int> coords;
 	string orientation;
@@ -193,12 +202,12 @@ bool Crossword::foundCommonLetter(const string answer, const string preWord, con
 	bool isBad = board.isBadPosition(coords, answer, orientation);
 
 	if (isBad == true) {
-		return yes; // false
+		return found; // false
 	}
 	else {
 		fillCrossword(row, col, answer, orientation);
-		yes = true;
-		return yes;
+		found = true;
+		return found;
 	}
 }
 
@@ -256,7 +265,7 @@ void Crossword::fillAnswer(const int NOQuestion, const std::string answer) {
 
 string Crossword::checkOrientation(const string word) {
 	// return what orientation has word on the board 
-	int index = getIndexAnswer(word);
+	int index = getIndexAnswerList(word);
 	return getOrientation(index);
 }
 
@@ -274,8 +283,8 @@ bool Crossword::isCorrectAnswer(const int NOQuestion, const std::string answer) 
 
 
 bool Crossword::isNumberOfQuestion(const int NOQuestion) {
-	// check whather input number is one of number of question
-	return (0 < NOQuestion && NOQuestion < solutions.size() + 1);
+	// check whether input number is one of number of question
+	return (0 < NOQuestion && NOQuestion < sizeListAnswers() + 1);
 }
 
 
@@ -285,12 +294,28 @@ void Crossword::fillField(const int row, const int col, const char value) {
 }
 
 
+//std::ostream& operator<<(std::ostream& os, Crossword& c) {
+//	os << '\n' << c.board;
+//
+//	int index = 0;
+//
+//	for (auto& question : c.getQuestions()) {
+//		os << '\n' << index + 1 << ". " << question;
+//		if (question.size() < 15) {		// distance should be changed
+//			os << '\t';
+//		}
+//		os << '\t' << "(" << c.getFirstLetterRow(index) + 1 << ", " << c.getFirstLetterCol(index) + 1 << ")";
+//		index++;
+//	}
+//	return os;
+//}
+
 std::ostream& operator<<(std::ostream& os, Crossword& c) {
 	os << '\n' << c.board;
 
 	int index = 0;
 
-	for (auto& question : c.getQuestions()) {
+	for (auto& question : c.getRandomQuestions()) {
 		os << '\n' << index + 1 << ". " << question;
 		if (question.size() < 15) {		// distance should be changed
 			os << '\t';
@@ -305,6 +330,12 @@ std::ostream& operator<<(std::ostream& os, Crossword& c) {
 std::vector<std::string> Crossword::getQuestions() {
 	// return vector of questions
 	return solutions.questions();
+}
+
+
+std::vector<std::string> Crossword::getRandomQuestions() {
+	// return vector of questions
+	return solutions.getRandomQuestions(answerList);
 }
 
 
@@ -326,6 +357,15 @@ int Crossword::getIndexAnswer(const string word) {
 }
 
 
+int Crossword::getIndexAnswerList(const string word) {
+	// return index of answer in dictionary 
+	for (int i = 0; i < sizeListAnswers(); i++) {
+		if (answerList[i] == word) {
+			return i;
+		}
+	}
+}
+
 int Crossword::letterPosition(const string word, const char letter) {
 	// return position of letter in the word
 	int position = 0;
@@ -339,7 +379,7 @@ int Crossword::letterPosition(const string word, const char letter) {
 
 int Crossword::getLetterRow(const string word, const char letter) {
 	// return X position of word`s letter on the board
-	int NOQuestion = getIndexAnswer(word);
+	int NOQuestion = getIndexAnswerList(word);
 	string orientation = getOrientation(NOQuestion);
 	int row = getFirstLetterRow(NOQuestion);
 	int position = letterPosition(word, letter);
@@ -351,7 +391,7 @@ int Crossword::getLetterRow(const string word, const char letter) {
 
 int Crossword::getLetterCol(const string word, const char letter) {
 	// return Y position of word`s letter on the board
-	int NOQuestion = getIndexAnswer(word);
+	int NOQuestion = getIndexAnswerList(word);
 	string orientation = getOrientation(NOQuestion);
 	int col = getFirstLetterCol(NOQuestion);
 	int position = letterPosition(word, letter);
@@ -364,7 +404,7 @@ int Crossword::getLetterCol(const string word, const char letter) {
 
 int Crossword::getLetterRow(const string word) {
 	// return X position of first word`s letter  
-	int NOQuestion = getIndexAnswer(word);
+	int NOQuestion = getIndexAnswerList(word);
 	int row = getFirstLetterRow(NOQuestion);
 	return row;
 }
@@ -372,7 +412,7 @@ int Crossword::getLetterRow(const string word) {
 
 int Crossword::getLetterCol(const string word) {
 	// return Y position of first word`s letter 
-	int NOQuestion = getIndexAnswer(word);
+	int NOQuestion = getIndexAnswerList(word);
 	int col = getFirstLetterCol(NOQuestion);
 	return col;
 }

@@ -137,7 +137,7 @@ vector<string> Dictionary::randomAnswers() {
 	string answer;
 	std::random_device rd; // obtain a random number from hardware
 	std::mt19937 gen(rd()); // seed the generator
-	std::uniform_int_distribution<> distr(1, size()-1); // define the range
+	std::uniform_int_distribution<> distr(1, 12); // define the range
 	int randAmount = distr(gen); // random amount of words
 
 	for(int i = 0; randomAnswers.size() != randAmount; i++){
@@ -207,9 +207,9 @@ vector<int> Dictionary::letterScores(const vector<int> numberWords, const vector
 } 
 
 
-multimap<int, string> Dictionary::wordScore(const vector<string> answers, const vector<int> letterScores) {
+multimap<int, string, greater<int>> Dictionary::wordScore(const vector<string> answers, const vector<int> letterScores) {
 	// calculate value of each word
-	multimap<int, string> scores;
+	multimap<int, string, greater<int>> scores;
 	pair<int, string> pairScoreWord;
 	for (auto& word : answers) {
 		int score = 0;
@@ -227,14 +227,34 @@ multimap<int, string> Dictionary::wordScore(const vector<string> answers, const 
 }
 
 
-vector<string> Dictionary::sortedAnswers(const multimap<int, string> wordScores) {
+vector<string> Dictionary::sortedAnswers(const multimap<int, string, greater<int>> wordScores) {
 	// sorted list of words, from least
-	multimap<int, string> wordsRank = wordScores;
+	multimap<int, string, greater<int>> wordsRank = wordScores;
 	vector<string> answers;
 	for (auto& pair : wordsRank) {
 		answers.push_back(pair.second);
 	}
 	return answers;
+}
+
+vector<string> Dictionary::getRankedRandomAnswers() {
+	const vector<string> listAnswers = randomAnswers();
+	const vector<int> numberWords = numbersWordsWithLetter(listAnswers);
+	vector<int> letterFrequencies = letterFrequencyInWord(listAnswers);
+	const vector<int> letterRanks = letterScores(numberWords, letterFrequencies);
+	const multimap<int, string, greater<int>> wordRanks = wordScore(listAnswers, letterRanks);
+	return sortedAnswers(wordRanks);
+}
+
+vector<string> Dictionary::getRandomQuestions(const vector<string> answers) {
+	vector<string> questions;
+	string ans, ques;
+	for (int i = 0; i <answers.size(); i++){
+		ans = answers[i];
+		ques = find_meaning(ans);
+		questions.push_back(ques);
+	}
+	return questions;
 }
 
 Dictionary& Dictionary::operator = (const Dictionary& another_dict)

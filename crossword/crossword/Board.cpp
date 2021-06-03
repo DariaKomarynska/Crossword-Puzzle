@@ -312,14 +312,13 @@ std::ostream& operator<<(std::ostream& os, const Board& b)
 		for (auto field : row) {
 			os << " " << field.getValue();
 			os << getSpaces(maxColIdLen - getLenOfNumber(colid));
-			os << " |";
+			os << "|";
 			colid++;
 		}
 		os << std::endl;
 	}
 	return os;
 }
-
 
 
 int getLenOfNumber(const int number) {
@@ -401,8 +400,8 @@ std::istream& operator>>(std::istream& is, Board& b) {
 			char v = values.at(Nrow).at(Ncol);
 			if (v != '#') {
 				b.setUpField(Nrow, Ncol);
+				if (v != '_') b.fillField(Nrow, Ncol, v);
 			}
-			b.fillField(Nrow, Ncol, v);
 		}
 	}
 

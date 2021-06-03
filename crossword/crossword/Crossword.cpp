@@ -1,11 +1,75 @@
 #include "Crossword.h"
 
-Crossword::Crossword(std::string filepath) {
 
+Crossword::Crossword(std::string filepath) {
+	Dictionary n_solutions;
+	std::vector< std::vector<int>> n_first_letters;
+	std::vector<std::string> n_orientations;
+
+	std::ifstream fileHandle;
+	try {
+		fileHandle.open(filepath);
+	}
+	catch (std::exception const& e) {
+		cout << "Invalid file error: " << e.what() << endl;
+	}
+
+	std::vector <std::string> rows = parseRows(fileHandle);
+	fileHandle.close();
+
+	for (auto& row : rows) {
+		std::vector <std::string> rowData = parseCSV(row);
+		if (rowData.size() != 5) throw InvalidData();
+
+		n_solutions.add_word(rowData.at(1), rowData.at(0));
+		std::vector<int> pos;
+		pos.push_back(number(rowData.at(2)));
+		pos.push_back(number(rowData.at(3)));
+		n_first_letters.push_back(pos);
+		n_orientations.push_back(rowData.at(4));
+	}
+
+	init(n_solutions, n_first_letters, n_orientations);
+}
+
+
+std::vector <std::string> parseRows(std::ifstream& fileHandle) {
+	std::vector <std::string> data;
+	std::string temp;
+
+	while (getline(fileHandle, temp)) {
+		data.push_back(temp);
+	}
+	return data;
+}
+
+
+std::vector <std::string> parseCSV(std::string& data) {
+	std::vector <std::string> sepData;
+	std::string temp;
+	std::stringstream s;
+	s << data;
+
+	while (getline(s, temp, ',')) {
+		sepData.push_back(temp);
+	}
+	return sepData;
 }
 
 
 Crossword::Crossword(const Dictionary n_solutions, const std::vector< std::vector<int>> first_letters, const std::vector<std::string> n_orientations) {
+	init(n_solutions, first_letters, n_orientations);
+}
+
+
+Crossword::Crossword(const Dictionary n_solutions) {
+	solutions = n_solutions;
+	answerList = solutions.getRankedRandomAnswers();
+	choosePositionPutAnswers();
+	//fillCrossword();
+}
+
+void Crossword::init(const Dictionary n_solutions, const std::vector< std::vector<int>> first_letters, const std::vector<std::string> n_orientations) {
 	unsigned size = n_solutions.size();
 	if (size != first_letters.size() || size != n_orientations.size()) {
 		throw std::invalid_argument("Invalid data size");
@@ -39,14 +103,6 @@ Crossword::Crossword(const Dictionary n_solutions, const std::vector< std::vecto
 
 		board.createAndSetUpFields(fst_letter_pos.at(0), fst_letter_pos.at(1), a_size, orientation);
 	}
-}
-
-
-Crossword::Crossword(const Dictionary n_solutions) {
-	solutions = n_solutions;
-	answerList = solutions.getRankedRandomAnswers();
-	choosePositionPutAnswers();
-	//fillCrossword();
 }
 
 
@@ -375,6 +431,7 @@ int Crossword::letterPosition(const string word, const char letter) {
 			return position;
 		}
 	}
+	throw std::out_of_range("No letter");
 }
 
 int Crossword::getLetterRow(const string word, const char letter) {

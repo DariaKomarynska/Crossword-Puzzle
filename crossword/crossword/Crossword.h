@@ -1,9 +1,12 @@
 #pragma once
 #include "Board.h"
 #include "Dictionary.h"
+#include "crosswordErrors.cpp"
 #include <iostream>
 #include <random>
 #include <vector>
+#include <sstream>
+#include <fstream>
 
 
 class Crossword {
@@ -13,13 +16,17 @@ private:
 	std::vector<std::string> answerList;
 	std::vector< std::vector<int>> firstLettersCoords;
 	std::vector<std::string> orientations;
+	std::string name = "";
 
 public:
 	Crossword() {};
 	Crossword(std::string filePath);
 	Crossword(const Dictionary n_solutions, const std::vector< std::vector<int>> first_letters, const std::vector<std::string> n_orientations);
 	Crossword(const Dictionary n_solutions);
-	
+
+	void init(const Dictionary n_solutions, const std::vector< std::vector<int>> first_letters, const std::vector < std::string > n_orientations);
+	void setName(const std::string newName) { name = newName; };
+
 	void fillCrossword(const int beginRow, const int beginCol, const string answer, const string orientation);
 	void fillAnswer(const int NOQuestion, const std::string answer);
 	void fillField(const int row, const int col, const char value);
@@ -27,6 +34,7 @@ public:
 	int countPoints();
 	friend std::ostream& operator<<(std::ostream& os, Crossword& c);
 	std::vector<std::string> getQuestions();
+	int getNOQuestions() { return solutions.size(); }
 
 	std::vector<int> getFirstLetterCoords(const int NOQuestion);
 	std::string getOrientation(const int NOQuestion);
@@ -61,4 +69,8 @@ public:
 	vector<int> putWordRandomly(const string curWord);
 	vector<int> putWordHorizontally(const string answer, const string preWord, const int curIndex, const int preIndex);
 	vector<int> putWordVertically(const string answer, const string preWord, const int curIndex, const int preIndex);
+
 };
+
+extern std::vector <std::string> parseRows(std::ifstream& fileHandle);
+extern std::vector <std::string> parseCSV(std::string& data);

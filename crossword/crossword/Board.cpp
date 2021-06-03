@@ -187,9 +187,7 @@ void Board::fillFields(const int begin_row, const int begin_col, const std::stri
 
 
 bool Board::isBadPosition( vector<int> coordinates, const std::string answer, const std::string orientation) {
-	int dx = 0;
-	int dy = 0;
-	int comRow, comCol;
+	int dx = 0, dy = 0, comRow, comCol;
 	bool notCommon = true; // without common letters
 	if (orientation == "vertically") {
 		dy = 1;
@@ -207,7 +205,6 @@ bool Board::isBadPosition( vector<int> coordinates, const std::string answer, co
 	}
 	int y = coordinates[0];
 	int x = coordinates[1];
-	bool badPosition = false;
 	for (unsigned i = 0; i < answer.size(); i++) {
 		try {
 			if (!notCommon) {

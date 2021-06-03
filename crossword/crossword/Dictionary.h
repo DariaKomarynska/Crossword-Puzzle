@@ -5,6 +5,7 @@
 #include <iostream>
 #include <algorithm>
 #include <fstream>
+#include <random>
 using namespace std;
 
 class Dictionary
@@ -12,6 +13,8 @@ class Dictionary
 	map<string, string> dictionary;
 
 	map<string, string>::iterator it;
+
+	string alphabet = "abcdefghijklmnopqrstuvwxyz";
 
 public:
 
@@ -22,6 +25,7 @@ public:
 	}
 
 	int size() const { return dictionary.size(); }
+	int alphSize() const { return alphabet.size(); }
 
 	const std::vector<std::string> questions ();
 	const std::vector<std::string> answers();
@@ -43,6 +47,21 @@ public:
 	int find_index(string word) const;
 
 	map<string, string> find_by_letter(char first_char);
+
+	bool isWordInVector(const string word, const vector<string> vect);
+
+	vector<string> randomAnswers();
+
+	vector<int> numbersWordsWithLetter(const vector<string> answers);
+
+	vector< vector<int>> letterFrequencyInWord(const vector<string> answers);
+
+	vector<int> letterScore(const vector<string> answers);
+
+	vector<int> wordScore(const vector<string> answers);
+
+	vector<string> sortedAnswers(const vector<string> answers);
+
 
 	//void add_dict_file(const string& file_name);
 
@@ -66,9 +85,6 @@ public:
 	friend
 		istream& operator >>(istream& is, Dictionary& dict);
 
-	friend
-		void menu(Dictionary& dict);
-
 };
 
 bool operator==(const vector<string> vect1, const vector<string> vect2);
@@ -76,7 +92,3 @@ bool operator==(const vector<string> vect1, const vector<string> vect2);
 ostream& operator <<(ostream& ss, const map<string, string>& dict);
 
 map<string, string> input_dict();
-
-string input();
-
-string ask_file_name();

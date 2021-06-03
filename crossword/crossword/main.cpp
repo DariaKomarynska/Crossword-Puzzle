@@ -24,7 +24,7 @@ int main(){
 	dict.add_word("lmeko", "napoj");
 	dict.add_word("wino", "wino");
 	dict.add_word("mleko", "costam");
-	dict.add_word("q", "qq");
+	dict.add_word("q", "qq"); // to check word with no common letter
 
 	//Crossword crossword = Crossword(dict, pair, orientation);
 	Crossword crossword = Crossword(dict);

@@ -121,6 +121,89 @@ const std::vector<std::string> Dictionary::answers() {
 }
 
 
+bool Dictionary::isWordInVector(const string word, const vector<string> vect) {
+	for (auto& i : vect) {
+		if (i == word) {
+			return true;
+		}
+	}
+	return false;
+}
+
+
+vector<string> Dictionary::randomAnswers() {
+	// random number of words 
+	vector<string> randomAnswers;
+	string answer;
+	std::random_device rd; // obtain a random number from hardware
+	std::mt19937 gen(rd()); // seed the generator
+	std::uniform_int_distribution<> distr(1, size()-1); // define the range
+	int randAmount = distr(gen); // random amount of words
+
+	for(int i = 0; randomAnswers.size() != randAmount; i++){
+		int randNumber = distr(gen); // random number of word in dictionary
+		answer = find_word(randNumber);
+		if (i != 0) {
+			if (!isWordInVector(answer, randomAnswers)) {
+				randomAnswers.push_back(answer);
+			}
+		}
+		else { randomAnswers.push_back(answer); }
+	}
+	return randomAnswers;
+}
+
+vector<int> Dictionary::numbersWordsWithLetter(const vector<string> answers) {
+	// in how many words letter appears
+	vector<int> numberOfWords;
+	for (char &letter : alphabet) {
+		int countLetter = 0, countWord = 0;
+		for (auto& answer : answers) {
+			for (auto& letterInWord : answer) {
+				if (letterInWord == letter) {
+					countLetter++;
+				}
+			}
+			if (countLetter != 0) {
+				countWord++;
+			}
+		}
+		numberOfWords.push_back(countWord);
+	}
+	return numberOfWords;
+
+} 
+vector< vector<int>> Dictionary::letterFrequencyInWord(const vector<string> answers) {
+	// how many times letter appears in word
+	// { {0, 1, 1}, {0,0,3}} - letter A appears 0 time in 1 word, 1 time in 2 word, 1 time in 3 word
+	vector< vector<int>> letterFrequencies;
+	vector<int> timesInWord;
+	for (char& letter : alphabet) {
+		int countLetter = 0, countWord = 0;
+		for (auto& answer : answers) {
+			for (auto& letterInWord : answer) {
+				if (letterInWord == letter) {
+					countLetter++;
+				}
+			}
+			timesInWord.push_back(countLetter);
+		}
+		letterFrequencies.push_back(timesInWord);
+	}
+} 
+vector<int> Dictionary::letterScore(const vector<string> answers) {
+	// calculate value of each letter
+
+} 
+vector<int> Dictionary::wordScore(const vector<string> answers) {
+	// calculate value of each word
+
+}
+vector<string> Dictionary::sortedAnswers(const vector<string> answers) {
+	// sorted list of words, from least
+
+}
+
 Dictionary& Dictionary::operator = (const Dictionary& another_dict)
 {
 	// operator for assignment object: dict_1 = dict2;
@@ -256,101 +339,3 @@ map<string, string> input_dict() {
 	return new_dict;
 }
 
-string input() {
-	// input word
-	string word;
-	cout << "Enter a word: ";
-	getline(cin, word);
-	return word;
-}
-
-void menu(Dictionary& dict) {
-
-	// menu for user
-
-	string word, meaning;
-	bool works = true;
-
-	cout << "Your Dictionary\nChoose:\n";
-	cout << "1 - See all words\n";
-	cout << "2 - Add a new word\n";
-	cout << "3 - Add a word without meaning\n";
-	cout << "4 - Remove a word\n";
-	cout << "5 - Add a dictionary\n";
-	cout << "6 - Find a definiton\n";
-	cout << "7 - Find a word by definition\n";
-	cout << "8 - Find words with first letter..\n";
-	cout << "0 - Exit\n";
-
-	while (works) {
-		cout << "Enter your choice: ";
-		int choice;
-		cin >> choice;
-		cin.ignore();
-		cout << endl;
-
-		switch (choice) {
-
-		case 1:
-			cout << dict << endl;
-			break;
-
-		case 2:
-			word = input();
-			cout << "Enter a definition: ";
-			getline(cin, meaning);
-			dict.add_word(word, meaning);
-			break;
-
-		case 3:
-			word = input();
-			dict + word;
-			break;
-
-		case 4:
-			word = input();
-			cout << endl;
-			dict.remove_word(word);
-			break;
-
-		case 5: {
-			map<string, string>dict_2 = input_dict();
-			Dictionary second_dict(dict_2);
-			second_dict = input_dict();
-			dict + second_dict;
-			cout << endl;
-			break; }
-
-		case 6:
-			word = input();
-			cout << endl;
-			meaning = dict.find_meaning(word);
-			cout << meaning << endl;
-			break;
-
-		case 7:
-			meaning = input();
-			cout << endl;
-			word = dict.find_word(meaning);
-			cout << word << endl;
-			break;
-
-		case 8:
-			char f_letter;
-			cout << "Enter a letter to start with: ";
-			cin >> f_letter;
-			cout << dict.find_by_letter(f_letter) << endl;
-			break;
-
-		case 0:
-			works = false;
-			break;
-
-		default:
-			cout << "Choose another number!" << endl;
-			break;
-		}
-
-	}
-
-}

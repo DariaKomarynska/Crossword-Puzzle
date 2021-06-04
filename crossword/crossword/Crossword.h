@@ -50,6 +50,7 @@ public:
 	int getLetterCol(const string word);
 	int getFirstLetterRow(const int NOQuestion);
 	int getFirstLetterCol(const int NOQuestion);
+	int sizeWord(const int NOQuestion);
 
 	int letterPosition(const string word, const char letter);
 
@@ -70,6 +71,15 @@ public:
 	vector<int> putWordHorizontally(const string answer, const string preWord, const int curIndex, const int preIndex);
 	vector<int> putWordVertically(const string answer, const string preWord, const int curIndex, const int preIndex);
 
+	bool isBadPosition(vector<int> coordinates, const std::string answer, const std::string orientation);
+	bool isCorrectField(const int row, const int col, const char letter);
+	bool isSameLetter(const int row, const int col, const char letter);
+	bool AreSameLetters(const char letter1, const char letter2);
+	char checkLetter(const int index, const int nextRow, const int nextCol);
+	char getLetterByColumn(const int NOQuestion, const int col);
+	char getLetterByRow(const int NOQuestion, const int row);
+	bool checkCoordinate(const int index, const int row, const int col);
+	bool isInRange(const int index, const int begin, const int coord);
 };
 
 extern std::vector <std::string> parseRows(std::ifstream& fileHandle);

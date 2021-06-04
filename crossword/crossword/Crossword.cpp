@@ -217,7 +217,7 @@ void Crossword::notFoundCommonLetter(const string answer, const string preWord) 
 		position = chooseRandomPosition(answer, preWord);
 		coords = position.first;
 		orientation = position.second;
-		bool isBad = board.isBadPosition(coords, answer, orientation);
+		bool isBad = isBadPosition(coords, answer, orientation);
 		if (isBad == true) {
 			continue;
 		}
@@ -255,7 +255,7 @@ bool Crossword::foundCommonLetter(const string answer, const string preWord, con
 	orientation = position.second;
 	int row = coords[0];
 	int col = coords[1];
-	bool isBad = board.isBadPosition(coords, answer, orientation);
+	bool isBad = isBadPosition(coords, answer, orientation);
 
 	if (isBad == true) {
 		return found; // false
@@ -328,7 +328,7 @@ string Crossword::checkOrientation(const string word) {
 
 string Crossword::correctAnswer(const int NOQuestion) {
 	// answer by number of position in dictionary
-	return solutions.find_word(NOQuestion);
+	return solutions.findWordInList(NOQuestion, answerList);
 }
 
 
@@ -484,4 +484,146 @@ int Crossword::getFirstLetterRow(const int NOQuestion) {
 int Crossword::getFirstLetterCol(const int NOQuestion) {
 	// return Y position of first word`s letter by index
 	return getFirstLetterCoords(NOQuestion)[1];
+}
+
+int Crossword::sizeWord(const int NOQuestion) {
+	// get size of answer using index in list
+	string word = correctAnswer(NOQuestion);
+	return word.size();
+}
+
+
+char Crossword::checkLetter(const int index, const int nextRow, const int nextCol) {
+	// return letter in word by column or row
+	// return '-' if using working with word 
+	if (!checkCoordinate(index, nextRow, nextCol)) {
+		return '-';
+	}
+	if (nextRow == -1) {
+		return getLetterByColumn(index, nextCol);
+	}
+	else if (nextCol == -1) {
+		return getLetterByRow(index, nextRow);
+	}
+}
+
+char Crossword::getLetterByColumn(const int NOQuestion, const int col) {
+	// get letter in horizontal word 
+	string preWord = correctAnswer(NOQuestion);
+	int begCol = getFirstLetterCol(NOQuestion);
+	for (int i = 0; i < preWord.size() ; i++) {
+		if ((i + begCol) == col) {
+			return preWord[i];
+		}
+	}
+}
+
+char Crossword::getLetterByRow(const int NOQuestion, const int row) {
+	// get letter in vertical word
+	string preWord = correctAnswer(NOQuestion);
+	int begRow = getFirstLetterRow(NOQuestion);
+	for (int i = 0; i < preWord.size(); i++) {
+		if ((i + begRow) == row) {
+			return preWord[i];
+		}
+	}
+}
+
+
+bool Crossword::checkCoordinate(const int index, const int row, const int col) {
+	// in range
+	int begin, coord;
+	if (row == -1) {
+		begin = getFirstLetterCol(index);
+		coord = col;
+	}
+	else if (col == -1) {
+		begin = getFirstLetterRow(index);
+		coord = row;
+	}
+	return isInRange(index, begin, coord);
+}
+
+
+bool Crossword::isInRange(const int index, const int begin, const int coord) {
+	int size = sizeWord(index);
+	for (int i = 0; i < size ; i++) {
+		if ((i + begin) == coord) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool Crossword::isSameLetter(const int row, const int col, const char letter) {
+	char newLetter = '#';
+	for (int i = 0; i < firstLettersCoords.size(); i++) {
+		if (row == firstLettersCoords[i][0]) {
+			newLetter = checkLetter(i, -1, col); // check by col, rows are same
+		}
+		else if (col == firstLettersCoords[i][1]) {
+			newLetter = checkLetter(i, row, -1); // check by row, cols are same
+		}
+		if ((newLetter != '#') && (newLetter != '-')) {
+			return AreSameLetters(newLetter, letter);
+		}
+	}
+}
+
+bool Crossword::AreSameLetters(const char letter1, const char letter2) {
+	return (letter1 == letter2);
+}
+
+bool Crossword::isCorrectField(const int row, const int col, const char letter) {
+	if (board.getValue(row, col) == '#') {
+		return true;
+	}
+	else if (isSameLetter(row, col, letter)) {
+		return true;
+	}
+	return false;
+}
+
+bool Crossword::isBadPosition(vector<int> coordinates, const std::string answer, const std::string orientation) {
+	int dx = 0, dy = 0, comRow, comCol;
+	bool notCommon = true; // without common letters
+	if (orientation == "vertically") {	dy = 1; }
+	else if (orientation == "horizontally") { dx = 1;}
+	else { throw InvalidOrientation(); }
+
+	if (coordinates.size() == 4) {
+		comRow = coordinates[2];
+		comCol = coordinates[3];
+		notCommon = false;
+	}
+	int y = coordinates[0];
+	int x = coordinates[1];
+	for (unsigned i = 0; i < answer.size(); i++) {
+		try {
+			if (!notCommon) {
+				if (x == comCol && y == comRow) {
+					x += dx;
+					y += dy;
+					continue;
+				}
+			}
+			if (isCorrectField(y, x, answer[i])) {
+				x += dx;
+				y += dy;
+			}
+			else {
+				return true;
+			}
+		}
+		catch (const FieldNotSettedUp&) {
+			x += dx;
+			y += dy;
+			continue;
+		}
+		catch (const std::out_of_range&) {
+			break;
+		}
+
+	}
+	return false;
 }

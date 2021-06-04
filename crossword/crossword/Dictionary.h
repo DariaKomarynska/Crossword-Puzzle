@@ -38,6 +38,7 @@ public:
 	string find_word(string& meaning) const;
 	string find_meaning(int index) const;
 	string find_word(int index) const;
+	string findWordInList(int index, const vector<string> wordList) const;
 	int find_index(string word) const;
 	map<string, string> find_by_letter(char first_char);
 	

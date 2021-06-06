@@ -14,7 +14,6 @@ private:
 	Board board = Board();
 	Dictionary solutions = Dictionary();
 	std::vector<std::string> answerList;
-	std::vector<std::string> onBoard;
 	std::vector< std::vector<int>> firstLettersCoords;
 	std::vector<std::string> orientations;
 	std::string name = "";
@@ -68,7 +67,7 @@ public:
 	pair<vector<int>, string>choosePosition(const string curWord, const string prevWord, const int curIndex, const int prevIndex);
 	pair<vector<int>, string>chooseRandomPosition(const string curWord, const string preWord);
 	void putFirstWord(const string answer);
-	void putAnotherWord(const string answer, const int answerSize);
+	void putAnotherWord(const string answer, const int answerSize, const vector<string> onBoard);
 	vector<int> putWordRandomly(const string curWord);
 	vector<int> putWordHorizontally(const string answer, const string preWord, const int curIndex, const int preIndex);
 	vector<int> putWordVertically(const string answer, const string preWord, const int curIndex, const int preIndex);

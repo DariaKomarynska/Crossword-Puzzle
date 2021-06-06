@@ -17,7 +17,7 @@ int main(){
 	dict.add_word("pingwin", "ptak");
 	dict.add_word("zajac", "bajki o grafach");
 	dict.add_word("enkapsulacja", "enkapsulacja");
-	dict.add_word("orzeszki", "zimne");
+	dict.add_word("orzeszki", "ziemne");
 	dict.add_word("mleko", "napoj");
 	dict.add_word("wino", "wino");
 	dict.add_word("woda", "woda");

@@ -117,7 +117,7 @@ int Crossword::sizeListAnswers() {
 
 void Crossword::choosePositionPutAnswers() {
 	unsigned amountOfWords = sizeListAnswers();
-
+	std::vector<std::string> onBoard;
 	for (unsigned i = 0; i < amountOfWords; i++) {
 
 		std::string answer = answerList[i];
@@ -131,7 +131,7 @@ void Crossword::choosePositionPutAnswers() {
 			placed = true;
 		}
 		else {
-			putAnotherWord(answer, answerSize);
+			putAnotherWord(answer, answerSize, onBoard);
 		}
 		onBoard.push_back(answer);
 	}
@@ -150,7 +150,7 @@ void Crossword::putFirstWord(const string answer) {
 }
 
 
-void Crossword::putAnotherWord(const string answer, const int answerSize) {
+void Crossword::putAnotherWord(const string answer, const int answerSize, const vector<string> onBoard) {
 	bool placed = false;
 	pair<vector<int>, string> position;
 	vector<int> coords;
@@ -628,8 +628,8 @@ bool Crossword::isBadPosition(vector<int> coordinates, const std::string answer,
 }
 
 string Crossword::answerOnBoard(const int NOQuestion) {
-	int row = firstLettersCoords.at(NOQuestion).at(0);
-	int col = firstLettersCoords.at(NOQuestion).at(1);
+	int row = getFirstLetterRow(NOQuestion);
+	int col = getFirstLetterCol(NOQuestion);
 	int size = sizeWord(NOQuestion);
 	string answer = "";
 	string orientation = getOrientation(NOQuestion);
@@ -654,7 +654,6 @@ int Crossword::countPoints() {
 	for (int i = 0; i < firstLettersCoords.size(); i++) {
 		if (answerOnBoard(i) == answerList[i]) {
 			points += 10;
-			// points += onBoard[i].size();
 		}
 	}
 	return points;

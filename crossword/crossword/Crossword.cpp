@@ -652,8 +652,6 @@ string Crossword::answerOnBoard(const int NOQuestion) {
 int Crossword::countPoints() {
 	int points = 0;
 	for (int i = 0; i < firstLettersCoords.size(); i++) {
-		string a = answerOnBoard(i);
-		string b = answerList[i];
 		if (answerOnBoard(i) == answerList[i]) {
 			points += 10;
 			// points += onBoard[i].size();

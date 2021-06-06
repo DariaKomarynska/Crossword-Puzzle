@@ -101,15 +101,22 @@ void Game::ending() {
 	// board.clear();
 	// board.putFirstLetters();
 	countPoints();
+	showCorrectBoard();
 	std::cout << player <<'\n';
 }
 
 
 void Game::countPoints() {
-	// player.addPoints(board.getPoints());
+	player.addPoints(crossword.countPoints());
 }
 
 
 void Game::checkForPoints(int row, int col) {
 	// if (board.isCorrect(row, col));
+}
+
+
+void Game::showCorrectBoard() {
+	crossword.getCorrectBoard();
+	cout << crossword << endl; // crossword.getBoard() shows only board without questions
 }

@@ -158,11 +158,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="TestBoard.cpp" />
     <ClCompile Include="TestCrossword.cpp" />
     <ClCompile Include="TestField.cpp" />
     <ClCompile Include="TestPlayer.cpp" />
     <ClCompile Include="TestsDictionary.cpp" />
-    <ClCompile Include="TestBoard.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -141,7 +141,6 @@
   <ItemGroup>
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Crossword.cpp" />
-    <ClCompile Include="crosswordErrors.cpp" />
     <ClCompile Include="Dictionary.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />

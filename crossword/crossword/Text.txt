@@ -1,0 +1,2 @@
+doooopa,sop,1,1,vertically
+doooopa,sop,2,2,vertically

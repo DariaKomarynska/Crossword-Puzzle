@@ -105,6 +105,12 @@ void Crossword::init(const Dictionary n_solutions, const std::vector< std::vecto
 	}
 }
 
+//void Crossword::choosePositionPutAnswers() {
+//	vector <string> words = solutions.answers();
+//	std::vector<string> onBoard;
+//	unsigned amountOfWords = solutions.size();
+//}
+
 
 vector <string> Crossword::getRandomAnswers() {
 	return answerList;

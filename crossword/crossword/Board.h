@@ -35,6 +35,7 @@ public:
 	bool validCoords(const int row, const int col) const;
 	bool coordsValidation(const int row, const int col) const;
 	void setUpMaxSize(const int NORows, const int NOCol);
+	bool isBadPosition(vector<int> coordinates, const std::string answer, const std::string orientation);
 };
 
 extern int getLenOfNumber(const int number);

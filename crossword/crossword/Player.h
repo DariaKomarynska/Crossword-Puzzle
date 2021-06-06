@@ -26,6 +26,7 @@ public:
 	void resetPoints() { points = 0; }
 	void substractPoints(const unsigned int noPoints);
 	int getAveragePoints();
+	int getScore();
 	std::string getStatistisc();
 
 	void newGame();

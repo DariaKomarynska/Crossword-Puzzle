@@ -34,6 +34,19 @@ int Player::getAveragePoints() {
 }
 
 
+int Player::getScore() {
+	const std::vector <int>& stats = Player::pointList;
+
+	int sum = 0;
+
+	for (auto& pt : stats) {
+		sum += pt;
+	}
+
+	return sum;
+}
+
+
 void Player::newGame() {
 	pointList.push_back(points);
 	resetPoints();
@@ -132,7 +145,6 @@ std::ostream& operator<<(std::ostream& os, const Player& player)
 	for (int points : player.pointList) {
 		os << "," << points;
 	}
-	os << '\n';
 	return os;
 }
 

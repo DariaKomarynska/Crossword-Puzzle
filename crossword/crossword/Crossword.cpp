@@ -103,6 +103,7 @@ void Crossword::init(const Dictionary n_solutions, const std::vector< std::vecto
 
 		board.createAndSetUpFields(fst_letter_pos.at(0), fst_letter_pos.at(1), a_size, orientation);
 	}
+	answerList = solutions.answers();
 }
 
 //void Crossword::choosePositionPutAnswers() {
@@ -118,7 +119,7 @@ vector <string> Crossword::getRandomAnswers() {
 
 
 int Crossword::sizeListAnswers() {
-	return answerList.size();
+	return solutions.answers().size();
 }
 
 void Crossword::choosePositionPutAnswers() {
@@ -361,28 +362,12 @@ void Crossword::fillField(const int row, const int col, const char value) {
 }
 
 
-//std::ostream& operator<<(std::ostream& os, Crossword& c) {
-//	os << '\n' << c.board;
-//
-//	int index = 0;
-//
-//	for (auto& question : c.getQuestions()) {
-//		os << '\n' << index + 1 << ". " << question;
-//		if (question.size() < 15) {		// distance should be changed
-//			os << '\t';
-//		}
-//		os << '\t' << "(" << c.getFirstLetterRow(index) + 1 << ", " << c.getFirstLetterCol(index) + 1 << ")";
-//		index++;
-//	}
-//	return os;
-//}
-
 std::ostream& operator<<(std::ostream& os, Crossword& c) {
 	os << '\n' << c.board;
 
 	int index = 0;
 
-	for (auto& question : c.getRandomQuestions()) {
+	for (auto& question : c.getQuestions()) {
 		os << '\n' << index + 1 << ". " << question;
 		if (question.size() < 15) {		// distance should be changed
 			os << '\t';
@@ -392,6 +377,22 @@ std::ostream& operator<<(std::ostream& os, Crossword& c) {
 	}
 	return os;
 }
+
+//std::ostream& operator<<(std::ostream& os, Crossword& c) {
+//	os << '\n' << c.board;
+//
+//	int index = 0;
+//
+//	for (auto& question : c.getRandomQuestions()) {
+//		os << '\n' << index + 1 << ". " << question;
+//		if (question.size() < 15) {		// distance should be changed
+//			os << '\t';
+//		}
+//		os << '\t' << "(" << c.getFirstLetterRow(index) + 1 << ", " << c.getFirstLetterCol(index) + 1 << ")";
+//		index++;
+//	}
+//	return os;
+//}
 
 
 std::vector<std::string> Crossword::getQuestions() {

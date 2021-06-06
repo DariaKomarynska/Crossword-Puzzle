@@ -315,7 +315,7 @@ namespace Dictionarytest
 			Assert::IsTrue(correct == scores);
 		}
 
-		TEST_METHOD(Word_Score)
+		/*TEST_METHOD(Word_Score)
 		{
 			const vector<string> words = { "apple", "banana", "peach" };
 			Dictionary dict_a;
@@ -332,9 +332,9 @@ namespace Dictionarytest
 				it1++;
 			}
 			
-		}
+		}*/
 
-		TEST_METHOD(Sorted_answers)
+		/*TEST_METHOD(Sorted_answers)
 		{
 			const vector<string> words = { "apple", "banana", "peach" };
 			Dictionary dict_a;
@@ -342,7 +342,7 @@ namespace Dictionarytest
 			vector<string> correct = { "peach" , "apple" , "banana" };
 			vector<string> answers = dict_a.sortedAnswers(wordScores);
 			Assert::IsTrue(correct == answers);
-		}
+		}*/
 
 		TEST_METHOD(Answer_not_alpha)
 		{

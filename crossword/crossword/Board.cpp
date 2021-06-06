@@ -186,7 +186,7 @@ void Board::fillFields(const int begin_row, const int begin_col, const std::stri
 }
 
 
-bool Board::isBadPosition( vector<int> coordinates, const std::string answer, const std::string orientation) {
+bool Board::isBadPosition(vector<int> coordinates, const std::string answer, const std::string orientation) {
 	int dx = 0, dy = 0, comRow, comCol;
 	bool notCommon = true; // without common letters
 	if (orientation == "vertically") {
@@ -319,7 +319,6 @@ std::ostream& operator<<(std::ostream& os, const Board& b)
 	}
 	return os;
 }
-
 
 
 int getLenOfNumber(const int number) {

@@ -36,9 +36,6 @@
     <ClCompile Include="Crossword.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="crosswordErrors.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.h">

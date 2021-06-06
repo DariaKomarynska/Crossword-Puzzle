@@ -13,6 +13,7 @@ class Crossword {
 private:
 	Board board = Board();
 	Dictionary solutions = Dictionary();
+	std::vector<std::string> answerList;
 	std::vector< std::vector<int>> firstLettersCoords;
 	std::vector<std::string> orientations;
 	std::string name = "";
@@ -29,7 +30,9 @@ public:
 	void fillCrossword(const int beginRow, const int beginCol, const string answer, const string orientation);
 	void fillAnswer(const int NOQuestion, const std::string answer);
 	void fillField(const int row, const int col, const char value);
+	void getCorrectBoard();
 
+	string answerOnBoard(const int NOQuestion);
 	int countPoints();
 	friend std::ostream& operator<<(std::ostream& os, Crossword& c);
 	std::vector<std::string> getQuestions();
@@ -39,13 +42,17 @@ public:
 	std::string getOrientation(const int NOQuestion);
 	Board getBoard() { return board; };
 	int getIndexAnswer(const string word);
-
+	int getIndexAnswerList(const string word);
+	std::vector<std::string> getRandomQuestions();
+	vector <string> getRandomAnswers();
+	int sizeListAnswers();
 	int getLetterRow(const string word);
 	int getLetterRow(const string word, const char letter);
 	int getLetterCol(const string word, const char letter);
 	int getLetterCol(const string word);
 	int getFirstLetterRow(const int NOQuestion);
 	int getFirstLetterCol(const int NOQuestion);
+	int sizeWord(const int NOQuestion);
 
 	int letterPosition(const string word, const char letter);
 
@@ -61,11 +68,20 @@ public:
 	pair<vector<int>, string>choosePosition(const string curWord, const string prevWord, const int curIndex, const int prevIndex);
 	pair<vector<int>, string>chooseRandomPosition(const string curWord, const string preWord);
 	void putFirstWord(const string answer);
-	void putAnotherWord(const string answer, const int answerSize, vector<string> onBoard);
+	void putAnotherWord(const string answer, const int answerSize, const vector<string> onBoard);
 	vector<int> putWordRandomly(const string curWord);
 	vector<int> putWordHorizontally(const string answer, const string preWord, const int curIndex, const int preIndex);
 	vector<int> putWordVertically(const string answer, const string preWord, const int curIndex, const int preIndex);
 
+	bool isBadPosition(vector<int> coordinates, const std::string answer, const std::string orientation);
+	bool isCorrectField(const int row, const int col, const char letter);
+	bool isSameLetter(const int row, const int col, const char letter);
+	bool AreSameLetters(const char letter1, const char letter2);
+	char checkLetter(const int index, const int nextRow, const int nextCol);
+	char getLetterByColumn(const int NOQuestion, const int col);
+	char getLetterByRow(const int NOQuestion, const int row);
+	bool checkCoordinate(const int index, const int row, const int col);
+	bool isInRange(const int index, const int begin, const int coord);
 };
 
 extern std::vector <std::string> parseRows(std::ifstream& fileHandle);

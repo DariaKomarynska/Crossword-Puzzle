@@ -9,7 +9,7 @@
 int main(){
 	//std::vector<std::vector<int>> pair = { {1, 1}, {1, 1} };
 	//std::vector<std::string> orientation = { "vertically", "horizontally" };
-	
+
 	Player jacus = Player("Jacex");
 	Dictionary dict = Dictionary();
 	dict.add_word("paliwko", "piwo to moje");

@@ -106,7 +106,7 @@ void Game::ending() {
 
 
 void Game::countPoints() {
-	//player.addPoints(crossword.countPoints());
+	player.addPoints(crossword.countPoints());
 }
 
 

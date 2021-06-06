@@ -627,33 +627,37 @@ bool Crossword::isBadPosition(vector<int> coordinates, const std::string answer,
 	return false;
 }
 
-//string Crossword::answerOnBoard(const int row, const int col) {
-//	//int size = sizeWord(NOQuestion);
-//	string answer = "";
-//	string orientation = getOrientation(NOQuestion);
-//	if (orientation == "horizontally") {
-//		for (int i = 0; i < size ; i++) {
-//			answer += board.getValue(row, col);
-//			col += i;
-//		}
-//	}
-//	else if (orientation == "vertically") {
-//		for (int i = 0; i < size ; i++) {
-//			answer += board.getValue(row, col);
-//			row += i;
-//		}
-//	}
-//	return answer;
-//}
+string Crossword::answerOnBoard(const int NOQuestion) {
+	int row = firstLettersCoords.at(NOQuestion).at(0);
+	int col = firstLettersCoords.at(NOQuestion).at(1);
+	int size = sizeWord(NOQuestion);
+	string answer = "";
+	string orientation = getOrientation(NOQuestion);
+	if (orientation == "horizontally") {
+		for (int i = 0; i < size ; i++) {
+			answer += board.getValue(row, col);
+			col += 1;
+		}
+	}
+	else if (orientation == "vertically") {
+		for (int i = 0; i < size ; i++) {
+			answer += board.getValue(row, col);
+			row += 1;
+		}
+	}
+	return answer;
+}
 
 
-//int Crossword::countPoints() {
-//	int points = 0;
-//	for (int i = 0; i < firstLettersCoords.size(); i++) {
-//		if (answerOnBoard(i) == answerList[i]) {
-//			points += 10;
-//			// points += onBoard[i].size();
-//		}
-//	}
-//	return points;
-//}
+int Crossword::countPoints() {
+	int points = 0;
+	for (int i = 0; i < firstLettersCoords.size(); i++) {
+		string a = answerOnBoard(i);
+		string b = answerList[i];
+		if (answerOnBoard(i) == answerList[i]) {
+			points += 10;
+			// points += onBoard[i].size();
+		}
+	}
+	return points;
+}

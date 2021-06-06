@@ -30,6 +30,7 @@ public:
 	void fillCrossword(const int beginRow, const int beginCol, const string answer, const string orientation);
 	void fillAnswer(const int NOQuestion, const std::string answer);
 	void fillField(const int row, const int col, const char value);
+	void getCorrectBoard();
 
 	string answerOnBoard(const int NOQuestion);
 	int countPoints();

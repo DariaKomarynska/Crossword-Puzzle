@@ -317,6 +317,12 @@ void Crossword::fillAnswer(const int NOQuestion, const std::string answer) {
 	board.fillFields(getFirstLetterRow(NOQuestion), getFirstLetterCol(NOQuestion), answer, getOrientation(NOQuestion));
 }
 
+void Crossword::getCorrectBoard() {
+	for (int i = 0; i < sizeListAnswers(); i++) {
+		fillAnswer(i, answerList[i]);
+	}
+}
+
 
 string Crossword::checkOrientation(const string word) {
 	// return what orientation has word on the board 

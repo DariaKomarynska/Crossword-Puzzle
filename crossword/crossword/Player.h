@@ -17,7 +17,7 @@ public:
 	std::string getName() { return name; }
 	const std::string getName() const { return name; }
 	int getPoints() { return points; }
-	const int getPoints() const { return points; }
+    int getPoints() const { return points; }
 	std::vector< int > getPointList() { return pointList; };
 
 	void setName(const std::string newName);

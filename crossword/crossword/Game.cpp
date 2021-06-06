@@ -118,5 +118,5 @@ void Game::checkForPoints(int row, int col) {
 
 void Game::showCorrectBoard() {
 	crossword.getCorrectBoard();
-	cout << crossword << endl;
+	cout << crossword << endl; // crossword.getBoard() shows only board without questions
 }

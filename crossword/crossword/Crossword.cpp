@@ -536,7 +536,7 @@ char Crossword::getLetterByRow(const int NOQuestion, const int row) {
 
 
 bool Crossword::checkCoordinate(const int index, const int row, const int col) {
-	// in range
+	// checking: is  x or y in correct range of answer`s coordinates 
 	int begin, coord;
 	if (row == -1) {
 		begin = getFirstLetterCol(index);
@@ -551,6 +551,7 @@ bool Crossword::checkCoordinate(const int index, const int row, const int col) {
 
 
 bool Crossword::isInRange(const int index, const int begin, const int coord) {
+	// checking given coordinate in range
 	int size = sizeWord(index);
 	for (int i = 0; i < size ; i++) {
 		if ((i + begin) == coord) {
@@ -561,6 +562,7 @@ bool Crossword::isInRange(const int index, const int begin, const int coord) {
 }
 
 bool Crossword::isSameLetter(const int row, const int col, const char letter) {
+	// checking letter on field with given row and column 
 	char newLetter = '#';
 	for (int i = 0; i < firstLettersCoords.size(); i++) {
 		if (row == firstLettersCoords[i][0]) {
@@ -576,10 +578,12 @@ bool Crossword::isSameLetter(const int row, const int col, const char letter) {
 }
 
 bool Crossword::AreSameLetters(const char letter1, const char letter2) {
+	// comparing two given letters
 	return (letter1 == letter2);
 }
 
 bool Crossword::isCorrectField(const int row, const int col, const char letter) {
+	// value in field shoud be # or same letter
 	if (board.getValue(row, col) == '#') {
 		return true;
 	}
@@ -597,6 +601,7 @@ bool Crossword::isBadPosition(vector<int> coordinates, const std::string answer,
 	else { throw InvalidOrientation(); }
 
 	if (coordinates.size() == 4) {
+		// if letter, to put, has common letter with another word 
 		comRow = coordinates[2];
 		comCol = coordinates[3];
 		notCommon = false;
@@ -634,6 +639,7 @@ bool Crossword::isBadPosition(vector<int> coordinates, const std::string answer,
 }
 
 string Crossword::answerOnBoard(const int NOQuestion) {
+	// get answer from board by index
 	int row = getFirstLetterRow(NOQuestion);
 	int col = getFirstLetterCol(NOQuestion);
 	int size = sizeWord(NOQuestion);
@@ -656,6 +662,7 @@ string Crossword::answerOnBoard(const int NOQuestion) {
 
 
 int Crossword::countPoints() {
+	// count points for each word, comparing given with correct
 	int points = 0;
 	for (int i = 0; i < firstLettersCoords.size(); i++) {
 		if (answerOnBoard(i) == answerList[i]) {

@@ -322,10 +322,10 @@ namespace Dictionarytest
 			vector<int> number_of_words = dict_a.numbersWordsWithLetter(words);
 			vector<int> frequency = dict_a.letterFrequencyInWord(words);
 			vector<int> letterScores = dict_a.letterScores(number_of_words, frequency);
-			multimap<int, string> wordScores = dict_a.wordScore(words, letterScores);
-			multimap<int, string> correct = { {15, "peach"}, {18, "apple"}, {30, "banana"} };
-			multimap<int, string>::iterator it1 = wordScores.begin();
-			multimap<int, string>::iterator it2 = correct.begin();
+			multimap<int, string, greater<int>> wordScores = dict_a.wordScore(words, letterScores);
+			multimap<int, string, greater<int>> correct = { {15, "peach"}, {18, "apple"}, {30, "banana"} };
+			multimap<int, string, greater<int>>::iterator it1 = wordScores.begin();
+			multimap<int, string, greater<int>>::iterator it2 = correct.begin();
 			for (it2; it2 != correct.end(); ++it2) {
 				Assert::AreEqual(it1->first, it2->first);
 				Assert::AreEqual(it1->second, it2->second);
@@ -338,7 +338,7 @@ namespace Dictionarytest
 		{
 			const vector<string> words = { "apple", "banana", "peach" };
 			Dictionary dict_a;
-			multimap<int, string> wordScores = { {15, "peach"}, {18, "apple"}, {30, "banana"} };
+			multimap<int, string, greater<int>> wordScores = { {15, "peach"}, {18, "apple"}, {30, "banana"} };
 			vector<string> correct = { "peach" , "apple" , "banana" };
 			vector<string> answers = dict_a.sortedAnswers(wordScores);
 			Assert::IsTrue(correct == answers);

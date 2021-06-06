@@ -57,7 +57,7 @@ int Board::getNORows() const
 }
 
 
-const char Board::getValue(const int row, const int col) const
+char Board::getValue(const int row, const int col) const
 {
 	coordsValidation(row, col);
 	return fields.at(row).at(col).getValue();
@@ -356,7 +356,7 @@ std::istream& operator>>(std::istream& is, Board& b) {
 	// | represents start of a new field
 	// /n represents new row
 
-	unsigned NORows = 0;
+    int NORows = 0;
 	std::vector<std::vector<char>> values;
 	std::vector<char> row;
 	values.push_back(row);
@@ -391,12 +391,12 @@ std::istream& operator>>(std::istream& is, Board& b) {
 	if (NORows == 0) {
 		throw BoardSizeException();
 	}
-	unsigned NOCols = values.at(0).size();
+    int NOCols = values.at(0).size();
 
 	b.setUpMaxSize(NORows, NOCols);
 
-	for (unsigned Nrow = 0; Nrow < NORows; Nrow++) {
-		for (unsigned Ncol = 0; Ncol < NOCols; Ncol++) {
+    for (int Nrow = 0; Nrow < NORows; Nrow++) {
+        for (int Ncol = 0; Ncol < NOCols; Ncol++) {
 			char v = values.at(Nrow).at(Ncol);
 			if (v != '#') {
 				b.setUpField(Nrow, Ncol);

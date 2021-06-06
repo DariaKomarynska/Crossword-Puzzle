@@ -1,5 +1,6 @@
 #include "Field.h"
 #include <string>
+#include <cstring>
 #include "crosswordErrors.cpp"
 
 

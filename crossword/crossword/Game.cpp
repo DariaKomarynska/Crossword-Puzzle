@@ -123,17 +123,17 @@ void Game::showCorrectBoard() {
 
 
 std::vector <Player> getPlayers() {
-	std::vector <Player> players_vector;
-	std::ifstream data_file("userData.csv");
-	std::string str;
-	while (std::getline(data_file, str)) {
-		std::stringstream lineStream(str);
-		Player p;
-		lineStream >> p;
-		players_vector.push_back(p);
-	}
-	data_file.close();
-	return players_vector;
+    std::vector <Player> players_vector;
+    std::ifstream data_file("userData.csv");
+    std::string str;
+    while (std::getline(data_file, str)) {
+        std::stringstream lineStream(str);
+        Player p;
+        lineStream >> p;
+        players_vector.push_back(p);
+    }
+    data_file.close();
+    return players_vector;
 }
 
 

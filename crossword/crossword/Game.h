@@ -21,3 +21,8 @@ public:
 	void showCorrectBoard();
 	std::string numberOfQuestion();
 };
+
+
+extern std::vector <Player> getPlayers();
+extern bool cmpPairs(const std::pair<std::string, int>& l, const std::pair<std::string, int>& r);
+extern Player getPlayerByName(const std::string name);

@@ -120,3 +120,38 @@ void Game::showCorrectBoard() {
 	crossword.getCorrectBoard();
 	cout << crossword << endl; // crossword.getBoard() shows only board without questions
 }
+
+
+std::vector <Player> getPlayers() {
+	std::vector <Player> players_vector;
+	std::ifstream data_file("userData.csv");
+	std::string str;
+	while (std::getline(data_file, str)) {
+		std::stringstream lineStream(str);
+		Player p;
+		lineStream >> p;
+		players_vector.push_back(p);
+	}
+	data_file.close();
+	return players_vector;
+}
+
+
+bool cmpPairs(const std::pair<std::string, int>& l, const std::pair<std::string, int>& r) {
+	if (l.second != r.second) {
+		return l.second > r.second;
+	}
+
+	return l.first > r.first;
+}
+
+
+Player getPlayerByName(const std::string name) {
+	std::vector <Player> players = getPlayers();
+	for (auto& player : players) {
+		if (player.getName() == name) {
+			return player;
+		}
+	}
+	throw std::invalid_argument("Player not found");
+}

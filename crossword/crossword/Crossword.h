@@ -83,6 +83,7 @@ public:
 	char getLetterByRow(const int NOQuestion, const int row);
 	bool checkCoordinate(const int index, const int row, const int col);
 	bool isInRange(const int index, const int begin, const int coord);
+	bool notContinueAnswer(const int row, const int col, const string lastOrientation, const char letter);
 };
 
 extern std::vector <std::string> parseRows(std::ifstream& fileHandle);

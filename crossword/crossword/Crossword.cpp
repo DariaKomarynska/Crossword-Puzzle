@@ -702,7 +702,6 @@ std::vector <Crossword> getCrosswords() {
 	fileH.close();
 	return crosswords;
 }
-}
 
 bool Crossword::notContinueAnswer(const int row, const int col, const string lastOrientation, const char letter) {
 	// can common letter continue previous or next word

@@ -186,56 +186,6 @@ void Board::fillFields(const int begin_row, const int begin_col, const std::stri
 }
 
 
-bool Board::isBadPosition(vector<int> coordinates, const std::string answer, const std::string orientation) {
-	int dx = 0, dy = 0, comRow, comCol;
-	bool notCommon = true; // without common letters
-	if (orientation == "vertically") {
-		dy = 1;
-	}
-	else if (orientation == "horizontally") {
-		dx = 1;
-	}
-	else {
-		throw InvalidOrientation();
-	}
-	if (coordinates.size() == 4) {
-		comRow = coordinates[2];
-		comCol = coordinates[3];
-		notCommon = false;
-	}
-	int y = coordinates[0];
-	int x = coordinates[1];
-	for (unsigned i = 0; i < answer.size(); i++) {
-		try {
-			if (!notCommon) {
-				if (x == comCol && y == comRow) {
-					x += dx;
-					y += dy;
-					continue;
-				}
-			}
-			if (fields.at(y).at(x).getValue() == '#') {
-				x += dx;
-				y += dy;
-			}
-			else {
-				return true;
-			}
-		}
-		catch (const FieldNotSettedUp&) {
-			x += dx;
-			y += dy;
-			continue;
-		}
-		catch (const std::out_of_range&) {
-			break;
-		}
-
-	}
-	return false;
-}
-
-
 void Board::putIndex(const int row, const int col, const int value) {
 	fields.at(row).at(col).putIndex(value);
 }

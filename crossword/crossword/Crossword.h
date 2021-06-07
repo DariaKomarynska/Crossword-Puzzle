@@ -20,7 +20,7 @@ private:
 
 public:
 	Crossword() {};
-	Crossword(std::string filePath);
+	Crossword(std::string filePath, std::string crosswordName="");
 	Crossword(const Dictionary n_solutions, const std::vector< std::vector<int>> first_letters, const std::vector<std::string> n_orientations);
 	Crossword(const Dictionary n_solutions);
 
@@ -31,6 +31,7 @@ public:
 	void fillAnswer(const int NOQuestion, const std::string answer);
 	void fillField(const int row, const int col, const char value);
 	void getCorrectBoard();
+	std::string getName() { return name; }
 
 	string answerOnBoard(const int NOQuestion);
 	int countPoints();
@@ -86,3 +87,4 @@ public:
 
 extern std::vector <std::string> parseRows(std::ifstream& fileHandle);
 extern std::vector <std::string> parseCSV(std::string& data);
+extern std::vector <Crossword> getCrosswords();

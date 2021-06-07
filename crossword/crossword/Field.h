@@ -6,6 +6,7 @@ private:
 	char value;
 
 public:
+	int index = 0;
 	Field() : value('#') {};		// empty - '#' field
 	Field(const char c) { fill(c); }
 	Field(const std::string s) { fill(s[0]); }
@@ -17,6 +18,7 @@ public:
 	void putIndex(const std::string num);
 	void clear();
 	char getValue() const { return value; }
+
 };
 
 extern bool alphaOrSpaceValidation(const char c);

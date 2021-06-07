@@ -9,10 +9,10 @@
 
 class Game {
 private:
-	Player player;
-	Crossword crossword;
 public:
-	Game(Player nPlayer, Crossword nCrossword) : player(nPlayer), crossword(nCrossword) {}
+	Game(Player &nPlayer, Crossword &nCrossword) : player(nPlayer), crossword(nCrossword) {}
+	Player &player;
+	Crossword &crossword;
 	void play();
 	void filling();
 	void ending();
@@ -26,3 +26,4 @@ public:
 extern std::vector <Player> getPlayers();
 extern bool cmpPairs(const std::pair<std::string, int>& l, const std::pair<std::string, int>& r);
 extern Player getPlayerByName(const std::string name);
+extern void saveUserData(std::vector <Player> player);

@@ -146,12 +146,26 @@ bool cmpPairs(const std::pair<std::string, int>& l, const std::pair<std::string,
 }
 
 
+/*
 Player getPlayerByName(const std::string name) {
-	std::vector <Player> players = getPlayers();
+    std::vector <Player> players = getPlayers();
 	for (auto& player : players) {
-		if (player.getName() == name) {
-			return player;
+        if (player.getName() == name) {
+            return player;
 		}
 	}
 	throw std::invalid_argument("Player not found");
+}
+*/
+
+
+void saveUserData(std::vector <Player> players) {
+	std::ofstream data_file("userData.csv");
+	std::stringstream s;
+
+	for(auto& player : players) {
+		s << player << '\n';
+	}
+	data_file << s.str();
+	data_file.close();
 }

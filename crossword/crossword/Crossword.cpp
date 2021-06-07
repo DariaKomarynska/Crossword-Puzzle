@@ -1,7 +1,7 @@
 #include "Crossword.h"
 
 
-Crossword::Crossword(std::string filepath) {
+Crossword::Crossword(std::string filepath, std::string crosswordName) : name(crosswordName) {
 	Dictionary n_solutions;
 	std::vector< std::vector<int>> n_first_letters;
 	std::vector<std::string> n_orientations;
@@ -677,4 +677,20 @@ int Crossword::countPoints() {
 		}
 	}
 	return points;
+}
+
+
+std::vector <Crossword> getCrosswords() {
+	ifstream fileH("crosswordNamesData.txt");
+	std::vector <std::string> data = parseRows(fileH);
+	std::vector <Crossword> crosswords;
+	for (auto& rowdata : data) {
+		std::vector <std::string> vecrowdata = parseCSV(rowdata);
+		if (vecrowdata.size() != 2) throw std::out_of_range("Invalid crossword names data");
+
+		Crossword c = Crossword(vecrowdata.at(0), vecrowdata.at(1));
+		crosswords.push_back(c);
+	}
+	fileH.close();
+	return crosswords;
 }

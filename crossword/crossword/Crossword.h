@@ -35,6 +35,7 @@ public:
 
 	string answerOnBoard(const int NOQuestion);
 	int countPoints();
+	int maxPoints();
 	friend std::ostream& operator<<(std::ostream& os, Crossword& c);
 	std::vector<std::string> getQuestions();
 	int getNOQuestions() { return solutions.size(); }

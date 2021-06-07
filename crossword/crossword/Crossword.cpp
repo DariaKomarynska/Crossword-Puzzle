@@ -119,7 +119,8 @@ vector <string> Crossword::getRandomAnswers() {
 
 
 int Crossword::sizeListAnswers() {
-	return solutions.answers().size();
+	// return solutions.answers().size();
+	return answerList.size();
 }
 
 void Crossword::choosePositionPutAnswers() {
@@ -367,7 +368,8 @@ std::ostream& operator<<(std::ostream& os, Crossword& c) {
 
 	int index = 0;
 
-	for (auto& question : c.getQuestions()) {
+	// for (auto& question : c.getQuestions()) {
+	for (auto& question : c.getRandomQuestions()) {
 		os << '\n' << index + 1 << ". " << question;
 		if (question.size() < 15) {		// distance should be changed
 			os << '\t';
@@ -571,17 +573,23 @@ bool Crossword::isInRange(const int index, const int begin, const int coord) {
 bool Crossword::isSameLetter(const int row, const int col, const char letter) {
 	// checking letter on field with given row and column 
 	char newLetter = '#';
+	string curOrientation = "";
 	for (int i = 0; i < firstLettersCoords.size(); i++) {
 		if (row == firstLettersCoords[i][0]) {
 			newLetter = checkLetter(i, -1, col); // check by col, rows are same
+			curOrientation = "horizontally";
 		}
 		else if (col == firstLettersCoords[i][1]) {
 			newLetter = checkLetter(i, row, -1); // check by row, cols are same
+			curOrientation = "vertically";
 		}
 		if ((newLetter != '#') && (newLetter != '-')) {
-			return AreSameLetters(newLetter, letter);
+			if (AreSameLetters(newLetter, letter) && notContinueAnswer(row, col, curOrientation, newLetter)) {
+				return true;
+			}
 		}
 	}
+	return false;
 }
 
 bool Crossword::AreSameLetters(const char letter1, const char letter2) {
@@ -677,4 +685,27 @@ int Crossword::countPoints() {
 		}
 	}
 	return points;
+}
+
+bool Crossword::notContinueAnswer(const int row, const int col, const string lastOrientation, const char letter) {
+	// can common letter continue previous or next word
+	char newLetter = '#';
+	for (int i = 0; i < firstLettersCoords.size(); i++) {
+		if (lastOrientation == "horizontally") {
+			if (col == firstLettersCoords[i][1]) {
+				newLetter = checkLetter(i, row, -1); // check by row, cols are same
+			}
+		}
+		else if (lastOrientation == "vertically") {
+			if (row == firstLettersCoords[i][0]) {
+				newLetter = checkLetter(i, -1, col); // check by col, rows are same
+			}
+		}
+		if ((newLetter != '#') && (newLetter != '-')) {
+			if (AreSameLetters(newLetter, letter)) {
+				return false;
+			};
+		}
+	}
+	return true;
 }

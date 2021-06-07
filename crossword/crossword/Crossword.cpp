@@ -688,6 +688,16 @@ int Crossword::countPoints() {
 }
 
 
+int Crossword::maxPoints() {
+	// count points for each word, comparing given with correct
+	int points = 0;
+	for (int i = 0; i < firstLettersCoords.size(); i++) {
+		points += 10;
+	}
+	return points;
+}
+
+
 std::vector <Crossword> getCrosswords() {
 	ifstream fileH("crosswordNamesData.txt");
 	std::vector <std::string> data = parseRows(fileH);
@@ -702,6 +712,7 @@ std::vector <Crossword> getCrosswords() {
 	fileH.close();
 	return crosswords;
 }
+
 
 bool Crossword::notContinueAnswer(const int row, const int col, const string lastOrientation, const char letter) {
 	// can common letter continue previous or next word

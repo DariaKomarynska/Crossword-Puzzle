@@ -39,6 +39,8 @@ public:
 	friend std::ostream& operator<<(std::ostream& os, Crossword& c);
 	std::vector<std::string> getQuestions();
 	int getNOQuestions() { return solutions.size(); }
+	std::vector <std::vector<int>> getAllFirstLetterCoords() { return firstLettersCoords; }
+	std::vector <std::vector<int>> getFieldsOfQuestion(const int index);
 
 	std::vector<int> getFirstLetterCoords(const int NOQuestion);
 	std::string getOrientation(const int NOQuestion);

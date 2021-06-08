@@ -696,6 +696,25 @@ int Crossword::maxPoints() {
 }
 
 
+std::vector <std::vector<int>> Crossword::getFieldsOfQuestion(const int index) {
+	std::vector <std::vector<int>> fields;
+	std::vector<int> pair = firstLettersCoords.at(index);;
+	std::string orientation = orientations.at(index);
+
+	int dx = 0;
+	int dy = 0;
+	if (orientation == "vertically") dy = 1;
+	else if (orientation == "horizontally") dx = 1;
+
+	for (unsigned i = 0; i < solutions.find_word(index).length(); i++) {
+		fields.push_back(pair);
+		pair.at(0) += dy;
+		pair.at(1) += dx;
+	}
+	return fields;
+}
+
+
 std::vector <Crossword> getCrosswords() {
 	ifstream fileH("crosswordNamesData.txt");
 	std::vector <std::string> data = parseRows(fileH);

@@ -145,8 +145,8 @@ public:
         palette4.setBrush(QPalette::Disabled, QPalette::WindowText, brush3);
         crosswordList->setPalette(palette4);
         QFont font2;
-        font2.setFamilies({QString::fromUtf8("Cooper Black")});
-        font2.setPointSize(20);
+        font2.setFamilies({QString::fromUtf8("Segoe UI")});
+        font2.setPointSize(24);
         crosswordList->setFont(font2);
         crosswordList->setLayoutDirection(Qt::LeftToRight);
 
@@ -156,6 +156,7 @@ public:
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         deletaCrosswordBtn = new QPushButton(selectCrossword);
         deletaCrosswordBtn->setObjectName(QString::fromUtf8("deletaCrosswordBtn"));
+        deletaCrosswordBtn->setMinimumSize(QSize(0, 75));
         QPalette palette5;
         palette5.setBrush(QPalette::Active, QPalette::ButtonText, brush4);
         palette5.setBrush(QPalette::Inactive, QPalette::ButtonText, brush4);
@@ -167,6 +168,7 @@ public:
 
         addCrosswordBtn = new QPushButton(selectCrossword);
         addCrosswordBtn->setObjectName(QString::fromUtf8("addCrosswordBtn"));
+        addCrosswordBtn->setMinimumSize(QSize(0, 75));
         QPalette palette6;
         palette6.setBrush(QPalette::Active, QPalette::ButtonText, brush4);
         palette6.setBrush(QPalette::Inactive, QPalette::ButtonText, brush4);
@@ -183,12 +185,14 @@ public:
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         logoutBtn = new QPushButton(selectCrossword);
         logoutBtn->setObjectName(QString::fromUtf8("logoutBtn"));
+        logoutBtn->setMinimumSize(QSize(0, 75));
         logoutBtn->setFont(font);
 
         horizontalLayout_2->addWidget(logoutBtn);
 
         playBtn = new QPushButton(selectCrossword);
         playBtn->setObjectName(QString::fromUtf8("playBtn"));
+        playBtn->setMinimumSize(QSize(0, 75));
         QPalette palette7;
         QBrush brush9(QColor(26, 78, 93, 255));
         brush9.setStyle(Qt::SolidPattern);

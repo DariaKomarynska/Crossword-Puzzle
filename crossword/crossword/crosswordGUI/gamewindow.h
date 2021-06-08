@@ -6,6 +6,7 @@
 #include <QLineEdit>
 #include <vector>
 #include <QGroupBox>
+#include <QTableWidget>
 
 namespace Ui {
 class gameWindow;
@@ -22,14 +23,19 @@ public:
 private:
     Ui::gameWindow *ui;
     Game &game;
-    std::vector <std::vector <QGroupBox*>> fields;
+    std::vector <std::vector <QTableWidget*>> fields;
+    void setColor(int row, int col, std::string color);
+    void no_select();
 
 signals:
     void game_end();
 
+
 private slots:
     void content_changed(QLineEdit* field);
     void on_finishBtn_clicked();
+    void on_questionList_itemSelectionChanged();
+
 };
 
 #endif // GAMEWINDOW_H

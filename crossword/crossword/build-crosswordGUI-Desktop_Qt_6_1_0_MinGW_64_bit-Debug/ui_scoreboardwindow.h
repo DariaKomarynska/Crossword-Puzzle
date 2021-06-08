@@ -86,7 +86,7 @@ public:
         font.setFamilies({QString::fromUtf8("Cooper Black")});
         font.setPointSize(22);
         indexLbl->setFont(font);
-        indexLbl->setAlignment(Qt::AlignCenter);
+        indexLbl->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
 
         horizontalLayout->addWidget(indexLbl);
 
@@ -98,7 +98,7 @@ public:
         palette2.setBrush(QPalette::Disabled, QPalette::WindowText, brush3);
         playerLbl->setPalette(palette2);
         playerLbl->setFont(font);
-        playerLbl->setAlignment(Qt::AlignCenter);
+        playerLbl->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
 
         horizontalLayout->addWidget(playerLbl);
 
@@ -111,7 +111,7 @@ public:
         scoreLbl->setPalette(palette3);
         scoreLbl->setFont(font);
         scoreLbl->setLayoutDirection(Qt::LeftToRight);
-        scoreLbl->setAlignment(Qt::AlignCenter);
+        scoreLbl->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
 
         horizontalLayout->addWidget(scoreLbl);
 

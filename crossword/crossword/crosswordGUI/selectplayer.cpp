@@ -1,6 +1,5 @@
 #include "selectplayer.h"
 #include "ui_selectplayer.h"
-#include "../Player.h"
 #include "../Game.h"
 #include <sstream>
 #include <fstream>
@@ -11,18 +10,17 @@ selectPlayer::selectPlayer(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    std::vector <Player> players = getPlayers();
+    this->players = getPlayers();
 
     for(auto& player : players) {
-
         QString name =  QString::fromStdString(player.getName());
         ui->playerList->addItem(name);
     }
-
 }
 
 selectPlayer::~selectPlayer()
 {
+    //players.clear();
     delete ui;
 }
 
@@ -34,7 +32,6 @@ void selectPlayer::on_backBtn_clicked()
 
 void selectPlayer::on_deletePlayerBtn_clicked()
 {
-    std::vector <Player> players = getPlayers();
     std::vector <Player> new_players;
 
     QString nameToDelete = ui->playerList->currentItem()->text();
@@ -59,18 +56,23 @@ void selectPlayer::on_playBtn_clicked()
 {
     if(ui->playerList->selectedItems().size() == 1) {
         QString playerName = ui->playerList->currentItem()->text();
-        std::string newNamestr = playerName.toLocal8Bit().constData();
+        std::string nameStr = playerName.toLocal8Bit().constData();
 
-        Player* player = new Player(newNamestr);
-        select_crossword_win = new selectCrossword(player);
-        connect (select_crossword_win, SIGNAL(logout()), this, SLOT(on_logout()));
-        select_crossword_win->setWindowState(Qt::WindowMaximized);
-        select_crossword_win->show();
-        this->hide();
+        for(auto& player : players) {
+            if(player.getName() == nameStr) {
+                select_crossword_win = new selectCrossword(player);
+                connect (select_crossword_win, SIGNAL(logout()), this, SLOT(on_logout()));
+                select_crossword_win->setWindowState(Qt::WindowMaximized);
+                select_crossword_win->show();
+                this->hide();
+                break;
+            }
+        }
     }
 }
 
 void selectPlayer::on_logout() {
+    saveUserData(players);
     emit selectPlayer_closed();
     this->close();
 }

@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "selectcrossword.h"
+#include "../Player.h"
 
 namespace Ui {
 class selectPlayer;
@@ -29,6 +30,7 @@ private slots:
 private:
     Ui::selectPlayer *ui;
     selectCrossword *select_crossword_win;
+    std::vector <Player> players;
 
 signals:
     void selectPlayer_closed();

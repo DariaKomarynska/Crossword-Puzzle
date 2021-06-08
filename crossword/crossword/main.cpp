@@ -23,7 +23,9 @@ int main(){
 	dict.add_word("woda", "woda");
 	dict.add_word("lampa", "lampa");
 	dict.add_word("q", "qq"); // to check word with no common letter
-
+	//dict.add_word("aamaa", "aamaa");
+	//dict.add_word("ccm", "ccm");	// to check continuation another answers
+	//dict.add_word("mkk", "mkk");
 
 	//Crossword crossword = Crossword(dict, pair, orientation);
 	Crossword crossword = Crossword(dict);

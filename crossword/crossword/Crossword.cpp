@@ -584,9 +584,7 @@ bool Crossword::isSameLetter(const int row, const int col, const char letter) {
 			curOrientation = "vertically";
 		}
 		if ((newLetter != '#') && (newLetter != '-')) {
-			if (AreSameLetters(newLetter, letter) && notContinueAnswer(row, col, curOrientation, newLetter)) {
-				return true;
-			}
+			return AreSameLetters(newLetter, letter);
 		}
 	}
 	return false;
@@ -611,8 +609,9 @@ bool Crossword::isCorrectField(const int row, const int col, const char letter) 
 bool Crossword::isBadPosition(vector<int> coordinates, const std::string answer, const std::string orientation) {
 	int dx = 0, dy = 0, comRow, comCol;
 	bool notCommon = true; // without common letters
-	if (orientation == "vertically") {	dy = 1; }
-	else if (orientation == "horizontally") { dx = 1;}
+	string comLetterOrientation = "";
+	if (orientation == "vertically") { dy = 1; comLetterOrientation = "horizontally"; }
+	else if (orientation == "horizontally") { dx = 1; comLetterOrientation = "vertically"; }
 	else { throw InvalidOrientation(); }
 
 	if (coordinates.size() == 4) {
@@ -627,27 +626,26 @@ bool Crossword::isBadPosition(vector<int> coordinates, const std::string answer,
 		try {
 			if (!notCommon) {
 				if (x == comCol && y == comRow) {
-					x += dx;
-					y += dy;
-					continue;
+					if (notContinueAnswer(y, x, comLetterOrientation, answer[i])) {
+						x += dx;
+						y += dy;
+						continue;
+					}
+					else { return true; }
 				}
 			}
 			if (isCorrectField(y, x, answer[i])) {
 				x += dx;
 				y += dy;
 			}
-			else {
-				return true;
-			}
+			else { return true; }
 		}
 		catch (const FieldNotSettedUp&) {
 			x += dx;
 			y += dy;
 			continue;
 		}
-		catch (const std::out_of_range&) {
-			break;
-		}
+		catch (const std::out_of_range&) { break; }
 
 	}
 	return false;

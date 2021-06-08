@@ -72,22 +72,22 @@ gameWindow::gameWindow(Game &g, QWidget *parent) :
             field->setFrame(false);
             field->setAlignment(Qt::AlignTop);
             if(board.getValue(y, x) == '#') {
-                field->setStyleSheet("QLineEdit { background: rgb(255, 184, 151); border: none;}");
+                field->setStyleSheet("QLineEdit { background: rgb(255, 241, 207); border: none;}");
                 field->setEnabled(false);
-                indexLbl->setStyleSheet(" background: rgb(255, 184, 151); border: none;");
+                indexLbl->setStyleSheet(" background: rgb(255, 241, 207); border: none;");
 
-                box->setStyleSheet("background: rgb(255, 184, 151);");
+                box->setStyleSheet("background: rgb(255, 241, 207);");
 
             }
             else {
-                field->setStyleSheet("color: rgb(251, 110, 181); background: rgb(3, 128, 125); selection-background-color: rgb(0, 120, 215);  border: none;");
-                indexLbl->setStyleSheet("color: rgb(255, 184, 151); background: rgb(3, 128, 125); selection-background-color: rgb(0, 120, 215);  border: none;");
+                field->setStyleSheet("color: rgb(255, 255, 255); background: rgb(115, 150, 40); selection-background-color: rgb(0, 120, 215);  border: none;");
+                indexLbl->setStyleSheet("color: rgb(255, 241, 207); background: rgb(115, 150, 40); selection-background-color: rgb(0, 120, 215);  border: none;");
 
                 // set index parameters
                 QFont indexfont = indexLbl->font();
                 indexfont.setPointSize(12);
                 indexLbl->setFont(indexfont);
-                connect (this, SIGNAL(no_select()), field, SLOT(indexLbl->setStyleSheet("background: rgb(3, 128, 125);")));
+                connect (this, SIGNAL(no_select()), field, SLOT(indexLbl->setStyleSheet("background: rgb(115, 150, 40);")));
 
                 // set field parameters
                 QFont font = field->font();
@@ -96,13 +96,13 @@ gameWindow::gameWindow(Game &g, QWidget *parent) :
                 connect (field, SIGNAL(editingFinished()), this, SLOT(content_changed(field)));
                 field->setAlignment(Qt::AlignCenter);
 
-                box->setStyleSheet("background: rgb(3, 128, 125);");
+                box->setStyleSheet("background: rgb(115, 150, 40);");
             }
             box->setCellWidget(0, 0, indexLbl);
             box->setCellWidget(1, 0, field);
             row.push_back(box);
             ui->gameTable->setCellWidget(y, x, box);
-            ui->gameTable->setStyleSheet("background: rgb(255, 184, 151); gridline-color: rgb(255, 184, 151);");
+            ui->gameTable->setStyleSheet("background: rgb(255, 241, 207); gridline-color: rgb(255, 241, 207);");
         }
         fields.push_back(row);
     }
@@ -158,7 +158,7 @@ void gameWindow::on_questionList_itemSelectionChanged()
         std::vector <std::vector<int>> ans_fields = game.crossword.getFieldsOfQuestion(index);
 
         for(auto& pair : ans_fields) {
-            setColor(pair.at(0), pair.at(1), "rgb(5,194,188)");
+            setColor(pair.at(0), pair.at(1), "rgb(200,214,48)");
         }
     }
 }
@@ -168,7 +168,7 @@ void gameWindow::no_select(){
     for(unsigned y = 0; y < fields.size(); y++){
         for(unsigned x = 0; x < fields.at(0).size(); x++) {
             if(game.crossword.getBoard().getValue(y, x) != '#')
-                setColor(y, x, "rgb(3, 128, 125)");
+                setColor(y, x, "rgb(115, 150, 40)");
         }
     }
 }

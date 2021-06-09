@@ -742,6 +742,23 @@ std::vector <std::vector<int>> Crossword::getFieldsOfQuestion(const int index) {
 }
 
 
+void Crossword::makeCSVFile() {
+    // makes CSV File named [name].csv
+
+    std::ofstream c_file(name + ".csv");
+
+    for (int i = 0; i < answerList.size(); i++) {
+        c_file << solutions.questions().at(i) << ',';
+        c_file << solutions.answers().at(i) << ',';
+        c_file << firstLettersCoords.at(i).at(0) << ',';
+        c_file << firstLettersCoords.at(i).at(1) << ',';
+        c_file << orientations.at(i) << '\n';
+    }
+
+    c_file.close();
+}
+
+
 std::vector <Crossword> getCrosswords() {
     ifstream fileH("crosswordNamesData.txt");
     std::vector <std::string> data = parseRows(fileH);

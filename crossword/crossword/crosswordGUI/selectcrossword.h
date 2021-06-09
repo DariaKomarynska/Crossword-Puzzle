@@ -36,6 +36,8 @@ private slots:
 
     void on_deleteCrosswordBtn_clicked();
 
+    void on_deleteBtn_clicked();
+
 private:
     Ui::selectCrossword *ui;
     gameWindow *game_win;

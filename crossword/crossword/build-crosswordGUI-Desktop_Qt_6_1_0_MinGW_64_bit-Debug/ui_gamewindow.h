@@ -18,6 +18,7 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QTableWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -28,7 +29,7 @@ class Ui_gameWindow
 {
 public:
     QGridLayout *gridLayout;
-    QVBoxLayout *verticalLayout_4;
+    QVBoxLayout *verticalLayout_2;
     QHBoxLayout *horizontalLayout_4;
     QLabel *crosswordNameLbl;
     QHBoxLayout *horizontalLayout_3;
@@ -41,11 +42,14 @@ public:
     QLabel *dashTxtLbl;
     QLCDNumber *maxScoreLCD;
     QHBoxLayout *horizontalLayout_5;
+    QSpacerItem *horizontalSpacer;
     QVBoxLayout *verticalLayout_3;
+    QSpacerItem *verticalSpacer;
     QTableWidget *gameTable;
-    QVBoxLayout *verticalLayout_2;
-    QListWidget *questionList;
+    QSpacerItem *verticalSpacer_2;
+    QSpacerItem *horizontalSpacer_2;
     QVBoxLayout *verticalLayout;
+    QListWidget *questionList;
     QPushButton *checkBtn;
     QPushButton *finishBtn;
 
@@ -68,8 +72,8 @@ public:
         gameWindow->setPalette(palette);
         gridLayout = new QGridLayout(gameWindow);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-        verticalLayout_4 = new QVBoxLayout();
-        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
+        verticalLayout_2 = new QVBoxLayout();
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         horizontalLayout_4 = new QHBoxLayout();
         horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
         crosswordNameLbl = new QLabel(gameWindow);
@@ -248,12 +252,20 @@ public:
         horizontalLayout_4->addLayout(horizontalLayout_2);
 
 
-        verticalLayout_4->addLayout(horizontalLayout_4);
+        verticalLayout_2->addLayout(horizontalLayout_4);
 
         horizontalLayout_5 = new QHBoxLayout();
         horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Minimum, QSizePolicy::Minimum);
+
+        horizontalLayout_5->addItem(horizontalSpacer);
+
         verticalLayout_3 = new QVBoxLayout();
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Minimum);
+
+        verticalLayout_3->addItem(verticalSpacer);
+
         gameTable = new QTableWidget(gameWindow);
         gameTable->setObjectName(QString::fromUtf8("gameTable"));
         QPalette palette8;
@@ -262,7 +274,7 @@ public:
         palette8.setBrush(QPalette::Active, QPalette::WindowText, brush8);
         palette8.setBrush(QPalette::Active, QPalette::Light, brush3);
         palette8.setBrush(QPalette::Active, QPalette::Midlight, brush3);
-        QBrush brush9(QColor(85, 85, 255, 255));
+        QBrush brush9(QColor(251, 110, 181, 255));
         brush9.setStyle(Qt::SolidPattern);
         palette8.setBrush(QPalette::Active, QPalette::Dark, brush9);
         QBrush brush10(QColor(255, 78, 246, 255));
@@ -317,13 +329,21 @@ public:
         gameTable->verticalHeader()->setVisible(false);
         gameTable->verticalHeader()->setHighlightSections(false);
 
-        verticalLayout_3->addWidget(gameTable, 0, Qt::AlignHCenter|Qt::AlignVCenter);
+        verticalLayout_3->addWidget(gameTable);
+
+        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Minimum);
+
+        verticalLayout_3->addItem(verticalSpacer_2);
 
 
         horizontalLayout_5->addLayout(verticalLayout_3);
 
-        verticalLayout_2 = new QVBoxLayout();
-        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Minimum, QSizePolicy::Minimum);
+
+        horizontalLayout_5->addItem(horizontalSpacer_2);
+
+        verticalLayout = new QVBoxLayout();
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         questionList = new QListWidget(gameWindow);
         questionList->setObjectName(QString::fromUtf8("questionList"));
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
@@ -336,10 +356,8 @@ public:
         font3.setPointSize(18);
         questionList->setFont(font3);
 
-        verticalLayout_2->addWidget(questionList);
+        verticalLayout->addWidget(questionList);
 
-        verticalLayout = new QVBoxLayout();
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         checkBtn = new QPushButton(gameWindow);
         checkBtn->setObjectName(QString::fromUtf8("checkBtn"));
         QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Fixed);
@@ -347,7 +365,7 @@ public:
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(checkBtn->sizePolicy().hasHeightForWidth());
         checkBtn->setSizePolicy(sizePolicy1);
-        checkBtn->setMinimumSize(QSize(300, 75));
+        checkBtn->setMinimumSize(QSize(400, 75));
         QPalette palette9;
         palette9.setBrush(QPalette::Active, QPalette::WindowText, brush5);
         QBrush brush12(QColor(35, 106, 126, 255));
@@ -379,7 +397,7 @@ public:
         finishBtn->setObjectName(QString::fromUtf8("finishBtn"));
         sizePolicy1.setHeightForWidth(finishBtn->sizePolicy().hasHeightForWidth());
         finishBtn->setSizePolicy(sizePolicy1);
-        finishBtn->setMinimumSize(QSize(0, 75));
+        finishBtn->setMinimumSize(QSize(200, 75));
         QPalette palette10;
         palette10.setBrush(QPalette::Active, QPalette::WindowText, brush5);
         palette10.setBrush(QPalette::Active, QPalette::Button, brush12);
@@ -399,16 +417,13 @@ public:
         verticalLayout->addWidget(finishBtn);
 
 
-        verticalLayout_2->addLayout(verticalLayout);
+        horizontalLayout_5->addLayout(verticalLayout);
 
 
-        horizontalLayout_5->addLayout(verticalLayout_2);
+        verticalLayout_2->addLayout(horizontalLayout_5);
 
 
-        verticalLayout_4->addLayout(horizontalLayout_5);
-
-
-        gridLayout->addLayout(verticalLayout_4, 0, 0, 1, 1);
+        gridLayout->addLayout(verticalLayout_2, 0, 0, 1, 1);
 
 
         retranslateUi(gameWindow);

@@ -5,24 +5,26 @@
 #include <QVBoxLayout>
 
 
-gameWindow::gameWindow(Game &g, QWidget *parent) :
+gameWindow::gameWindow(Game *g, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::gameWindow),
     game(g)
 {
     ui->setupUi(this);
     // fill crossword name lable
-    QString c_name = QString::fromStdString(game.crossword.getName());
+    QString c_name = QString::fromStdString(game->crossword.getName());
     ui->crosswordNameLbl->setText(c_name);
-    //fill player name lable
-    QString p_name = QString::fromStdString(game.player.getName());
+    // fill player name lable
+    QString p_name = QString::fromStdString(game->player.getName());
     ui->playerNameLbl->setText(p_name);
 
     // fill max score LCD
-    ui->maxScoreLCD->display(game.crossword.maxPoints());
+    ui->maxScoreLCD->display(game->crossword.maxPoints());
 
     //fill question list
-    std::vector <std::string> questions = game.crossword.getQuestions();
+    std::vector <std::string> questions = game->crossword.getQuestions();
+
+    g->crossword.board.clear();
 
     int q_index = 1;
     for(auto& question : questions) {
@@ -35,7 +37,7 @@ gameWindow::gameWindow(Game &g, QWidget *parent) :
 
     //make crossword
 
-    Board board = game.crossword.getBoard();
+    Board board = game->crossword.getBoard();
     int NCol = board.getNOColumns();
     int NRow = board.getNORows();
 
@@ -85,7 +87,7 @@ gameWindow::gameWindow(Game &g, QWidget *parent) :
 
             }
             else {
-                field->setStyleSheet("color: rgb(255, 255, 255); background: rgb(3, 128, 125);  border: none;");
+                field->setStyleSheet(":enabled {color: rgb(255, 255, 255); background: rgb(3, 128, 125);  border: none } :disabled { color: rgb(251, 110, 181) } ");
                 indexLbl->setStyleSheet("color: rgb(255, 241, 207); background: rgb(3, 128, 125);  border: none;");
 
                 // set index parameters
@@ -113,7 +115,7 @@ gameWindow::gameWindow(Game &g, QWidget *parent) :
     }
 
     // put question indexes
-    std::vector <std::vector<int>> first_indexes = game.crossword.getAllFirstLetterCoords();
+    std::vector <std::vector<int>> first_indexes = game->crossword.getAllFirstLetterCoords();
     int qindex = 1;
     for (auto& coords : first_indexes) {
         int row = coords.at(0);
@@ -142,7 +144,7 @@ gameWindow::~gameWindow()
 
 void gameWindow::on_finishBtn_clicked()
 {   
-    game.player.resetPoints();
+    game->player.newGame();
     emit game_end();
     this->close();
 }
@@ -160,7 +162,7 @@ void gameWindow::on_questionList_itemSelectionChanged()
     no_select();
     if (ui->questionList->selectedItems().size() == 1) {
         int index = ui->questionList->currentRow();
-        std::vector <std::vector<int>> ans_fields = game.crossword.getFieldsOfQuestion(index);
+        std::vector <std::vector<int>> ans_fields = game->crossword.getFieldsOfQuestion(index);
 
         for(auto& pair : ans_fields) {
             setColor(pair.at(0), pair.at(1), "rgb(5,208,201)");
@@ -172,7 +174,7 @@ void gameWindow::on_questionList_itemSelectionChanged()
 void gameWindow::no_select(){
     for(unsigned y = 0; y < fields.size(); y++){
         for(unsigned x = 0; x < fields.at(0).size(); x++) {
-            if(game.crossword.getBoard().getValue(y, x) != '#')
+            if(game->crossword.getBoard().getValue(y, x) != '#')
                 setColor(y, x, "rgb(3, 128, 125)");
         }
     }
@@ -191,3 +193,45 @@ void gameWindow::setColor(int row, int col, std::string color) {
     label->setStyleSheet("background: " + col_qstring + ";");
 }
 
+
+void gameWindow::on_checkBtn_clicked()
+{
+    // fill copy GUI board to game class board
+    for(unsigned row = 0; row < fields.size(); row++){
+        for(unsigned col = 0; col < fields.at(0).size(); col++) {
+            if(game->crossword.getBoard().isSettedUp(row, col)) {
+                QTableWidget *box = fields.at(row).at(col);
+                QLineEdit *field = box->findChild<QLineEdit *>("Field");
+
+                QString answ = field->text();
+                    if (answ.size() > 0) {
+                    field->setText(answ.at(0));
+                    char answer_char = answ.toStdString().at(0);
+                    game->crossword.fillField(row, col, answer_char);
+                }
+            }
+
+        }
+    }
+    game->countPoints();
+    blockCorrectFields();
+    ui->scoreLCD->display(game->player.getPoints());
+}
+
+
+void gameWindow::blockCorrectFields() {
+    for (int i = 0; i < game->crossword.getNOQuestions(); i++) {
+        if ( game->crossword.isCorrectAnswer(i)) {
+            std::vector <std::vector<int>> coords = game->crossword.getFieldsOfQuestion(i);
+
+            for(auto& pair : coords) {
+                blockField(pair.at(0), pair.at(1));
+            }
+        }
+    }
+}
+
+
+void gameWindow::blockField(int row, int col) {
+     fields.at(row).at(col)->setEnabled(false);
+}

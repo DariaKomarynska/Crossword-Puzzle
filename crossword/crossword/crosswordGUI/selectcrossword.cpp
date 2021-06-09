@@ -42,7 +42,7 @@ void selectCrossword::on_playBtn_clicked()
         for(auto& c : crosswords) {
             if (c.getName() == newNamestr) {
                 game = new Game(player, c); /// player is not ref type in game
-                game_win = new gameWindow(*game);
+                game_win = new gameWindow(game);
                 connect (game_win, SIGNAL(game_end()), this, SLOT(on_game_end()));
                 game_win->setWindowState(Qt::WindowMaximized);
                 game_win->show();
@@ -84,23 +84,21 @@ void selectCrossword::reset_list() {
 }
 
 
-void selectCrossword::on_deleteCrosswordBtn_clicked()
+void selectCrossword::on_deleteBtn_clicked()
 {
     QString nameToDelete = ui->crosswordList->currentItem()->text();
 
-    std::stringstream s;
+    std::fstream data_file("crosswordNamesData.txt", ios::out);
     ui->crosswordList->clear();
 
     for(auto& crosswordN : crosswords) {
         QString name =  QString::fromStdString(crosswordN.getName());
 
         if(name != nameToDelete){
-            s << crosswordN.getName() << '\n';
+            data_file << crosswordN.getName() << '\n';
             ui->crosswordList->addItem(name);
         }
     }
-    std::fstream data_file("crosswordNamesData.txt", ios::out);
-    data_file << s.str();
     data_file.close();
 }
 

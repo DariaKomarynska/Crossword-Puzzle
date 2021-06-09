@@ -45,6 +45,7 @@ public:
 	int getNOQuestions() { return solutions.size(); }
 	std::vector <std::vector<int>> getAllFirstLetterCoords() { return firstLettersCoords; }
 	std::vector <std::vector<int>> getFieldsOfQuestion(const int index);
+	void makeCSVFile();
 
 	std::vector<int> getFirstLetterCoords(const int NOQuestion);
 	std::string getOrientation(const int NOQuestion);

@@ -12,10 +12,21 @@ scoreBoardWindow::scoreBoardWindow(QWidget *parent) :
 
     std::vector <Player> players = getPlayers();
 
-    int index = 1;
-    for(auto& player : players) {
-        QString name =  QString::fromStdString(player.getName());
-        QString score =  QString::number(player.getScore());
+    std::vector <std::pair<std::string, int>> scoreTable;
+
+    for (auto& p : players) {
+        std::pair<std::string, int> pair;
+        pair.first = p.getName();
+        pair.second = p.getSumOfPoints();
+        scoreTable.push_back(pair);
+    }
+
+    std::sort(scoreTable.begin(), scoreTable.end(), cmpPairs);
+    unsigned index = 1;
+
+    for (auto& record : scoreTable) {
+        QString name = QString::fromStdString(record.first);
+        QString score = QString::number(record.second);
         QString idx = QString::number(index);
 
         ui->indexList->addItem(idx);

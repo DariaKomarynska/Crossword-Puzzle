@@ -28,7 +28,13 @@ void addCrosswordWindow::on_addBtn_clicked()
     if(new_name != "" && file_name != "") {
         std::string new_name_str = new_name.toLocal8Bit().constData();
         std::string file_name_str = file_name.toLocal8Bit().constData();
-        if (validCrosswordName(new_name_str) && validFileName(file_name_str)) {
+        if (ui->generateFromListChckB->isChecked()) {
+            addCrossword(file_name_str, new_name_str, true);
+            emit closed();
+            this->close();
+
+        }
+        else if (validCrosswordName(new_name_str) && validFileName(file_name_str)) {
             addCrossword(file_name_str, new_name_str);
             emit closed();
             this->close();
@@ -84,7 +90,15 @@ bool validFileName(std::string file_name) {
 }
 
 
-void addCrossword(std::string file_name, std::string name) {
-    std::ofstream log("crosswordNamesData.txt", std::ios_base::app | std::ios_base::out);
-    log << file_name << "," << name << '\n';
+void addCrossword(std::string file_name, std::string name, bool is_list_of_words) {
+    if(is_list_of_words) {
+        std::ofstream log("crosswordNamesData.txt", std::ios_base::app | std::ios_base::out);
+        Crossword c = Crossword(file_name, name, true);
+        c.makeCSVFile();
+        log << name << ".csv," << name << '\n';
+    }
+    else {
+        std::ofstream log("crosswordNamesData.txt", std::ios_base::app | std::ios_base::out);
+        log << file_name << "," << name << '\n';
+    }
 }

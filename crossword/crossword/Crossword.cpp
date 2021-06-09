@@ -1,10 +1,7 @@
 #include "Crossword.h"
 
-
 Crossword::Crossword(std::string filepath, std::string crosswordName) : name(crosswordName) {
 	Dictionary n_solutions;
-	std::vector< std::vector<int>> n_first_letters;
-	std::vector<std::string> n_orientations;
 
 	std::ifstream fileHandle;
 	try {
@@ -19,17 +16,12 @@ Crossword::Crossword(std::string filepath, std::string crosswordName) : name(cro
 
 	for (auto& row : rows) {
 		std::vector <std::string> rowData = parseCSV(row);
-		if (rowData.size() != 5) throw InvalidData();
+		if (rowData.size() != 2) throw InvalidData();
 
 		n_solutions.add_word(rowData.at(1), rowData.at(0));
-		std::vector<int> pos;
-		pos.push_back(number(rowData.at(2)));
-		pos.push_back(number(rowData.at(3)));
-		n_first_letters.push_back(pos);
-		n_orientations.push_back(rowData.at(4));
 	}
 
-	init(n_solutions, n_first_letters, n_orientations);
+	init(n_solutions);
 }
 
 
@@ -61,14 +53,16 @@ Crossword::Crossword(const Dictionary n_solutions, const std::vector< std::vecto
 	init(n_solutions, first_letters, n_orientations);
 }
 
-
 Crossword::Crossword(const Dictionary n_solutions) {
+	init(n_solutions);
+}
+
+
+void Crossword::init(const Dictionary n_solutions) {
 	solutions = n_solutions;
 	answerList = solutions.getRankedRandomAnswers();
 	choosePositionPutAnswers();
-	//fillCrossword();
 }
-
 void Crossword::init(const Dictionary n_solutions, const std::vector< std::vector<int>> first_letters, const std::vector<std::string> n_orientations) {
 	unsigned size = n_solutions.size();
 	if (size != first_letters.size() || size != n_orientations.size()) {
@@ -105,12 +99,6 @@ void Crossword::init(const Dictionary n_solutions, const std::vector< std::vecto
 	}
 	answerList = solutions.answers();
 }
-
-//void Crossword::choosePositionPutAnswers() {
-//	vector <string> words = solutions.answers();
-//	std::vector<string> onBoard;
-//	unsigned amountOfWords = solutions.size();
-//}
 
 
 vector <string> Crossword::getRandomAnswers() {

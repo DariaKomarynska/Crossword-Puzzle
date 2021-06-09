@@ -1,9 +1,9 @@
-Dzialo,ARMATA,4,0,horizontally
-Zderzak pociagu,BUFOR,0,1,vertically
-Co dzien inna w kalendarzu,DATA,1,5,vertically
-Aktywowiec o l. a. 100,FERM,1,2,vertically
-Gospodarstwo hodowlane,FERMA,2,1,horizontally
-Prawy doplyw Sekwany,MARNA,0,3,vertically
-Kapral na statku,MAT,2,4,vertically
-Zlaczka rur,MUFA,1,0,horizontally
-Szata liturgiczna,ORNAT,3,1,horizontally
+Dzialo,ARMATA
+Zderzak pociagu,BUFOR
+Co dzien inna w kalendarzu,DATA
+Aktywowiec o l. a. 100,FERM
+Gospodarstwo hodowlane,FERMA
+Prawy doplyw Sekwany,MARNA
+Kapral na statku,MAT
+Zlaczka rur,MUFA
+Szata liturgiczna,ORNAT

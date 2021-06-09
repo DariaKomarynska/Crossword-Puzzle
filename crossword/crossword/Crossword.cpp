@@ -40,7 +40,7 @@ Crossword::Crossword(std::string filepath, std::string crosswordName, bool list_
                 n_orientations.push_back(rowData.at(4));
             }
 
-            init(n_solutions, n_first_letters, n_orientations);
+        init(n_solutions, n_first_letters, n_orientations);
     }
 }
 

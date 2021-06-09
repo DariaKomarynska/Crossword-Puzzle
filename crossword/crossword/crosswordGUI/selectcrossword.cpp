@@ -3,17 +3,14 @@
 #include "../Crossword.h"
 #include "../Game.h"
 
-
 selectCrossword::selectCrossword(Player &pl, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::selectCrossword), player(pl)
 {
     ui->setupUi(this);
 
-    // if(player) {
-        QString name = QString::fromStdString(player.getName());
-        ui->playerLbl->setText(name);
-    // }
+    QString name = QString::fromStdString(player.getName());
+    ui->playerLbl->setText(name);
 
     crosswords = getCrosswords();
 
@@ -61,3 +58,49 @@ void selectCrossword::on_playBtn_clicked()
 void selectCrossword::on_game_end() {
     this->show();
 }
+
+
+
+
+void selectCrossword::on_addCrosswordBtn_clicked()
+{
+    addCrossword_win = new addCrosswordWindow;
+    connect (addCrossword_win, SIGNAL(closed()), this, SLOT(reset_list()));
+    addCrossword_win->show();
+}
+
+
+void selectCrossword::reset_list() {
+
+    crosswords = getCrosswords();
+    ui->crosswordList->clear();
+
+    for(Crossword& cross : crosswords) {
+
+        QString name =  QString::fromStdString(cross.getName());
+        ui->crosswordList->addItem(name);
+    }
+
+}
+
+
+void selectCrossword::on_deleteCrosswordBtn_clicked()
+{
+    QString nameToDelete = ui->crosswordList->currentItem()->text();
+
+    std::stringstream s;
+    ui->crosswordList->clear();
+
+    for(auto& crosswordN : crosswords) {
+        QString name =  QString::fromStdString(crosswordN.getName());
+
+        if(name != nameToDelete){
+            s << crosswordN.getName() << '\n';
+            ui->crosswordList->addItem(name);
+        }
+    }
+    std::fstream data_file("crosswordNamesData.txt", ios::out);
+    data_file << s.str();
+    data_file.close();
+}
+

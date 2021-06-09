@@ -33,7 +33,7 @@ public:
     QLabel *selectCrosswortTxtLbl;
     QListWidget *crosswordList;
     QHBoxLayout *horizontalLayout;
-    QPushButton *deletaCrosswordBtn;
+    QPushButton *deleteCrosswordBtn;
     QPushButton *addCrosswordBtn;
     QHBoxLayout *horizontalLayout_2;
     QPushButton *logoutBtn;
@@ -154,17 +154,17 @@ public:
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        deletaCrosswordBtn = new QPushButton(selectCrossword);
-        deletaCrosswordBtn->setObjectName(QString::fromUtf8("deletaCrosswordBtn"));
-        deletaCrosswordBtn->setMinimumSize(QSize(0, 75));
+        deleteCrosswordBtn = new QPushButton(selectCrossword);
+        deleteCrosswordBtn->setObjectName(QString::fromUtf8("deleteCrosswordBtn"));
+        deleteCrosswordBtn->setMinimumSize(QSize(0, 75));
         QPalette palette5;
         palette5.setBrush(QPalette::Active, QPalette::ButtonText, brush4);
         palette5.setBrush(QPalette::Inactive, QPalette::ButtonText, brush4);
         palette5.setBrush(QPalette::Disabled, QPalette::ButtonText, brush3);
-        deletaCrosswordBtn->setPalette(palette5);
-        deletaCrosswordBtn->setFont(font);
+        deleteCrosswordBtn->setPalette(palette5);
+        deleteCrosswordBtn->setFont(font);
 
-        horizontalLayout->addWidget(deletaCrosswordBtn);
+        horizontalLayout->addWidget(deleteCrosswordBtn);
 
         addCrosswordBtn = new QPushButton(selectCrossword);
         addCrosswordBtn->setObjectName(QString::fromUtf8("addCrosswordBtn"));
@@ -243,7 +243,7 @@ public:
         playerTxtLbl->setText(QCoreApplication::translate("selectCrossword", "Player:", nullptr));
         playerLbl->setText(QString());
         selectCrosswortTxtLbl->setText(QCoreApplication::translate("selectCrossword", "Select Crossword:", nullptr));
-        deletaCrosswordBtn->setText(QCoreApplication::translate("selectCrossword", "Delete", nullptr));
+        deleteCrosswordBtn->setText(QCoreApplication::translate("selectCrossword", "Delete", nullptr));
         addCrosswordBtn->setText(QCoreApplication::translate("selectCrossword", "Add", nullptr));
         logoutBtn->setText(QCoreApplication::translate("selectCrossword", "Logout", nullptr));
         playBtn->setText(QCoreApplication::translate("selectCrossword", "Play", nullptr));

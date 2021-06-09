@@ -24,9 +24,13 @@ gameWindow::gameWindow(Game &g, QWidget *parent) :
     //fill question list
     std::vector <std::string> questions = game.crossword.getQuestions();
 
+    int q_index = 1;
     for(auto& question : questions) {
-        QString questionQString = QString::fromStdString(question);
+        std::stringstream s;
+        s << q_index << ". " << question;
+        QString questionQString = QString::fromStdString(s.str());
         ui->questionList->addItem(questionQString);
+        q_index++;
     }
 
     //make crossword
@@ -37,7 +41,7 @@ gameWindow::gameWindow(Game &g, QWidget *parent) :
 
     ui->gameTable->setColumnCount(NCol);
     ui->gameTable->setRowCount(NRow);
-
+    ui->gameTable->setFrameStyle(0);
 
     int size = ui->gameTable->columnWidth(0);
 
@@ -51,6 +55,7 @@ gameWindow::gameWindow(Game &g, QWidget *parent) :
             box->setColumnCount(1);
             box->setRowCount(2);
             box->setShowGrid(false);
+            box->setFrameStyle(0);
             box->horizontalHeader()->hide();
             box->verticalHeader()->hide();
             box->horizontalHeader()->setStretchLastSection(true);
@@ -80,23 +85,23 @@ gameWindow::gameWindow(Game &g, QWidget *parent) :
 
             }
             else {
-                field->setStyleSheet("color: rgb(255, 255, 255); background: rgb(115, 150, 40); selection-background-color: rgb(0, 120, 215);  border: none;");
-                indexLbl->setStyleSheet("color: rgb(255, 241, 207); background: rgb(115, 150, 40); selection-background-color: rgb(0, 120, 215);  border: none;");
+                field->setStyleSheet("color: rgb(255, 255, 255); background: rgb(3, 128, 125);  border: none;");
+                indexLbl->setStyleSheet("color: rgb(255, 241, 207); background: rgb(3, 128, 125);  border: none;");
 
                 // set index parameters
                 QFont indexfont = indexLbl->font();
                 indexfont.setPointSize(12);
                 indexLbl->setFont(indexfont);
-                connect (this, SIGNAL(no_select()), field, SLOT(indexLbl->setStyleSheet("background: rgb(115, 150, 40);")));
+                //connect (this, SIGNAL(no_select()), field, SLOT(indexLbl->setStyleSheet("background: rgb(115, 150, 40);")));
 
                 // set field parameters
                 QFont font = field->font();
                 font.setPointSize(20);
                 field->setFont(font);
-                connect (field, SIGNAL(editingFinished()), this, SLOT(content_changed(field)));
+                connect (field, SIGNAL(field->editingFinished()), this, SLOT(content_changed(field)));
                 field->setAlignment(Qt::AlignCenter);
 
-                box->setStyleSheet("background: rgb(115, 150, 40);");
+                box->setStyleSheet("background: rgb(3, 128, 125);");
             }
             box->setCellWidget(0, 0, indexLbl);
             box->setCellWidget(1, 0, field);
@@ -158,7 +163,7 @@ void gameWindow::on_questionList_itemSelectionChanged()
         std::vector <std::vector<int>> ans_fields = game.crossword.getFieldsOfQuestion(index);
 
         for(auto& pair : ans_fields) {
-            setColor(pair.at(0), pair.at(1), "rgb(200,214,48)");
+            setColor(pair.at(0), pair.at(1), "rgb(5,208,201)");
         }
     }
 }
@@ -168,7 +173,7 @@ void gameWindow::no_select(){
     for(unsigned y = 0; y < fields.size(); y++){
         for(unsigned x = 0; x < fields.at(0).size(); x++) {
             if(game.crossword.getBoard().getValue(y, x) != '#')
-                setColor(y, x, "rgb(115, 150, 40)");
+                setColor(y, x, "rgb(3, 128, 125)");
         }
     }
 }

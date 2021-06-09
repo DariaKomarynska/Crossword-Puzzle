@@ -1,8 +1,6 @@
 #include "Crossword.h"
 
 Crossword::Crossword(std::string filepath, std::string crosswordName, bool list_of_words) : name(crosswordName) {
-    Dictionary n_solutions;
-
     std::ifstream fileHandle;
     try {
         fileHandle.open(filepath);
@@ -15,13 +13,15 @@ Crossword::Crossword(std::string filepath, std::string crosswordName, bool list_
     fileHandle.close();
 
     if (list_of_words) {
+        Dictionary n_solutions;
         for (auto& row : rows) {
             std::vector <std::string> rowData = parseCSV(row);
             if (rowData.size() != 2) throw InvalidData();
 
             n_solutions.add_word(rowData.at(1), rowData.at(0));
-            init(n_solutions);
+            
         }
+        init(n_solutions);
     }
     else {
         Dictionary n_solutions;

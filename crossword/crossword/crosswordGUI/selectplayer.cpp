@@ -32,8 +32,6 @@ void selectPlayer::on_backBtn_clicked()
 
 void selectPlayer::on_deletePlayerBtn_clicked()
 {
-    std::vector <Player> new_players;
-
     QString nameToDelete = ui->playerList->currentItem()->text();
 
     std::stringstream s;

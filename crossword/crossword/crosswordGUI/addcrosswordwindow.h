@@ -15,8 +15,21 @@ public:
     explicit addCrosswordWindow(QWidget *parent = nullptr);
     ~addCrosswordWindow();
 
+signals:
+    void closed();
+
+private slots:
+    void on_cancelBtn_clicked();
+
+    void on_addBtn_clicked();
+
 private:
     Ui::addCrosswordWindow *ui;
 };
+
+extern bool crosswordNameUsed(std::string name);
+extern bool validCrosswordName(std::string name);
+extern bool validFileName(std::string file_name);
+extern void addCrossword(std::string file_name, std::string name);
 
 #endif // ADDCROSSWORDWINDOW_H

@@ -6,6 +6,8 @@
 #include "../Crossword.h"
 #include "../Game.h"
 #include "gamewindow.h"
+#include "addcrosswordwindow.h"
+
 
 namespace Ui {
 class selectCrossword;
@@ -26,9 +28,18 @@ private slots:
 
     void on_game_end();
 
+    void on_deletaCrosswordBtn_clicked();
+
+    void on_addCrosswordBtn_clicked();
+
+    void reset_list();
+
+    void on_deleteCrosswordBtn_clicked();
+
 private:
     Ui::selectCrossword *ui;
     gameWindow *game_win;
+    addCrosswordWindow *addCrossword_win;
     Player &player;
     std::vector <Crossword> crosswords;
     Game *game;

@@ -25,7 +25,7 @@ void AddPlayer::on_cancelBtn_clicked()
 
 void AddPlayer::on_addBtn_clicked()
 {
-    QString newName = ui->newPlayerName->toPlainText();
+    QString newName = ui->newPlayerName->text();
     if(newName != "") {
         std::string newNamestr = newName.toLocal8Bit().constData();
         if (validName(newNamestr)) {

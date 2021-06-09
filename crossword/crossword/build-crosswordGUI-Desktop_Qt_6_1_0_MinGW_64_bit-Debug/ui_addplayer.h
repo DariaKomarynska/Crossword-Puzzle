@@ -14,9 +14,9 @@
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QSpacerItem>
-#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QVBoxLayout>
 
 QT_BEGIN_NAMESPACE
@@ -26,19 +26,26 @@ class Ui_AddPlayer
 public:
     QGridLayout *gridLayout;
     QVBoxLayout *verticalLayout_2;
-    QTextEdit *newPlayerName;
+    QHBoxLayout *horizontalLayout_2;
+    QLabel *label;
+    QLineEdit *newPlayerName;
     QHBoxLayout *horizontalLayout;
-    QSpacerItem *horizontalSpacer;
+    QPushButton *cancelBtn;
     QVBoxLayout *verticalLayout;
     QPushButton *addBtn;
-    QPushButton *cancelBtn;
 
     void setupUi(QDialog *AddPlayer)
     {
         if (AddPlayer->objectName().isEmpty())
             AddPlayer->setObjectName(QString::fromUtf8("AddPlayer"));
-        AddPlayer->resize(618, 244);
-        AddPlayer->setMaximumSize(QSize(618, 244));
+        AddPlayer->resize(715, 214);
+        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy.setHorizontalStretch(71);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(AddPlayer->sizePolicy().hasHeightForWidth());
+        AddPlayer->setSizePolicy(sizePolicy);
+        AddPlayer->setMinimumSize(QSize(214, 0));
+        AddPlayer->setMaximumSize(QSize(715, 214));
         QPalette palette;
         QBrush brush(QColor(0, 0, 0, 255));
         brush.setStyle(Qt::SolidPattern);
@@ -62,57 +69,96 @@ public:
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
-        newPlayerName = new QTextEdit(AddPlayer);
-        newPlayerName->setObjectName(QString::fromUtf8("newPlayerName"));
+        horizontalLayout_2 = new QHBoxLayout();
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        label = new QLabel(AddPlayer);
+        label->setObjectName(QString::fromUtf8("label"));
+        label->setMinimumSize(QSize(0, 100));
+        QPalette palette1;
+        QBrush brush4(QColor(5, 208, 201, 255));
+        brush4.setStyle(Qt::SolidPattern);
+        palette1.setBrush(QPalette::Active, QPalette::WindowText, brush4);
+        palette1.setBrush(QPalette::Inactive, QPalette::WindowText, brush4);
+        palette1.setBrush(QPalette::Disabled, QPalette::WindowText, brush3);
+        label->setPalette(palette1);
         QFont font;
-        font.setFamilies({QString::fromUtf8("Segoe UI Light")});
-        font.setPointSize(24);
+        font.setFamilies({QString::fromUtf8("Cooper Black")});
+        font.setPointSize(28);
+        label->setFont(font);
+
+        horizontalLayout_2->addWidget(label);
+
+        newPlayerName = new QLineEdit(AddPlayer);
+        newPlayerName->setObjectName(QString::fromUtf8("newPlayerName"));
+        newPlayerName->setMinimumSize(QSize(0, 100));
+        QPalette palette2;
+        QBrush brush5(QColor(251, 110, 181, 255));
+        brush5.setStyle(Qt::SolidPattern);
+        palette2.setBrush(QPalette::Active, QPalette::Text, brush5);
+        palette2.setBrush(QPalette::Active, QPalette::Base, brush2);
+        QBrush brush6(QColor(251, 110, 181, 128));
+        brush6.setStyle(Qt::SolidPattern);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
+        palette2.setBrush(QPalette::Active, QPalette::PlaceholderText, brush6);
+#endif
+        palette2.setBrush(QPalette::Inactive, QPalette::Text, brush5);
+        palette2.setBrush(QPalette::Inactive, QPalette::Base, brush2);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
+        palette2.setBrush(QPalette::Inactive, QPalette::PlaceholderText, brush6);
+#endif
+        palette2.setBrush(QPalette::Disabled, QPalette::Text, brush3);
+        palette2.setBrush(QPalette::Disabled, QPalette::Base, brush2);
+        QBrush brush7(QColor(0, 0, 0, 128));
+        brush7.setStyle(Qt::SolidPattern);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
+        palette2.setBrush(QPalette::Disabled, QPalette::PlaceholderText, brush7);
+#endif
+        newPlayerName->setPalette(palette2);
         newPlayerName->setFont(font);
 
-        verticalLayout_2->addWidget(newPlayerName);
+        horizontalLayout_2->addWidget(newPlayerName);
+
+
+        verticalLayout_2->addLayout(horizontalLayout_2);
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        cancelBtn = new QPushButton(AddPlayer);
+        cancelBtn->setObjectName(QString::fromUtf8("cancelBtn"));
+        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Expanding);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(cancelBtn->sizePolicy().hasHeightForWidth());
+        cancelBtn->setSizePolicy(sizePolicy1);
+        QPalette palette3;
+        QBrush brush8(QColor(83, 83, 83, 255));
+        brush8.setStyle(Qt::SolidPattern);
+        palette3.setBrush(QPalette::Active, QPalette::ButtonText, brush8);
+        palette3.setBrush(QPalette::Inactive, QPalette::ButtonText, brush8);
+        palette3.setBrush(QPalette::Disabled, QPalette::ButtonText, brush3);
+        cancelBtn->setPalette(palette3);
+        QFont font1;
+        font1.setFamilies({QString::fromUtf8("Cooper Black")});
+        font1.setPointSize(20);
+        cancelBtn->setFont(font1);
 
-        horizontalLayout->addItem(horizontalSpacer);
+        horizontalLayout->addWidget(cancelBtn);
 
         verticalLayout = new QVBoxLayout();
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         addBtn = new QPushButton(AddPlayer);
         addBtn->setObjectName(QString::fromUtf8("addBtn"));
-        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(addBtn->sizePolicy().hasHeightForWidth());
-        addBtn->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(addBtn->sizePolicy().hasHeightForWidth());
+        addBtn->setSizePolicy(sizePolicy1);
         addBtn->setMinimumSize(QSize(320, 0));
-        QPalette palette1;
-        palette1.setBrush(QPalette::Active, QPalette::ButtonText, brush2);
-        palette1.setBrush(QPalette::Inactive, QPalette::ButtonText, brush2);
-        palette1.setBrush(QPalette::Disabled, QPalette::ButtonText, brush3);
-        addBtn->setPalette(palette1);
-        QFont font1;
-        font1.setFamilies({QString::fromUtf8("Cooper Black")});
-        font1.setPointSize(20);
+        QPalette palette4;
+        palette4.setBrush(QPalette::Active, QPalette::ButtonText, brush2);
+        palette4.setBrush(QPalette::Inactive, QPalette::ButtonText, brush2);
+        palette4.setBrush(QPalette::Disabled, QPalette::ButtonText, brush3);
+        addBtn->setPalette(palette4);
         addBtn->setFont(font1);
 
         verticalLayout->addWidget(addBtn);
-
-        cancelBtn = new QPushButton(AddPlayer);
-        cancelBtn->setObjectName(QString::fromUtf8("cancelBtn"));
-        sizePolicy.setHeightForWidth(cancelBtn->sizePolicy().hasHeightForWidth());
-        cancelBtn->setSizePolicy(sizePolicy);
-        QPalette palette2;
-        QBrush brush4(QColor(83, 83, 83, 255));
-        brush4.setStyle(Qt::SolidPattern);
-        palette2.setBrush(QPalette::Active, QPalette::ButtonText, brush4);
-        palette2.setBrush(QPalette::Inactive, QPalette::ButtonText, brush4);
-        palette2.setBrush(QPalette::Disabled, QPalette::ButtonText, brush3);
-        cancelBtn->setPalette(palette2);
-        cancelBtn->setFont(font1);
-
-        verticalLayout->addWidget(cancelBtn);
 
 
         horizontalLayout->addLayout(verticalLayout);
@@ -132,8 +178,9 @@ public:
     void retranslateUi(QDialog *AddPlayer)
     {
         AddPlayer->setWindowTitle(QCoreApplication::translate("AddPlayer", "New Player", nullptr));
-        addBtn->setText(QCoreApplication::translate("AddPlayer", "Add", nullptr));
+        label->setText(QCoreApplication::translate("AddPlayer", "Enter name: ", nullptr));
         cancelBtn->setText(QCoreApplication::translate("AddPlayer", "Cancel", nullptr));
+        addBtn->setText(QCoreApplication::translate("AddPlayer", "Add", nullptr));
     } // retranslateUi
 
 };

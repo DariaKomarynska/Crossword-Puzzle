@@ -691,8 +691,9 @@ int Crossword::countPoints() {
     // count points for each word, comparing given with correct
     int points = 0;
     for (int i = 0; i < firstLettersCoords.size(); i++) {
-        if (isCorrectAnswer(i)) {
+        if (isCorrectAnswer(i) && notGuessed(i)) {
             points += 10;
+            guessed.push_back(i);
             }
     }
     return points;
@@ -701,6 +702,14 @@ int Crossword::countPoints() {
 
 bool Crossword::isCorrectAnswer(const int question_index) {
     return answerOnBoard(question_index) == answerList[question_index];
+}
+
+
+bool Crossword::notGuessed(int index) {
+    for (int i = 0; i < guessed.size(); i++) {
+        if (i == index) return false;
+    }
+    return true;
 }
 
 

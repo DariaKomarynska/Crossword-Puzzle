@@ -83,6 +83,7 @@ void Board::createAndSetUpFields(const int begin_row, const int begin_col, const
 	setUpFields(begin_row, begin_col, size, orientation);
 }
 
+
 // Set fields to be empty, editable fields.
 // Starting at given coords, [size] number of fields, moving right or down.
 void Board::setUpFields(const int begin_row, const int begin_col, const int size, const std::string orientation) {

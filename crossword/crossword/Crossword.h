@@ -11,7 +11,6 @@
 
 class Crossword {
 private:
-	Board board = Board();
 	Dictionary solutions = Dictionary();
 	std::vector<std::string> answerList;
 	std::vector< std::vector<int>> firstLettersCoords;
@@ -19,6 +18,9 @@ private:
 	std::string name = "";
 
 public:
+	Board board = Board();
+	std::vector <int> guessed;
+
 	Crossword() {};
 	Crossword(std::string filePath, std::string crosswordName="", bool is_list_of_words=false);
 	Crossword(const Dictionary n_solutions, const std::vector< std::vector<int>> first_letters, const std::vector<std::string> n_orientations);
@@ -33,6 +35,7 @@ public:
 	void fillField(const int row, const int col, const char value);
 	void getCorrectBoard();
 	std::string getName() { return name; }
+	bool notGuessed(int index);
 
 	string answerOnBoard(const int NOQuestion);
 	int countPoints();

@@ -1,7 +1,10 @@
 #include "Crossword.h"
 
+
 Crossword::Crossword(std::string filepath, std::string crosswordName) : name(crosswordName) {
 	Dictionary n_solutions;
+	std::vector< std::vector<int>> n_first_letters;
+	std::vector<std::string> n_orientations;
 
 	std::ifstream fileHandle;
 	try {
@@ -16,12 +19,17 @@ Crossword::Crossword(std::string filepath, std::string crosswordName) : name(cro
 
 	for (auto& row : rows) {
 		std::vector <std::string> rowData = parseCSV(row);
-		if (rowData.size() != 2) throw InvalidData();
+		if (rowData.size() != 5) throw InvalidData();
 
 		n_solutions.add_word(rowData.at(1), rowData.at(0));
+		std::vector<int> pos;
+		pos.push_back(number(rowData.at(2)));
+		pos.push_back(number(rowData.at(3)));
+		n_first_letters.push_back(pos);
+		n_orientations.push_back(rowData.at(4));
 	}
 
-	init(n_solutions);
+	init(n_solutions, n_first_letters, n_orientations);
 }
 
 
@@ -53,16 +61,14 @@ Crossword::Crossword(const Dictionary n_solutions, const std::vector< std::vecto
 	init(n_solutions, first_letters, n_orientations);
 }
 
+
 Crossword::Crossword(const Dictionary n_solutions) {
-	init(n_solutions);
-}
-
-
-void Crossword::init(const Dictionary n_solutions) {
 	solutions = n_solutions;
 	answerList = solutions.getRankedRandomAnswers();
 	choosePositionPutAnswers();
+	//fillCrossword();
 }
+
 void Crossword::init(const Dictionary n_solutions, const std::vector< std::vector<int>> first_letters, const std::vector<std::string> n_orientations) {
 	unsigned size = n_solutions.size();
 	if (size != first_letters.size() || size != n_orientations.size()) {
@@ -100,6 +106,12 @@ void Crossword::init(const Dictionary n_solutions, const std::vector< std::vecto
 	answerList = solutions.answers();
 }
 
+//void Crossword::choosePositionPutAnswers() {
+//	vector <string> words = solutions.answers();
+//	std::vector<string> onBoard;
+//	unsigned amountOfWords = solutions.size();
+//}
+
 
 vector <string> Crossword::getRandomAnswers() {
 	return answerList;
@@ -119,9 +131,12 @@ void Crossword::choosePositionPutAnswers() {
 		std::string answer = answerList[i];
 		unsigned answerSize = answer.size();
 
+		bool placed = false;
+
 		if (i == 0) {
 			// put first word on the board
 			putFirstWord(answer);
+			placed = true;
 		}
 		else {
 			putAnotherWord(answer, answerSize, onBoard);
@@ -352,16 +367,27 @@ std::ostream& operator<<(std::ostream& os, Crossword& c) {
 	os << '\n' << c.board;
 
 	int index = 0;
+	std::stringstream horizontal;
+	std::stringstream vertical;
+	std::stringstream* osptr;
 
 	// for (auto& question : c.getQuestions()) {
 	for (auto& question : c.getRandomQuestions()) {
-		os << '\n' << index + 1 << ". " << question;
-		if (question.size() < 15) {		// distance should be changed
-			os << '\t';
+		std::stringstream bridge;
+		if (c.getOrientation(index) == "horizontally") {
+			osptr = &horizontal;
 		}
-		os << '\t' << "(" << c.getFirstLetterRow(index) + 1 << ", " << c.getFirstLetterCol(index) + 1 << ")";
+		else {
+			osptr = &vertical;
+		}
+		*osptr << '\n' << index + 1 << ". " << question;
+		if (question.size() < 15) {		// distance should be changed
+			*osptr << '\t';
+		}
+		*osptr << '\t' << "(" << c.getFirstLetterRow(index) + 1 << ", " << c.getFirstLetterCol(index) + 1 << ")";
 		index++;
 	}
+	os << "Vertical:" << vertical.str() << "\nHorizontal:" << horizontal.str();
 	return os;
 }
 
@@ -663,16 +689,11 @@ int Crossword::countPoints() {
 	// count points for each word, comparing given with correct
 	int points = 0;
 	for (int i = 0; i < firstLettersCoords.size(); i++) {
-		if (isCorrectAnswer(i)) {
+		if (answerOnBoard(i) == answerList[i]) {
 			points += 10;
-			}
+		}
 	}
 	return points;
-}
-
-
-bool Crossword::isCorrectAnswer(const int question_index) {
-	return answerOnBoard(question_index) == answerList[question_index];
 }
 
 

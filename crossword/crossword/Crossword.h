@@ -65,6 +65,7 @@ public:
 	string correctAnswer(const int NOQuestion);
 	string checkOrientation(const string word);
 	bool isNotLastAnswer(const string answer);
+	bool isCorrectAnswer(const int question_index);
 
 	void notFoundCommonLetter(const string answer, const string preWord);
 	bool foundCommonLetter(const string answer, const string preWord, const int ansIndex, const int prevIndex);

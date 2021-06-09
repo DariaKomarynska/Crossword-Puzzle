@@ -131,12 +131,9 @@ void Crossword::choosePositionPutAnswers() {
 		std::string answer = answerList[i];
 		unsigned answerSize = answer.size();
 
-		bool placed = false;
-
 		if (i == 0) {
 			// put first word on the board
 			putFirstWord(answer);
-			placed = true;
 		}
 		else {
 			putAnotherWord(answer, answerSize, onBoard);
@@ -678,11 +675,16 @@ int Crossword::countPoints() {
 	// count points for each word, comparing given with correct
 	int points = 0;
 	for (int i = 0; i < firstLettersCoords.size(); i++) {
-		if (answerOnBoard(i) == answerList[i]) {
+		if (isCorrectAnswer(i)) {
 			points += 10;
-		}
+			}
 	}
 	return points;
+}
+
+
+bool Crossword::isCorrectAnswer(const int question_index) {
+	return answerOnBoard(question_index) == answerList[question_index];
 }
 
 

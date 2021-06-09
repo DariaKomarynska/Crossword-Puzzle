@@ -21,6 +21,7 @@ public:
 	void clear();
 	// Return value.
 	char getValue() const { return value; }
+	bool isSettedUp() { return (value != '#'); }
 
 };
 

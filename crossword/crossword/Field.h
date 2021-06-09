@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 
+// Represents a single field.
 class Field {
 private:
 	char value;
@@ -10,6 +11,7 @@ public:
 	Field() : value('#') {};		// empty - '#' field
 	Field(const char c) { fill(c); }
 	Field(const std::string s) { fill(s[0]); }
+	// Set value to '_'.
 	void setUp() { value = '_'; }
 	void fill(char c);
 	void fill(const std::string s);
@@ -17,6 +19,7 @@ public:
 	void putIndex(const char num);
 	void putIndex(const std::string num);
 	void clear();
+	// Return value.
 	char getValue() const { return value; }
 
 };

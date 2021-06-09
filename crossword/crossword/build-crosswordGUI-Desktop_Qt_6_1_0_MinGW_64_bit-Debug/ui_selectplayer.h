@@ -205,7 +205,7 @@ public:
 
     void retranslateUi(QWidget *selectPlayer)
     {
-        selectPlayer->setWindowTitle(QCoreApplication::translate("selectPlayer", "Form", nullptr));
+        selectPlayer->setWindowTitle(QCoreApplication::translate("selectPlayer", "crossword", nullptr));
         selectPlayerLbl->setText(QCoreApplication::translate("selectPlayer", "Select Player:", nullptr));
         backBtn->setText(QCoreApplication::translate("selectPlayer", "Back", nullptr));
         deletePlayerBtn->setText(QCoreApplication::translate("selectPlayer", "Delete", nullptr));

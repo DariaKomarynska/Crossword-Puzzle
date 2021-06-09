@@ -29,6 +29,8 @@ private:
 
 extern bool crosswordNameUsed(std::string name);
 extern bool validCrosswordName(std::string name);
+extern bool validListOfWordsFile(std::string file_name);
+extern bool validCrosswordFile(std::string file_name);
 extern bool validFileName(std::string file_name);
 extern void addCrossword(std::string file_name, std::string name, bool is_list_of_words=false);
 

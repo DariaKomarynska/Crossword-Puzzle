@@ -28,13 +28,13 @@ void addCrosswordWindow::on_addBtn_clicked()
     if(new_name != "" && file_name != "") {
         std::string new_name_str = new_name.toLocal8Bit().constData();
         std::string file_name_str = file_name.toLocal8Bit().constData();
-        if (ui->generateFromListChckB->isChecked()) {
+        if (ui->generateFromListChckB->isChecked() && validListOfWordsFile(file_name_str)) {
             addCrossword(file_name_str, new_name_str, true);
             emit closed();
             this->close();
 
         }
-        else if (validCrosswordName(new_name_str) && validFileName(file_name_str)) {
+        else if (validCrosswordName(new_name_str) && validCrosswordFile(file_name_str)) {
             addCrossword(file_name_str, new_name_str);
             emit closed();
             this->close();
@@ -78,15 +78,37 @@ bool validCrosswordName(std::string name) {
 
 
 bool validFileName(std::string file_name) {
+    for(auto &character : file_name) {
+        if(character == '*' || character == '?' || character == '*' || character == '>' || character == '<' || character == '|' || character == 34) {
+            return false;
+        }
+    }
+    return true;
+}
+
+
+bool validListOfWordsFile(std::string file_name) {
+    if (!validFileName(file_name)) return false;
     try {
-
-        Crossword c = Crossword(file_name);
-
+        Crossword c = Crossword(file_name, "some name", true);
     }
     catch (...) {
         return false;
     }
     return true;
+}
+
+
+bool validCrosswordFile(std::string file_name) {
+    if (!validFileName(file_name)) return false;
+    try {
+        Crossword c = Crossword(file_name);
+    }
+    catch (...) {
+        return false;
+    }
+    return true;
+
 }
 
 

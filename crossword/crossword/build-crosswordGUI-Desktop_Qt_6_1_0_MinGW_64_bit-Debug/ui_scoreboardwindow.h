@@ -256,7 +256,7 @@ public:
     void retranslateUi(QWidget *scoreBoardWindow)
     {
         scoreBoardWindow->setWindowTitle(QCoreApplication::translate("scoreBoardWindow", "crossword", nullptr));
-        indexLbl->setText(QCoreApplication::translate("scoreBoardWindow", "Index", nullptr));
+        indexLbl->setText(QCoreApplication::translate("scoreBoardWindow", "Rank", nullptr));
         playerLbl->setText(QCoreApplication::translate("scoreBoardWindow", "Player", nullptr));
         scoreLbl->setText(QCoreApplication::translate("scoreBoardWindow", "Score", nullptr));
         label->setText(QString());

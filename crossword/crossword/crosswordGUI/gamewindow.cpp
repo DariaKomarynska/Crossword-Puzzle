@@ -87,7 +87,8 @@ gameWindow::gameWindow(Game *g, QWidget *parent) :
 
             }
             else {
-                field->setStyleSheet(":enabled {color: rgb(255, 255, 255); background: rgb(3, 128, 125);  border: none } :disabled { color: rgb(251, 110, 181) } ");
+                field->setStyleSheet(":enabled {color: rgb(255, 255, 255); background: rgb(3, 128, 125);  border: none }");
+                field->setStyleSheet(":disabled { color: rgb(251, 110, 181) }");
                 indexLbl->setStyleSheet("color: rgb(255, 241, 207); background: rgb(3, 128, 125);  border: none;");
 
                 // set index parameters
@@ -100,7 +101,6 @@ gameWindow::gameWindow(Game *g, QWidget *parent) :
                 QFont font = field->font();
                 font.setPointSize(20);
                 field->setFont(font);
-                connect (field, SIGNAL(field->editingFinished()), this, SLOT(content_changed(field)));
                 field->setAlignment(Qt::AlignCenter);
 
                 box->setStyleSheet("background: rgb(3, 128, 125);");
@@ -191,6 +191,7 @@ void gameWindow::setColor(int row, int col, std::string color) {
     box->setStyleSheet("background: " + col_qstring + ";");
     field->setStyleSheet("background: " + col_qstring + ";");
     label->setStyleSheet("background: " + col_qstring + ";");
+    field->setStyleSheet(":disabled { color: rgb(251, 110, 181) }");
 }
 
 

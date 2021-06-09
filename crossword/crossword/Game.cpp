@@ -111,11 +111,6 @@ void Game::countPoints() {
 }
 
 
-void Game::checkForPoints(int row, int col) {
-	// if (board.isCorrect(row, col));
-}
-
-
 void Game::showCorrectBoard() {
 	crossword.getCorrectBoard();
 	cout << crossword << endl; // crossword.getBoard() shows only board without questions
@@ -144,19 +139,6 @@ bool cmpPairs(const std::pair<std::string, int>& l, const std::pair<std::string,
 
 	return l.first > r.first;
 }
-
-
-/*
-Player getPlayerByName(const std::string name) {
-    std::vector <Player> players = getPlayers();
-	for (auto& player : players) {
-        if (player.getName() == name) {
-            return player;
-		}
-	}
-	throw std::invalid_argument("Player not found");
-}
-*/
 
 
 void saveUserData(std::vector <Player> players) {

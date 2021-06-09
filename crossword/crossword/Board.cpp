@@ -23,7 +23,7 @@ Board::Board(const int no_row, const int no_col)
 	setUpMaxSize(no_row, no_col);
 }
 
-
+// Add an empty row.
 void Board::addRow() {
 	std::vector <Field> new_row;
 	for (int i = 0; i < getNOColumns(); i++) {
@@ -33,7 +33,7 @@ void Board::addRow() {
 	fields.push_back(new_row);
 }
 
-
+// Add an empty column.
 void Board::addColumn() {
 	for (auto& row : fields) {
 		Field f = Field();
@@ -41,7 +41,7 @@ void Board::addColumn() {
 	}
 }
 
-
+// Return number of columns.
 int Board::getNOColumns() const
 {
 	if (getNORows() == 0) {
@@ -50,20 +50,20 @@ int Board::getNOColumns() const
 	return fields.at(0).size();
 }
 
-
+// Return number of rows.
 int Board::getNORows() const
 {
 	return fields.size();
 }
 
-
+// Return value of a field with given coords.
 char Board::getValue(const int row, const int col) const
 {
 	coordsValidation(row, col);
 	return fields.at(row).at(col).getValue();
 }
 
-
+// Set field to be empty, editable field.
 void Board::setUpField(const int row, const int col) {
 	coordsValidation(row, col);
 	fields.at(row).at(col).setUp();
@@ -83,7 +83,8 @@ void Board::createAndSetUpFields(const int begin_row, const int begin_col, const
 	setUpFields(begin_row, begin_col, size, orientation);
 }
 
-
+// Set fields to be empty, editable fields.
+// Starting at given coords, [size] number of fields, moving right or down.
 void Board::setUpFields(const int begin_row, const int begin_col, const int size, const std::string orientation) {
 	int dx = 0;
 	int dy = 0;
@@ -116,7 +117,7 @@ void Board::setUpFields(const int begin_row, const int begin_col, const int size
 	}
 }
 
-
+// Verify that coords are in range.
 bool Board::coordsValidation(const int row, const int col) const {
 	if (!validCoords(row, col))
 	{
@@ -125,26 +126,27 @@ bool Board::coordsValidation(const int row, const int col) const {
 	return true;
 }
 
-
+// Verify that coords are in range.
 bool Board::validCoords(const int row, const int col) const {
 	return col >= 0 && col < getNOColumns() && row >= 0 && row < getNORows();
 }
 
-
+// Fill specified field with given value.
 void Board::fillField(const int row, const int col, const char value)
 {
 	coordsValidation(row, col);
 	fields.at(row).at(col).fill(value);
 }
 
-
+// Fill specified field with given value.
 void Board::fillField(const int row, const int col, const std::string value) {
 
 	coordsValidation(row, col);
 	fields.at(row).at(col).fill(value);
 }
 
-
+// Fill specified fields with given value.
+// Starting at given coords, [size] number of fields, moving right or down.
 void Board::fillFields(const int begin_row, const int begin_col, const std::string answer, const std::string orientation) {
 	int dx = 0;
 	int dy = 0;
@@ -185,22 +187,22 @@ void Board::fillFields(const int begin_row, const int begin_col, const std::stri
 	}
 }
 
-
+// Fill specified field with given value.
 void Board::putIndex(const int row, const int col, const int value) {
 	fields.at(row).at(col).putIndex(value);
 }
 
-
+// Fill specified field with given value.
 void Board::putIndex(const int row, const int col, const std::string value) {
 	fields.at(row).at(col).putIndex(value);
 }
 
-
+// Fill specified field with given value.
 void Board::putIndex(const int row, const int col, const char value) {
 	fields.at(row).at(col).putIndex(value);
 }
 
-
+// Clear all fields.
 void Board::clear() {
 	for (auto& row : fields) {
 		for (auto& field : row) {
@@ -209,7 +211,7 @@ void Board::clear() {
 	}
 }
 
-
+//  Enlarge board.
 void Board::setUpMaxSize(const int NORows, const int NOCol) {
 
 	if (NORows <= 0 || NOCol <= 0) {
@@ -276,9 +278,8 @@ int getLenOfNumber(const int number) {
 	return smindex.length();
 }
 
-
+//  Return string of spaces that has the same length as a given number.
 std::string getSpaces(const int index) {
-	//  returns string of spaces that has the same length as a given number
 	int NOSpaces = getLenOfNumber(index);
 	std::string spaces = "";
 	for (int i = 0; i < NOSpaces; i++) {
@@ -287,7 +288,7 @@ std::string getSpaces(const int index) {
 	return spaces;
 }
 
-
+// Create vector of characters, exclude ' ' and '|'.
 std::vector <char> separateRow(std::string rowData) {
 	std::vector<char> rowSep;
 	for (char elem : rowData) {

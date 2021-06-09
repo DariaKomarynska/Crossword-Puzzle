@@ -73,6 +73,7 @@ Crossword::Crossword(const Dictionary n_solutions, const std::vector< std::vecto
     init(n_solutions, first_letters, n_orientations);
 }
 
+
 Crossword::Crossword(const Dictionary n_solutions) {
     init(n_solutions);
 }
@@ -83,6 +84,7 @@ void Crossword::init(const Dictionary n_solutions) {
     answerList = solutions.getRankedRandomAnswers();
     choosePositionPutAnswers();
 }
+
 void Crossword::init(const Dictionary n_solutions, const std::vector< std::vector<int>> first_letters, const std::vector<std::string> n_orientations) {
     unsigned size = n_solutions.size();
     if (size != first_letters.size() || size != n_orientations.size()) {
@@ -119,6 +121,12 @@ void Crossword::init(const Dictionary n_solutions, const std::vector< std::vecto
     }
     answerList = solutions.answers();
 }
+
+//void Crossword::choosePositionPutAnswers() {
+//	vector <string> words = solutions.answers();
+//	std::vector<string> onBoard;
+//	unsigned amountOfWords = solutions.size();
+//}
 
 
 vector <string> Crossword::getRandomAnswers() {

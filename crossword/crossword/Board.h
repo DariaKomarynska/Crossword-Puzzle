@@ -5,6 +5,8 @@
 #include "Dictionary.h"
 #include "Field.h"
 
+
+// Represents a board.
 class Board
 {
 private:
@@ -28,7 +30,6 @@ public:
 	void putIndex(const int row, const int col, const std::string value);
 	void putIndex(const int row, const int col, const char value);
     char getValue(const int row, const int col) const;
-	bool isSettedUp(const int row, const int col) const { return getValue(row, col) != '#'; }
 	void setUpField(const int row, const int col);
 	void createAndSetUpFields(const int begin_row, const int begin_col, const int size, const std::string orientation);
 	void setUpFields(const int begin_row, const int begin_col, const int size, const std::string orientation);

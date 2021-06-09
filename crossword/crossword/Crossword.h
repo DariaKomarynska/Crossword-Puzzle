@@ -20,7 +20,7 @@ private:
 
 public:
 	Crossword() {};
-	Crossword(std::string filePath, std::string crosswordName="");
+	Crossword(std::string filePath, std::string crosswordName="", bool is_list_of_words=false);
 	Crossword(const Dictionary n_solutions, const std::vector< std::vector<int>> first_letters, const std::vector<std::string> n_orientations);
 	Crossword(const Dictionary n_solutions);
 

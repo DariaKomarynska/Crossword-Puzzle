@@ -108,6 +108,13 @@ Player Player::operator--(int) {
 }
 
 
+int Player::getSumOfPoints() {
+	int sum = 0;
+	for (auto& score : pointList) sum += score;
+	return sum;
+}
+
+
 Player operator+(const Player& player1, const Player& player2) {
 	Player player;
 

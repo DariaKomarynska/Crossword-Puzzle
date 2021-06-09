@@ -23,6 +23,7 @@ public:
 	void setName(const std::string newName);
 
 	void addPoints(const unsigned int noPoints) { points += noPoints; }
+	int getSumOfPoints();
 	void resetPoints() { points = 0; }
 	void substractPoints(const unsigned int noPoints);
 	int getAveragePoints();

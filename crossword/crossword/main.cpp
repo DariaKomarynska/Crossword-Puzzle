@@ -27,7 +27,7 @@ int main(){
 	//dict.add_word("ccm", "ccm");	// to check continuation another answers
 	//dict.add_word("mkk", "mkk");
 
-	//Crossword crossword = Crossword(dict, pair, orientation);
+	//Crossword crossword = Crossword(dict);
 
 	Crossword crossword = Crossword("crossword1.csv");
 	Game game = Game(jacus, crossword);

@@ -5,6 +5,56 @@
 #include <QVBoxLayout>
 
 
+std::vector<int> getQuestions(Crossword& c, std::vector<std::string>* questionList) {
+    int q_index = 0;
+    int same_index = 0;
+    int temp = -1;
+    std::vector<int> output_index;
+    std::vector <std::string> questions = c.getQuestions();
+    std::vector<std::string> horizontal;
+    std::vector<std::string> vertical;
+    std::vector<std::string>* osptr;
+    std::vector<std::vector<int>> same_coords = c.getDoubleCoords();
+    horizontal.push_back("Horizontal:");
+    vertical.push_back("Vertical:");
+
+    for (auto& question : questions) {
+        std::stringstream s;
+        int index = same_index / 2;
+        if (c.getOrientation(q_index) == "horizontally") {
+            osptr = &horizontal;
+        }
+        else {
+            osptr = &vertical;
+        }
+        if (std::find(same_coords.begin(), same_coords.end(), c.getAllFirstLetterCoords()[q_index - index]) != same_coords.end()) {
+            if (temp != -1) {
+                output_index.push_back(temp);
+                s << temp << ". " << question;
+                temp = -1;
+            }
+            else {
+                output_index.push_back(q_index - index + 1);
+                s << q_index - index + 1 << ". " << question;
+                temp = q_index - index + 1;
+            }
+            same_index++;
+        }
+        else {
+            output_index.push_back(q_index - index + 1);
+            s << q_index - index + 1 << ". " << question;
+        }
+        std::vector<std::string> ob = *osptr;
+        ob.push_back(s.str());
+        *osptr = ob;
+        q_index++;
+    }
+    horizontal.insert(horizontal.end(), vertical.begin(), vertical.end());
+    *questionList = horizontal;
+    return output_index;
+}
+
+
 gameWindow::gameWindow(Game *g, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::gameWindow),
@@ -22,17 +72,13 @@ gameWindow::gameWindow(Game *g, QWidget *parent) :
     ui->maxScoreLCD->display(game->crossword.maxPoints());
 
     //fill question list
-    std::vector <std::string> questions = game->crossword.getQuestions();
+    //std::vector <std::string> questions = game.crossword.getQuestions();
 
-    g->crossword.board.clear();
-
-    int q_index = 1;
-    for(auto& question : questions) {
-        std::stringstream s;
-        s << q_index << ". " << question;
-        QString questionQString = QString::fromStdString(s.str());
+    std::vector<std::string> questions;
+    std::vector<int> que_index = getQuestions(game.crossword, &questions);
+    for (auto& s : questions) {
+        QString questionQString = QString::fromStdString(s);
         ui->questionList->addItem(questionQString);
-        q_index++;
     }
 
     //make crossword
@@ -115,16 +161,17 @@ gameWindow::gameWindow(Game *g, QWidget *parent) :
     }
 
     // put question indexes
-    std::vector <std::vector<int>> first_indexes = game->crossword.getAllFirstLetterCoords();
-    int qindex = 1;
+    std::vector <std::vector<int>> first_indexes = game.crossword.getAllFirstLetterCoords();
+    int i = 0;
     for (auto& coords : first_indexes) {
+        int qindex = que_index[i];
         int row = coords.at(0);
         int col = coords.at(1);
 
-        QTableWidget *box = fields.at(row).at(col);
-        QLabel *label = box->findChild<QLabel *>("Index Label");
+        QTableWidget* box = fields.at(row).at(col);
+        QLabel* label = box->findChild<QLabel*>("Index Label");
         label->setText(QString::number(qindex));
-        qindex++;
+        i++;
     }
 
 

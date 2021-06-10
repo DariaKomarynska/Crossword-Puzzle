@@ -39,5 +39,6 @@ private slots:
     void on_questionList_itemSelectionChanged();
     void on_checkBtn_clicked();
 };
+std::vector<int> getQuestions(Crossword& c, std::vector<std::string>* questionList);
 
 #endif // GAMEWINDOW_H

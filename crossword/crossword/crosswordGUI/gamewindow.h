@@ -34,11 +34,11 @@ signals:
 
 
 private slots:
-    void content_changed(QLineEdit* field);
     void on_finishBtn_clicked();
     void on_questionList_itemSelectionChanged();
     void on_checkBtn_clicked();
 };
 std::vector<int> getQuestions(Crossword& c, std::vector<std::string>* questionList);
+extern int getIndexBeforeDot(std::string text);
 
 #endif // GAMEWINDOW_H

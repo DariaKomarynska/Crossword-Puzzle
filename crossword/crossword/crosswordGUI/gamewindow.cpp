@@ -75,7 +75,7 @@ gameWindow::gameWindow(Game *g, QWidget *parent) :
     //std::vector <std::string> questions = game.crossword.getQuestions();
 
     std::vector<std::string> questions;
-    std::vector<int> que_index = getQuestions(game.crossword, &questions);
+    std::vector<int> que_index = getQuestions(game->crossword, &questions);
     for (auto& s : questions) {
         QString questionQString = QString::fromStdString(s);
         ui->questionList->addItem(questionQString);
@@ -161,7 +161,7 @@ gameWindow::gameWindow(Game *g, QWidget *parent) :
     }
 
     // put question indexes
-    std::vector <std::vector<int>> first_indexes = game.crossword.getAllFirstLetterCoords();
+    std::vector <std::vector<int>> first_indexes = game->crossword.getAllFirstLetterCoords();
     int i = 0;
     for (auto& coords : first_indexes) {
         int qindex = que_index[i];
@@ -196,25 +196,31 @@ void gameWindow::on_finishBtn_clicked()
     this->close();
 }
 
-void gameWindow::content_changed(QLineEdit *field) {
-    QString content = field->text();
-    if(content.size() > 1) {
-        field->setText(content[0]);
-    }
-}
-
 
 void gameWindow::on_questionList_itemSelectionChanged()
 {
     no_select();
     if (ui->questionList->selectedItems().size() == 1) {
-        int index = ui->questionList->currentRow();
-        std::vector <std::vector<int>> ans_fields = game->crossword.getFieldsOfQuestion(index);
+        QString text = ui->questionList->selectedItems().at(0)->text();
+        if(text != "Horizontal:" && text != "Vertical:") {
+            int index = getIndexBeforeDot(text.toLocal8Bit().constData()) - 1;
+            std::vector <std::vector<int>> ans_fields = game->crossword.getFieldsOfQuestion(index);
 
-        for(auto& pair : ans_fields) {
-            setColor(pair.at(0), pair.at(1), "rgb(5,208,201)");
+            for(auto& pair : ans_fields) {
+                setColor(pair.at(0), pair.at(1), "rgb(5,208,201)");
+            }
         }
     }
+}
+
+int getIndexBeforeDot(std::string text) {
+    std::string num_str;
+    for(auto &character : text) {
+        if(character == '.') break;
+
+        num_str += (character);
+    }
+    return number(num_str);
 }
 
 

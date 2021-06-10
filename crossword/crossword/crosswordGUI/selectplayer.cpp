@@ -20,7 +20,7 @@ selectPlayer::selectPlayer(QWidget *parent) :
 
 selectPlayer::~selectPlayer()
 {
-    //players.clear();
+    players.clear();
     delete ui;
 }
 

@@ -23,6 +23,7 @@ selectCrossword::selectCrossword(Player &pl, QWidget *parent) :
 
 selectCrossword::~selectCrossword()
 {
+    crosswords.clear();
     delete ui;
 }
 

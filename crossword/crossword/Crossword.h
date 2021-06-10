@@ -93,11 +93,11 @@ public:
 	bool checkCoordinate(const int index, const int row, const int col);
 	bool isInRange(const int index, const int begin, const int coord);
 	bool notContinueAnswer(const int row, const int col, const string lastOrientation, const char letter);
-	//std::vector< std::vector<int>> getDoubleCoords();
+	std::vector< std::vector<int>> getDoubleCoords();
 };
 
 extern std::vector <std::string> parseRows(std::ifstream& fileHandle);
 extern std::vector <std::string> parseCSV(std::string& data);
 extern std::vector <Crossword> getCrosswords();
-//bool isInVector(std::vector< std::vector<int>> v, std::vector<int> ob);
-//bool twoTimesInVector(std::vector< std::vector<int>> v, const int index);
+bool isInVector(std::vector< std::vector<int>> v, std::vector<int> ob);
+bool twoTimesInVector(std::vector< std::vector<int>> v, const int index);

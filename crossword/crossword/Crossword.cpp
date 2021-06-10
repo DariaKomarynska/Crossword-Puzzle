@@ -799,25 +799,25 @@ bool Crossword::notContinueAnswer(const int row, const int col, const string las
 }
 
 
-//std::vector< std::vector<int>> Crossword::getDoubleCoords() {
-//    std::vector< std::vector<int>> output;
-//    std::vector< std::vector<int>> v = firstLettersCoords;
-//    for (int index = 0; index < v.size(); index++) {
-//        if (twoTimesInVector(v, index) && !isInVector(output, v[index])) {
-//            output.push_back(v[index]);
-//        }
-//    }
-//    return output;
-//}
-//
-//
-//bool isInVector(std::vector< std::vector<int>> v, std::vector<int> ob) {
-//    return std::find(v.begin(), v.end(), ob) != v.end();
-//}
-//
-//
-//bool twoTimesInVector(std::vector< std::vector<int>> v, const int index) {
-//    std::vector< std::vector<int>>::iterator begin = index + v.begin() + 1;
-//    std::vector< std::vector<int>>::iterator end = index + v.begin();
-//    return std::find(begin, v.end(), v[index]) != v.end() || std::find(v.begin(), end, v[index]) != end;
-//}
+std::vector< std::vector<int>> Crossword::getDoubleCoords() {
+    std::vector< std::vector<int>> output;
+    std::vector< std::vector<int>> v = firstLettersCoords;
+    for (int index = 0; index < v.size(); index++) {
+        if (twoTimesInVector(v, index) && !isInVector(output, v[index])) {
+            output.push_back(v[index]);
+        }
+    }
+    return output;
+}
+
+
+bool isInVector(std::vector< std::vector<int>> v, std::vector<int> ob) {
+    return std::find(v.begin(), v.end(), ob) != v.end();
+}
+
+
+bool twoTimesInVector(std::vector< std::vector<int>> v, const int index) {
+    std::vector< std::vector<int>>::iterator begin = index + v.begin() + 1;
+    std::vector< std::vector<int>>::iterator end = index + v.begin();
+    return std::find(begin, v.end(), v[index]) != v.end() || std::find(v.begin(), end, v[index]) != end;
+}

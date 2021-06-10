@@ -340,5 +340,19 @@ namespace TestCrossword
 
 			Assert::IsTrue(crossword.isNotLastAnswer("paliwo"));
 		}
+
+		TEST_METHOD(TestCrosswordgetDoubleCoords)
+		{
+			vector<vector<int>> pair = { {1,1}, {1,1} };
+			vector<std::string> orientations = { "vertically", "horizontally" };
+
+			Dictionary dict = Dictionary();
+			dict.add_word("paliwo", "piwo to moje");
+			dict.add_word("psz", "pszczola bez czola");
+			Crossword crossword = Crossword(dict, pair, orientations);
+
+			vector<vector<int>> output = { {1, 1} };
+			Assert::IsTrue(crossword.getDoubleCoords() == output);
+		}
 	};
 }

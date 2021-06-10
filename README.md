@@ -6,6 +6,7 @@
 - Kindeusz Michał
 
 ### Diagram klas
+![diagram](diagram.png)
 
 ### Wszystkie szczegóły i opis wykonania projektu znajdują się w pliku
 > `DOCUMENTATION.pdf`

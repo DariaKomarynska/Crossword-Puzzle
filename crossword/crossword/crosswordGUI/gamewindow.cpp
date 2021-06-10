@@ -183,6 +183,7 @@ gameWindow::~gameWindow()
 void gameWindow::on_finishBtn_clicked()
 {   
     game->player.newGame();
+    delete game;
     emit game_end();
     this->close();
 }

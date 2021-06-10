@@ -41,7 +41,7 @@ void selectCrossword::on_playBtn_clicked()
 
         for(auto& c : crosswords) {
             if (c.getName() == newNamestr) {
-                game = new Game(player, c); /// player is not ref type in game
+                game = new Game(player, c);
                 game_win = new gameWindow(game);
                 connect (game_win, SIGNAL(game_end()), this, SLOT(on_game_end()));
                 game_win->setWindowState(Qt::WindowMaximized);

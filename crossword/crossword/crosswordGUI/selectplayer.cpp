@@ -37,6 +37,7 @@ void selectPlayer::on_deletePlayerBtn_clicked()
     std::stringstream s;
     ui->playerList->clear();
 
+    int index = 0;
     for(auto& player : players) {
         QString name =  QString::fromStdString(player.getName());
 
@@ -44,6 +45,10 @@ void selectPlayer::on_deletePlayerBtn_clicked()
             s << player << '\n';
             ui->playerList->addItem(name);
         }
+        else {
+            players.erase(players.begin() + index);
+        }
+        index++;
     }
     std::fstream data_file("userData.csv", ios::out);
     data_file << s.str();

@@ -218,7 +218,7 @@ namespace UnitTestBoard
 			Assert::AreEqual("q"[0], b1.getValue(6, 2));
 			Assert::AreEqual("u"[0], b1.getValue(7, 2));
 			Assert::AreEqual("e"[0], b1.getValue(8, 2));
-			Assert::AreEqual("_"[0], b1.getValue(9, 2));
+			Assert::AreEqual("4"[0], b1.getValue(9, 2));
 		}
 
 
@@ -230,7 +230,7 @@ namespace UnitTestBoard
 			Assert::AreEqual("p"[0], b1.getValue(3, 2));
 			Assert::AreEqual("r"[0], b1.getValue(4, 2));
 			Assert::AreEqual("o"[0], b1.getValue(5, 2));
-			Assert::AreEqual("_"[0], b1.getValue(6, 2));
+			Assert::AreEqual("8"[0], b1.getValue(6, 2));
 			Assert::AreEqual("l"[0], b1.getValue(7, 2));
 			Assert::AreEqual("e"[0], b1.getValue(8, 2));
 			Assert::AreEqual("m"[0], b1.getValue(9, 2));

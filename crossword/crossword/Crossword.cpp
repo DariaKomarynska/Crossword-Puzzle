@@ -177,14 +177,14 @@ void Crossword::putAnotherWord(const string answer, const int answerSize, const 
     vector<int> coords;
     string orientation;
     int lastJ = 0;
-    for (int i = 0; i < onBoard.size(); i++) { // iterate vector of words which are already on board
+    for (unsigned i = 0; i < onBoard.size(); i++) { // iterate vector of words which are already on board
         string preWord = onBoard[i];
         if (placed == false) {
             lastJ = 0;
             for (int j = 0; j < answerSize; j++) { // iterate letter of current word
                 lastJ++;
                 if (placed == false) {
-                    for (int k = 0; k < preWord.size(); k++) { // iterate letter of previous word
+                    for (unsigned k = 0; k < preWord.size(); k++) { // iterate letter of previous word
                         if (answer[j] == preWord[k]) {
                             placed = foundCommonLetter(answer, preWord, j, k);
                             if (placed == true) {
@@ -447,12 +447,13 @@ int Crossword::getIndexAnswerList(const string word) {
             return i;
         }
     }
+    throw std::out_of_range("There is no answer with this index");
 }
 
 int Crossword::letterPosition(const string word, const char letter) {
     // return position of letter in the word
     int position = 0;
-    for (int i = 0; i < word.size(); i++) {
+    for (unsigned i = 0; i < word.size(); i++) {
         if (word[i] == letter) {
             position = i;
             return position;
@@ -538,7 +539,7 @@ char Crossword::getLetterByColumn(const int NOQuestion, const int col) {
     // get letter in horizontal word
     string preWord = correctAnswer(NOQuestion);
     int begCol = getFirstLetterCol(NOQuestion);
-    for (int i = 0; i < preWord.size() ; i++) {
+    for (unsigned i = 0; i < preWord.size() ; i++) {
         if ((i + begCol) == col) {
             return preWord[i];
         }
@@ -549,7 +550,7 @@ char Crossword::getLetterByRow(const int NOQuestion, const int row) {
     // get letter in vertical word
     string preWord = correctAnswer(NOQuestion);
     int begRow = getFirstLetterRow(NOQuestion);
-    for (int i = 0; i < preWord.size(); i++) {
+    for (unsigned i = 0; i < preWord.size(); i++) {
         if ((i + begRow) == row) {
             return preWord[i];
         }
@@ -587,7 +588,7 @@ bool Crossword::isSameLetter(const int row, const int col, const char letter) {
     // checking letter on field with given row and column
     char newLetter = '#';
     string curOrientation = "";
-    for (int i = 0; i < firstLettersCoords.size(); i++) {
+    for (unsigned i = 0; i < firstLettersCoords.size(); i++) {
         if (row == firstLettersCoords[i][0]) {
             newLetter = checkLetter(i, -1, col); // check by col, rows are same
             curOrientation = "horizontally";
@@ -690,7 +691,7 @@ string Crossword::answerOnBoard(const int NOQuestion) {
 int Crossword::countPoints() {
     // count points for each word, comparing given with correct
     int points = 0;
-    for (int i = 0; i < firstLettersCoords.size(); i++) {
+    for (unsigned i = 0; i < firstLettersCoords.size(); i++) {
         if (isCorrectAnswer(i) && notGuessed(i)) {
             points += 10;
             guessed.push_back(i);
@@ -706,7 +707,7 @@ bool Crossword::isCorrectAnswer(const int question_index) {
 
 
 bool Crossword::notGuessed(int index) {
-    for (int i = 0; i < guessed.size(); i++) {
+    for (unsigned i = 0; i < guessed.size(); i++) {
         if (i == index) return false;
     }
     return true;
@@ -716,7 +717,7 @@ bool Crossword::notGuessed(int index) {
 int Crossword::maxPoints() {
     // count points for each word, comparing given with correct
     int points = 0;
-    for (int i = 0; i < firstLettersCoords.size(); i++) {
+    for (unsigned i = 0; i < firstLettersCoords.size(); i++) {
         points += 10;
     }
     return points;
@@ -747,7 +748,7 @@ void Crossword::makeCSVFile() {
 
     std::ofstream c_file(name + ".csv");
 
-    for (int i = 0; i < answerList.size(); i++) {
+    for (unsigned i = 0; i < answerList.size(); i++) {
         c_file << solutions.questions().at(i) << ',';
         c_file << solutions.answers().at(i) << ',';
         c_file << firstLettersCoords.at(i).at(0) << ',';
@@ -778,7 +779,7 @@ std::vector <Crossword> getCrosswords() {
 bool Crossword::notContinueAnswer(const int row, const int col, const string lastOrientation, const char letter) {
     // can common letter continue previous or next word
     char newLetter = '#';
-    for (int i = 0; i < firstLettersCoords.size(); i++) {
+    for (unsigned i = 0; i < firstLettersCoords.size(); i++) {
         if (lastOrientation == "horizontally") {
             if (col == firstLettersCoords[i][1]) {
                 newLetter = checkLetter(i, row, -1); // check by row, cols are same
@@ -802,7 +803,7 @@ bool Crossword::notContinueAnswer(const int row, const int col, const string las
 std::vector< std::vector<int>> Crossword::getDoubleCoords() {
     std::vector< std::vector<int>> output;
     std::vector< std::vector<int>> v = firstLettersCoords;
-    for (int index = 0; index < v.size(); index++) {
+    for (unsigned index = 0; index < v.size(); index++) {
         if (twoTimesInVector(v, index) && !isInVector(output, v[index])) {
             output.push_back(v[index]);
         }

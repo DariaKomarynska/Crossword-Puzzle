@@ -30,7 +30,7 @@ void Player::substractPoints(const unsigned int noPoints) {
 
 int Player::getAveragePoints() {
 	const std::vector<int>& stats = Player::pointList;
-	return 1.0 * std::accumulate(stats.begin(), stats.end(), 0) / stats.size();
+	return std::accumulate(stats.begin(), stats.end(), 0) / stats.size();
 }
 
 
@@ -176,7 +176,7 @@ std::istream& operator>>(std::istream& input, Player& player)
 	if (!stringDigit(data.at(1))) return input;
 	player.setPoints(stoi(data.at(1)));
 
-	for (int i = 2; i < data.size(); i++) {
+    for (unsigned i = 2; i < data.size(); i++) {
 		if (!stringDigit(data.at(i))) return input;
 		player.pointList.push_back(stoi(data.at(i)));
 	}

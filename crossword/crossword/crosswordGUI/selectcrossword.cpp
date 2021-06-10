@@ -91,6 +91,8 @@ void selectCrossword::on_deleteBtn_clicked()
     std::fstream data_file("crosswordNamesData.txt", ios::out);
     ui->crosswordList->clear();
 
+    int index = 0;
+
     for(auto& crosswordN : crosswords) {
         QString name =  QString::fromStdString(crosswordN.getName());
 
@@ -98,6 +100,10 @@ void selectCrossword::on_deleteBtn_clicked()
             data_file << crosswordN.getName() << '\n';
             ui->crosswordList->addItem(name);
         }
+        else {
+            crosswords.erase(crosswords.begin() + index);
+        }
+        index++;
     }
     data_file.close();
 }

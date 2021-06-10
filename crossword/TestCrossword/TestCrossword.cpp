@@ -287,47 +287,6 @@ namespace TestCrossword
 			Assert::AreEqual(Col, crossword.getLetterCol("psz", 's'));
 		}
 
-		TEST_METHOD(TestCrosswordRowCoordLetterInVerWord)
-		{
-			vector<vector<int>> pair = { {1,1}, {3,5} };
-			vector<std::string> orientations = { "vertically", "horizontally" };
-
-			Dictionary dict = Dictionary();
-			dict.add_word("paliwo", "piwo to moje");
-			dict.add_word("psz", "pszczola bez czola");
-
-			Crossword crossword = Crossword(dict, pair, orientations);
-			int Row = 5; // board starts in (0,0)
-			Assert::AreEqual(Row, crossword.getLetterRow("paliwo", 'w'));
-		}
-
-		TEST_METHOD(TestCrosswordColCoordLetterInVerWord)
-		{
-			vector<vector<int>> pair = { {1,1}, {3,5} };
-			vector<std::string> orientations = { "vertically", "horizontally" };
-
-			Dictionary dict = Dictionary();
-			dict.add_word("paliwo", "piwo to moje");
-			dict.add_word("psz", "pszczola bez czola");
-
-			Crossword crossword = Crossword(dict, pair, orientations);
-			int Col = 1; // board starts in (0,0)
-			Assert::AreEqual(Col, crossword.getLetterCol("paliwo", 'w'));
-		}
-
-		TEST_METHOD(TestCrosswordLastWordInDictionary)
-		{
-			vector<vector<int>> pair = { {1,1}, {3,5} };
-			vector<std::string> orientations = { "vertically", "horizontally" };
-
-			Dictionary dict = Dictionary();
-			dict.add_word("paliwo", "piwo to moje");
-			dict.add_word("psz", "pszczola bez czola");
-			Crossword crossword = Crossword(dict, pair, orientations);
-
-			Assert::IsFalse(crossword.isNotLastAnswer("psz"));
-		}
-
 		TEST_METHOD(TestCrosswordNotLastWordInDictionary)
 		{
 			vector<vector<int>> pair = { {1,1}, {3,5} };

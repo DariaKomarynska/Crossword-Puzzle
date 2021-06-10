@@ -50,3 +50,11 @@ public:
     virtual char const* what() const noexcept override { return "Invalid input data."; }
 };
 
+
+class InvalidFilename : public std::exception
+{
+public:
+    virtual char const* what() const noexcept override { return "Invalid filename."; }
+};
+
+

@@ -2,15 +2,14 @@
 
 Crossword::Crossword(std::string filepath, std::string crosswordName, bool list_of_words) : name(crosswordName) {
     std::ifstream fileHandle;
-    try {
-        fileHandle.open(filepath);
-    }
-    catch (std::exception const& e) {
-        cout << "Invalid file error: " << e.what() << endl;
-    }
+    fileHandle.open(filepath);
 
     std::vector <std::string> rows = parseRows(fileHandle);
     fileHandle.close();
+
+    if (rows.size() == 0){
+        throw InvalidFilename();
+    }
 
     if (list_of_words) {
         Dictionary n_solutions;

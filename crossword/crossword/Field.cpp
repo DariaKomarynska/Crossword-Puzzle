@@ -5,14 +5,14 @@
 
 // Fill with given letter or space.
 void Field::fill(const char c) {
-	alphaOrSpaceValidation(c);
+
 	if (value == '#') throw FieldNotSettedUp();
 
-	if (c != '_') {
+	if (c != '#') {
 		value = tolower(c);
 	}
 	else {
-		value = c;
+		value = ' ';
 	}
 }
 

@@ -533,6 +533,7 @@ char Crossword::checkLetter(const int index, const int nextRow, const int nextCo
     else if (nextCol == -1) {
         return getLetterByRow(index, nextRow);
     }
+    throw std::out_of_range("Letter not found");
 }
 
 char Crossword::getLetterByColumn(const int NOQuestion, const int col) {
@@ -544,6 +545,7 @@ char Crossword::getLetterByColumn(const int NOQuestion, const int col) {
             return preWord[i];
         }
     }
+    throw std::out_of_range("Letter not found");
 }
 
 char Crossword::getLetterByRow(const int NOQuestion, const int row) {
@@ -555,6 +557,7 @@ char Crossword::getLetterByRow(const int NOQuestion, const int row) {
             return preWord[i];
         }
     }
+    throw std::out_of_range("Letter not found");
 }
 
 

@@ -173,15 +173,6 @@ gameWindow::gameWindow(Game *g, QWidget *parent) :
         label->setText(QString::number(qindex));
         i++;
     }
-
-
-        /*
-    for(auto row : board) {
-        for(auto field : row) {         // board iterator would be nice
-        }
-        ...2
-    }
-    */
 }
 
 gameWindow::~gameWindow()

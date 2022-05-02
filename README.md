@@ -44,23 +44,23 @@ At the top there is the name of the current crossword puzzle, the name of the pl
 
 ### Algorithm of Crossword generation:
 
-● At the beginning, the program selects a random number of passwords from 3 to 15 from the given file to create the crossword puzzle. Then this number of words is also randomly selected.
-● Before stacking, all words are sorted: - by letter frequency among all words.
-● The first word takes a horizontal position.
-● When searching for a common letter for a password, among those already sorted, the following conditions are valid:
-- whether individual predicted fields are empty or
-- is there another common letter in the field,
-- whether the potential position of the word will visually extend another word on the crossword puzzle.
-● After checking the conditions for the correct position, the password is placed on a crossword puzzle:
+- At the beginning, the program selects a random number of passwords from 3 to 15 from the given file to create the crossword puzzle. Then this number of words is also randomly selected.
+- Before stacking, all words are sorted: - by letter frequency among all words.
+- The first word takes a horizontal position.
+- When searching for a common letter for a password, among those already sorted, the following conditions are valid:
+  * whether individual predicted fields are empty or
+  * is there another common letter in the field,
+  * whether the potential position of the word will visually extend another word on the crossword puzzle.
+- After checking the conditions for the correct position, the password is placed on a crossword puzzle:
 - in the opposite direction to the word with a common letter.
 
 ### Starting the program:
 
-● It is obligatory to install Qt 6. If you skip this step, the program will not start, and the user will be informed about it by system messages. If the message still appears after installing Qt 6, make sure that the path to the required files is in the PATH environment variable.
+- It is obligatory to install Qt 6. If you skip this step, the program will not start, and the user will be informed about it by system messages. If the message still appears after installing Qt 6, make sure that the path to the required files is in the PATH environment variable.
 
 
 To run the application it is necessary:
-● Download the file from repository Crossword-Puzzle/crossword/crossword/build-crosswordGUI-Desktop_Qt_6_1_0_MinGW_64_bit-Debug/debug/crosswordGUI.exe and run it.
+- Download the file from repository Crossword-Puzzle/crossword/crossword/build-crosswordGUI-Desktop_Qt_6_1_0_MinGW_64_bit-Debug/debug/crosswordGUI.exe and run it.
 
 ### Diagram of classes
 ![diagram](diagram.png)
